@@ -1,0 +1,60 @@
+[
+  {
+    "id": "4.21-test1-q1",
+    "date": "4.21",
+    "test": "test1",
+    "questionNumber": 1,
+    "type": "matching",
+    "prompt": "Sensors can be classified into two categories regarding their purpose. Match the category name and its purpose.",
+    "choices": ["internal sensors", "external sensors"],
+    "items": [
+      { "prompt": "self status and/or control self movement", "answer": "internal sensors" },
+      { "prompt": "identify surroundings, and move to the target location", "answer": "external sensors" }
+    ],
+    "sourceRef": "4.21/test1/Q1.png"
+  },
+  {
+    "id": "4.21-test1-q2",
+    "date": "4.21",
+    "test": "test1",
+    "questionNumber": 2,
+    "type": "fill_blank",
+    "prompt": "With the objective of {{0}} increase and control automation, mechatronics connects {{1}} system elements from {{2}} to {{3}} by using {{4}} and {{5}} circuits, {{6}}, and digital {{7}} processing. It shows that mechatronic systems are closely related to {{8}} engineering and {{9}} engineering.",
+    "answers": ["performance", "control", "sensor input", "actuator output", "electrical", "electronic", "micro-processors", "signals", "electronic", "electrical"],
+    "sourceRef": "4.21/test1/Q2_last_one_is_incorrect.png",
+    "notes": "元スクショは最後が一部誤答。ユーザー指定により、engineeringの正答は electronic engineering と electrical engineering として記録。"
+  },
+  {
+    "id": "4.21-test1-q3",
+    "date": "4.21",
+    "test": "test1",
+    "questionNumber": 3,
+    "type": "multi_select",
+    "prompt": "Select everything that is correct about the role of sensors.",
+    "choices": ["pass to the CPU", "translates energy", "measure the state of motion", "operates actively", "convert into an electric signal"],
+    "answers": ["pass to the CPU", "measure the state of motion", "convert into an electric signal"],
+    "sourceRef": "4.21/test1/Q3.png"
+  },
+  {
+    "id": "4.21-test1-q4",
+    "date": "4.21",
+    "test": "test1",
+    "questionNumber": 4,
+    "type": "fill_blank",
+    "prompt": "A sensor takes the measurement object's {{0}} and translates it into a {{1}} that we can use.",
+    "answers": ["reaction", "physical quantity"],
+    "sourceRef": "4.21/test1/Q4.png"
+  },
+  {
+    "id": "4.21-test1-q5",
+    "date": "4.21",
+    "test": "test1",
+    "questionNumber": 5,
+    "type": "multi_select",
+    "prompt": "Select all the physical quantities that sensors are essentially used to measure in the mechatronics system.",
+    "choices": ["age", "vibration", "force", "angle", "position", "light intensity", "acceleration", "distance", "displacement", "BMI"],
+    "answers": ["vibration", "force", "angle", "position", "light intensity", "acceleration", "distance", "displacement"],
+    "sourceRef": "4.21/test1/Q5.png",
+    "notes": "スクショ内に重複選択肢があるため、JSONでは重複を統合。"
+  }
+]

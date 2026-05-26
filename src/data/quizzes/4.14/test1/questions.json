@@ -1,0 +1,23 @@
+[
+  {
+    "id": "4.14-test1-q1",
+    "date": "4.14",
+    "test": "test1",
+    "questionNumber": 1,
+    "type": "fill_blank",
+    "prompt": "The word \"mechatronics\" is a {{0}} word, created by the combination of {{1}} and {{2}}. Mechatronics technology is used in the {{3}} of any mechanized operation object, such as {{4}}, {{5}}. Its application range is huge: {{6}}, {{7}}, {{8}}. To run those machines toward target settings, machine state/condition is checked through {{9}} that deliver information (position, {{10}}, temperature, etc.) used to regulate the output of {{11}} (light, {{12}}, engine, etc.) that drive the machine. This is called {{13}}.",
+    "answers": ["Japanese-English", "mechanics", "electronics", "AUTOMATION", "fan", "cleaner", "vehicles", "robots", "home electronics", "sensors", "acceleration", "actuators", "motor", "automatic control"],
+    "sourceRef": "4.14/test1/Q1.png"
+  },
+  {
+    "id": "4.14-test1-q2",
+    "date": "4.14",
+    "test": "test1",
+    "questionNumber": 2,
+    "type": "fill_blank",
+    "prompt": "With the objective of {{0}} increase and control automation, mechatronics connects {{1}} system elements from {{2}} to {{3}} by using {{4}} and {{5}} circuits, {{6}}, and digital {{7}} processing. It shows that mechatronic systems are closely related to {{8}} engineering and {{9}} engineering.",
+    "answers": ["performance", "control", "sensor input", "actuator output", "electrical", "electronic", "micro-processors", "signal", "electronic", "information"],
+    "sourceRef": "4.14/test1/Q2.png",
+    "notes": "4.21/test1/Q2の補正方針とは別に、この回の採点済みスクショどおりに記録。"
+  }
+]

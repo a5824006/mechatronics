@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vite/
+*.local
+*.log
+
+# Source screenshots and lecture materials are extraction-only data.
+raw/
+tmp/
+extraction-work/
+*.png
+*.pdf
+*.pptx
+
+# If committed UI images become necessary later, place them here.
+!src/assets/keep/
+!src/assets/keep/**

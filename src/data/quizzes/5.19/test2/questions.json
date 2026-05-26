@@ -1,0 +1,51 @@
+[
+  {
+    "id": "5.19-test2-q1",
+    "date": "5.19",
+    "test": "test2",
+    "questionNumber": 1,
+    "type": "fill_blank",
+    "prompt": "Write the Ohm's Law. Use official symbols for physical quantities, use =, x, /, +, - for operators, use Pi or π, and use no blank spaces. Answer: {{0}}",
+    "answers": ["V=RxI", "V=R×I", "V=IR", "V=IxR", "V=I×R"],
+    "sourceRef": "5.19/test2/Q1.png"
+  },
+  {
+    "id": "5.19-test2-q2",
+    "date": "5.19",
+    "test": "test2",
+    "questionNumber": 2,
+    "type": "fill_blank",
+    "prompt": "Write the Ampere's law. Use official symbols for physical quantities, use =, x, /, +, - for operators, use Pi or π, and use no blank spaces. Answer: {{0}}",
+    "answers": ["I=2xπxrxH", "I=2xPixrxH", "I=2πrH", "H=I/(2xπxr)", "H=I/(2xPixr)"],
+    "sourceRef": "5.19/test2/Q2.png",
+    "notes": "スクショの文字が小さいため、講義で一般的な円形磁界のアンペール則表記を別解として含める。"
+  },
+  {
+    "id": "5.19-test2-q3",
+    "date": "5.19",
+    "test": "test2",
+    "questionNumber": 3,
+    "type": "matching",
+    "prompt": "Match the correct formula corresponding to each type of electrical element composition in circuits.",
+    "choices": ["L = L1 + L2", "1/C = 1/C1 + 1/C2", "1/L = 1/L1 + 1/L2", "C = C1 + C2", "1/R = 1/R1 + 1/R2", "R = R1 + R2"],
+    "items": [
+      { "prompt": "The resulting inductance of two inductances composed in series", "answer": "L = L1 + L2" },
+      { "prompt": "The resulting capacitance of two capacitances and composed in series", "answer": "1/C = 1/C1 + 1/C2" },
+      { "prompt": "The resulting inductance of two inductances composed in parallel", "answer": "1/L = 1/L1 + 1/L2" },
+      { "prompt": "The resulting capacitance of two capacitances composed in parallel", "answer": "C = C1 + C2" },
+      { "prompt": "The resulting resistance of two resistances composed in parallel", "answer": "1/R = 1/R1 + 1/R2" },
+      { "prompt": "The resulting resistance of two resistances composed in series", "answer": "R = R1 + R2" }
+    ],
+    "sourceRef": "5.19/test2/Q3.png"
+  },
+  {
+    "id": "5.19-test2-q4",
+    "date": "5.19",
+    "test": "test2",
+    "questionNumber": 4,
+    "type": "fill_blank",
+    "prompt": "Transistors are electric elements made from {{0}} to {{1}} when used in analog circuits or to {{2}} when used in digital circuits. A Diode is an electric element that has the effect of allowing only {{3}} electric current (rectification). LED is the abbreviation for {{4}} {{5}} Diode. It can {{6}} with very {{7}} electric current.",
+    "answers": ["semiconductor", "amplify", "switch", "one-way", "light", "emitting", "light", "small"],
+    "sourceRef": "5.19/test2/Q4.png"
+  }
+]
