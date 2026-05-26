@@ -1,13 +1,17 @@
-<!doctype html>
+import { writeFile } from "node:fs/promises";
+
+const html = `<!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>メカトロニクス小テスト</title>
-    <script type="module" crossorigin src="/mechatronics/assets/index-D4qGM0JE.js"></script>
-    <link rel="stylesheet" crossorigin href="/mechatronics/assets/index-ChwDe4iY.css">
   </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+`;
+
+await writeFile("index.html", html, "utf8");
