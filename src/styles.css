@@ -193,6 +193,18 @@ h1 {
   border-radius: 6px;
 }
 
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.word-bank button {
+  min-height: 34px;
+  background: #eef6f7;
+}
+
 .matching-list label {
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(180px, 300px);

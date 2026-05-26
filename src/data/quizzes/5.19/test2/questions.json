@@ -27,7 +27,7 @@
     "questionNumber": 3,
     "type": "matching",
     "prompt": "Match the correct formula corresponding to each type of electrical element composition in circuits.",
-    "choices": ["L = L1 + L2", "1/C = 1/C1 + 1/C2", "1/L = 1/L1 + 1/L2", "C = C1 + C2", "1/R = 1/R1 + 1/R2", "R = R1 + R2"],
+    "choices": ["C = C1 + C2", "L = L1 + L2", "R = R1 + R2", "C = 1/C1 + 1/C2", "R = 1/R1 + 1/R2", "1/C = 1/C1 + 1/C2", "L = 1/L1 + 1/L2", "1/R = 1/R1 + 1/R2", "1/L = 1/L1 + 1/L2"],
     "items": [
       { "prompt": "The resulting inductance of two inductances composed in series", "answer": "L = L1 + L2" },
       { "prompt": "The resulting capacitance of two capacitances and composed in series", "answer": "1/C = 1/C1 + 1/C2" },
@@ -46,6 +46,7 @@
     "type": "fill_blank",
     "prompt": "Transistors are electric elements made from {{0}} to {{1}} when used in analog circuits or to {{2}} when used in digital circuits. A Diode is an electric element that has the effect of allowing only {{3}} electric current (rectification). LED is the abbreviation for {{4}} {{5}} Diode. It can {{6}} with very {{7}} electric current.",
     "answers": ["semiconductor", "amplify", "switch", "one-way", "light", "emitting", "light", "small"],
+    "choices": ["semiconductor", "semiresistor", "semiinductor", "one-way", "reduce", "switch", "amplify", "laser", "lite", "light", "emitting", "effect", "editing", "wide", "big", "small"],
     "sourceRef": "5.19/test2/Q4.png"
   }
 ]

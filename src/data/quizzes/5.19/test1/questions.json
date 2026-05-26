@@ -6,7 +6,7 @@
     "questionNumber": 1,
     "type": "matching",
     "prompt": "Match each definition with its corresponding physical quantity.",
-    "choices": ["electric resistance", "inductance", "electric power", "electric potential", "capacitance", "electric charge", "electric current"],
+    "choices": ["electric power", "electric charge", "electric quantity", "electric energy", "electric current", "electric time", "inductance", "capacitance", "electric emission", "electric potential", "electric storage", "electric resistance", "electric field"],
     "items": [
       { "prompt": "The electric current difficulty to flow", "answer": "electric resistance" },
       { "prompt": "Store Energy into the magnetic field formed by electric current", "answer": "inductance" },
@@ -25,7 +25,7 @@
     "questionNumber": 2,
     "type": "matching",
     "prompt": "Match each sign with its corresponding physical quantity.",
-    "choices": ["inductance", "electric power", "capacitance", "electric current", "electric potential", "electric charge", "electric resistance"],
+    "choices": ["electric power", "electric charge", "electric quantity", "electric energy", "electric current", "electric time", "inductance", "capacitance", "electric emission", "electric potential", "electric storage", "electric resistance", "electric field"],
     "items": [
       { "prompt": "Henry (H)", "answer": "inductance" },
       { "prompt": "Watt (W)", "answer": "electric power" },
@@ -44,7 +44,7 @@
     "questionNumber": 3,
     "type": "matching",
     "prompt": "Match each sign with its corresponding physical quantity.",
-    "choices": ["electric power", "inductance", "electric resistance", "electric current", "electric potential", "capacitance", "electric charge"],
+    "choices": ["electric storage", "electric current", "electric emission", "electric power", "electric energy", "electric potential", "electric field", "electric time", "capacitance", "electric quantity", "inductance", "electric charge", "electric resistance"],
     "items": [
       { "prompt": "P", "answer": "electric power" },
       { "prompt": "L", "answer": "inductance" },
@@ -63,7 +63,7 @@
     "questionNumber": 4,
     "type": "matching",
     "prompt": "Match each Japanese word with its corresponding English word.",
-    "choices": ["electric potential", "electric power", "capacitance", "electric current", "electric resistance", "electric charge", "inductance"],
+    "choices": ["electric power", "electric charge", "electric quantity", "electric energy", "electric current", "electric time", "inductance", "capacitance", "electric emission", "electric potential", "electric storage", "electric resistance", "electric field"],
     "items": [
       { "prompt": "電位", "answer": "electric potential" },
       { "prompt": "電力", "answer": "electric power" },

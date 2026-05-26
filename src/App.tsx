@@ -154,18 +154,41 @@ function QuestionCard({
 
       <div className="question-body">
         {question.type === "fill_blank" && (
-          <p className="fill-prompt">
-            {renderPromptWithBlanks(
-              question.prompt,
-              Array.isArray(currentAnswer) ? currentAnswer.map(String) : [String(currentAnswer ?? "")],
-              (index, value) => {
-                const next = Array.isArray(currentAnswer) ? [...currentAnswer.map(String)] : [String(currentAnswer ?? "")];
-                next[index] = value;
-                onAnswerChange(next);
-              },
-              review,
+          <>
+            <p className="fill-prompt">
+              {renderPromptWithBlanks(
+                question.prompt,
+                Array.isArray(currentAnswer) ? currentAnswer.map(String) : [String(currentAnswer ?? "")],
+                (index, value) => {
+                  const next = Array.isArray(currentAnswer) ? [...currentAnswer.map(String)] : [String(currentAnswer ?? "")];
+                  next[index] = value;
+                  onAnswerChange(next);
+                },
+                review,
+              )}
+            </p>
+            {question.choices && question.choices.length > 0 && (
+              <div className="word-bank" aria-label="候補語">
+                {question.choices.map((choice) => (
+                  <button
+                    key={choice}
+                    type="button"
+                    disabled={review}
+                    onClick={() => {
+                      const values = Array.isArray(currentAnswer) ? currentAnswer.map(String) : [String(currentAnswer ?? "")];
+                      const emptyIndex = values.findIndex((value) => value.trim().length === 0);
+                      if (emptyIndex === -1) return;
+                      const next = [...values];
+                      next[emptyIndex] = choice;
+                      onAnswerChange(next);
+                    }}
+                  >
+                    {choice}
+                  </button>
+                ))}
+              </div>
             )}
-          </p>
+          </>
         )}
 
         {question.type === "true_false" && (
