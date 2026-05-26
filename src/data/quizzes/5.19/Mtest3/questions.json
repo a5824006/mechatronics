@@ -1,0 +1,207 @@
+[
+  {
+    "id": "5.19-Mtest3-q1",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "type": "choice",
+    "prompt": "In electrical engineering, AC is the abbreviation for?",
+    "choices": [
+      "a. Analog Current",
+      "b. Analog Converter",
+      "c. Alternating Current",
+      "d. Alternative Converter"
+    ],
+    "answer": "c. Alternating Current",
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140431.png",
+    "canonicalId": "5.19-Mtest3-q1"
+  },
+  {
+    "id": "5.19-Mtest3-q2",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "type": "choice",
+    "prompt": "In electrical engineering, DC is the abbreviation for?",
+    "choices": [
+      "a. Decimal Current",
+      "b. Digital Converter",
+      "c. Direct Converter",
+      "d. Digital Current",
+      "e. Direct Current",
+      "f. Decimal Converter"
+    ],
+    "answer": "e. Direct Current",
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140438.png",
+    "canonicalId": "5.19-Mtest3-q2"
+  },
+  {
+    "id": "5.19-Mtest3-q3",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "type": "fill_blank",
+    "prompt": "DC is an electric current or voltage that {{0}} in {{1}} and {{2}} in {{3}} over {{4}}.",
+    "answers": [
+      "doesn't change",
+      "direction",
+      "changes",
+      "magnitude",
+      "time"
+    ],
+    "choices": [
+      "doesn't change",
+      "direction",
+      "changes",
+      "magnitude",
+      "time",
+      "sometimes changes",
+      "potential",
+      "impedance",
+      "intensity",
+      "field",
+      "space"
+    ],
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140448.png",
+    "canonicalId": "5.19-Mtest3-q3"
+  },
+  {
+    "id": "5.19-Mtest3-q4",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 4,
+    "type": "fill_blank",
+    "prompt": "AC is an electric current or voltage that {{0}} in {{1}} and {{2}} in {{3}}, {{4}} over {{5}}.",
+    "answers": [
+      "changes",
+      "direction",
+      "changes",
+      "magnitude",
+      "periodically",
+      "time"
+    ],
+    "choices": [
+      "changes",
+      "direction",
+      "magnitude",
+      "periodically",
+      "time",
+      "doesn't change",
+      "sometimes changes",
+      "impedance",
+      "potential",
+      "sometimes",
+      "regularly",
+      "intensity",
+      "space",
+      "field"
+    ],
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140458.png",
+    "canonicalId": "5.19-Mtest3-q4"
+  },
+  {
+    "id": "5.19-Mtest3-q5",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 5,
+    "type": "matching",
+    "prompt": "Match the correct formula corresponding to the calculation of electrical potential around each electric element in AC conditions.",
+    "choices": [
+      "V=Ix1/(ωxL)",
+      "V=Rx1/(ωxL)",
+      "V=Ix1/(ωxC)",
+      "V=RxωxC",
+      "V=RxωxL",
+      "V=IxωxC",
+      "V=IxωxL",
+      "V=Rx1/(ωxC)"
+    ],
+    "items": [
+      {
+        "prompt": "Capacitance",
+        "answer": "V=Ix1/(ωxC)"
+      },
+      {
+        "prompt": "Inductance",
+        "answer": "V=IxωxL"
+      }
+    ],
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140503.png",
+    "canonicalId": "5.19-Mtest3-q5"
+  },
+  {
+    "id": "5.19-Mtest3-q6",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 6,
+    "type": "fill_blank",
+    "prompt": "In an AC circuit, the {{0}} works to {{1}} the flow of electric current as {{2}} does in DC circuits, while the {{3}} is a pseudo-{{4}} resulting from a {{5}} {{6}}.",
+    "answers": [
+      "Impedance",
+      "prevent",
+      "Resistance",
+      "Reactance",
+      "Resistance",
+      "phase",
+      "delay"
+    ],
+    "choices": [
+      "reactance",
+      "light-bulb",
+      "resistance",
+      "delay",
+      "amplify",
+      "accumulate",
+      "Cell",
+      "Transistor",
+      "Light Emitting Diode",
+      "Resistance",
+      "Light-bulb",
+      "Impedance",
+      "magnitude",
+      "direction",
+      "amplification",
+      "accumulation",
+      "prevention",
+      "prevent",
+      "Reactance",
+      "phase"
+    ],
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140518.png",
+    "canonicalId": "5.19-Mtest3-q6"
+  },
+  {
+    "id": "5.19-Mtest3-q7",
+    "date": "5.19",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 7,
+    "type": "fill_blank",
+    "prompt": "In an electrical circuit, with a power source (e.g. a battery), and an electrical component (e.g. a light bulb), the resistance of the power source is called the {{0}} Impedance, and the resistance of the electric component the {{1}} Impedance. To reduce the power consumption of the circuit, it is recommended that the {{2}} Impedance is {{3}} than the {{4}} Impedance.",
+    "answers": [
+      "output",
+      "input",
+      "input",
+      ">",
+      "output"
+    ],
+    "choices": [
+      "input",
+      "output",
+      ">",
+      "≥",
+      "<",
+      "≤",
+      "="
+    ],
+    "sourceRef": "5.19/Mtest3/スクリーンショット 2026-05-26 140525.png",
+    "notes": "最後の比較対象は電気回路の説明として output impedance として登録。",
+    "canonicalId": "5.19-Mtest3-q7"
+  }
+]

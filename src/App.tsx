@@ -1,16 +1,23 @@
 import { useMemo, useState } from "react";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
 import { buildBalancedSet, isTextCorrect, loadAttempts, saveAttempt, shuffle } from "./lib/quiz";
-import type { LoadedQuiz, QuestionType, QuizQuestion, SessionMode } from "./types";
+import type { LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
 
 type UserAnswer = string | boolean | string[] | Record<string, string>;
 type AnswerMap = Record<string, UserAnswer>;
 type ViewMode = "setup" | "quiz" | "summary";
+type PlatformFilter = "all" | QuizPlatform;
 
 const modeLabels: Record<SessionMode, string> = {
   single: "この回の小テストを受ける",
   balanced: "バラバラ・均等モード",
   random: "バラバラ・完全ランダムモード",
+};
+
+const platformLabels: Record<PlatformFilter, string> = {
+  all: "すべて",
+  moodle: "Moodle版 (Mtest)",
+  canvas: "Canvas版 (test)",
 };
 
 function quizKey(quiz: LoadedQuiz) {
@@ -25,6 +32,10 @@ function questionTypeLabel(type: QuestionType) {
     multi_select: "複数選択",
     matching: "マッチング",
   }[type];
+}
+
+function platformLabel(platform: QuizPlatform | undefined) {
+  return platform === "moodle" ? "Moodle版" : "Canvas版";
 }
 
 function defaultAnswer(question: QuizQuestion): UserAnswer {
@@ -148,6 +159,8 @@ function QuestionCard({
     <article className="question-panel">
       <div className="question-meta">
         <span>{question.date} {question.test}</span>
+        <span>{platformLabel(question.platform)}</span>
+        <span>共通ID {question.canonicalId ?? question.id}</span>
         <span>Q{question.questionNumber}</span>
         <span>{questionTypeLabel(question.type)}</span>
       </div>
@@ -294,6 +307,7 @@ function QuestionCard({
 }
 
 export default function App() {
+  const [platformFilter, setPlatformFilter] = useState<PlatformFilter>("moodle");
   const [mode, setMode] = useState<SessionMode>("single");
   const [selectedQuizKey, setSelectedQuizKey] = useState(() => quizKey(quizzes[0]));
   const [questionCount, setQuestionCount] = useState(10);
@@ -303,9 +317,14 @@ export default function App() {
   const [viewMode, setViewMode] = useState<ViewMode>("setup");
   const [attempts, setAttempts] = useState(() => loadAttempts());
 
-  const selectedQuiz = quizzes.find((quiz) => quizKey(quiz) === selectedQuizKey) ?? quizzes[0];
+  const activeQuizzes = useMemo(
+    () => quizzes.filter((quiz) => platformFilter === "all" || quiz.platform === platformFilter),
+    [platformFilter],
+  );
+  const activeQuestions = activeQuizzes.flatMap((quiz) => quiz.questions);
+  const selectedQuiz = activeQuizzes.find((quiz) => quizKey(quiz) === selectedQuizKey) ?? activeQuizzes[0];
   const currentQuestion = session[currentIndex];
-  const maxCount = allQuestions.length;
+  const maxCount = activeQuestions.length || allQuestions.length;
   const answeredCount = session.filter((question) => hasAnswer(question, answers[question.id])).length;
   const correctCount = session.filter((question) => gradeQuestion(question, answers[question.id])).length;
 
@@ -319,8 +338,8 @@ export default function App() {
   function buildSession() {
     const count = Math.min(Math.max(questionCount, 1), maxCount);
     if (mode === "single") return [...(selectedQuiz?.questions ?? [])].sort((a, b) => a.questionNumber - b.questionNumber);
-    if (mode === "balanced") return buildBalancedSet(quizzes, count);
-    return shuffle(allQuestions).slice(0, count);
+    if (mode === "balanced") return buildBalancedSet(activeQuizzes, count);
+    return shuffle(activeQuestions).slice(0, count);
   }
 
   function startSession() {
@@ -355,6 +374,24 @@ export default function App() {
 
         <div className="controls">
           <label>
+            版
+            <select
+              value={platformFilter}
+              onChange={(event) => {
+                const nextPlatform = event.target.value as PlatformFilter;
+                setPlatformFilter(nextPlatform);
+                const nextQuiz = quizzes.find((quiz) => nextPlatform === "all" || quiz.platform === nextPlatform);
+                if (nextQuiz) setSelectedQuizKey(quizKey(nextQuiz));
+              }}
+              disabled={viewMode === "quiz"}
+            >
+              {Object.entries(platformLabels).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label>
             出題モード
             <select value={mode} onChange={(event) => setMode(event.target.value as SessionMode)} disabled={viewMode === "quiz"}>
               {Object.entries(modeLabels).map(([value, label]) => (
@@ -367,9 +404,9 @@ export default function App() {
             <label>
               小テスト
               <select value={selectedQuizKey} onChange={(event) => setSelectedQuizKey(event.target.value)} disabled={viewMode === "quiz"}>
-                {quizzes.map((quiz) => (
+                {activeQuizzes.map((quiz) => (
                   <option key={quizKey(quiz)} value={quizKey(quiz)}>
-                    {quiz.date} {quiz.test} ({quiz.questions.length}問)
+                    {quiz.date} {quiz.test} / {platformLabel(quiz.platform)} ({quiz.questions.length}問)
                   </option>
                 ))}
               </select>
@@ -397,7 +434,7 @@ export default function App() {
       </section>
 
       <section className="status-grid">
-        <div><span>収録</span><strong>{allQuestions.length}</strong></div>
+        <div><span>収録</span><strong>{activeQuestions.length}</strong></div>
         <div><span>今回</span><strong>{session.length || "-"}</strong></div>
         <div><span>回答済み</span><strong>{answeredCount}</strong></div>
         <div><span>要復習</span><strong>{historicalWeakCount}</strong></div>

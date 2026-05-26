@@ -7,7 +7,9 @@
     "type": "true_false",
     "prompt": "The mechanical systems are good at lifting/moving heavy objects.",
     "answer": true,
-    "sourceRef": "4.14/test3/Q1-5.png"
+    "sourceRef": "4.14/test3/Q1-5.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q1"
   },
   {
     "id": "4.14-test3-q2",
@@ -17,7 +19,9 @@
     "type": "true_false",
     "prompt": "The electronic systems are good at lifting/moving heavy objects.",
     "answer": false,
-    "sourceRef": "4.14/test3/Q1-5.png"
+    "sourceRef": "4.14/test3/Q1-5.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q2"
   },
   {
     "id": "4.14-test3-q3",
@@ -27,7 +31,9 @@
     "type": "true_false",
     "prompt": "The electronic systems are good at operating delicate motions.",
     "answer": true,
-    "sourceRef": "4.14/test3/Q1-5.png"
+    "sourceRef": "4.14/test3/Q1-5.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q3"
   },
   {
     "id": "4.14-test3-q4",
@@ -37,7 +43,9 @@
     "type": "true_false",
     "prompt": "The mechanical systems are good at operating delicate motions.",
     "answer": false,
-    "sourceRef": "4.14/test3/Q1-5.png"
+    "sourceRef": "4.14/test3/Q1-5.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q4"
   },
   {
     "id": "4.14-test3-q5",
@@ -46,9 +54,15 @@
     "questionNumber": 5,
     "type": "choice",
     "prompt": "What is defined as being the smallest part of a machine that cannot be \"broken\" into smaller pieces?",
-    "choices": ["machine element", "electronic element", "mechanism"],
+    "choices": [
+      "machine element",
+      "electronic element",
+      "mechanism"
+    ],
     "answer": "machine element",
-    "sourceRef": "4.14/test3/Q1-5.png"
+    "sourceRef": "4.14/test3/Q1-5.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q5"
   },
   {
     "id": "4.14-test3-q6",
@@ -57,9 +71,21 @@
     "questionNumber": 6,
     "type": "multi_select",
     "prompt": "Select everything that is correct about the role of sensors.",
-    "choices": ["pass the signal to the CPU", "operates actively", "convert into an electric signal", "translates energy", "measure the state of motion"],
-    "answers": ["pass the signal to the CPU", "convert into an electric signal", "measure the state of motion"],
-    "sourceRef": "4.14/test3/Q6-8.png"
+    "choices": [
+      "pass the signal to the CPU",
+      "operates actively",
+      "convert into an electric signal",
+      "translates energy",
+      "measure the state of motion"
+    ],
+    "answers": [
+      "pass the signal to the CPU",
+      "convert into an electric signal",
+      "measure the state of motion"
+    ],
+    "sourceRef": "4.14/test3/Q6-8.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q6"
   },
   {
     "id": "4.14-test3-q7",
@@ -68,9 +94,20 @@
     "questionNumber": 7,
     "type": "multi_select",
     "prompt": "Select everything that is correct about the role of actuators.",
-    "choices": ["pass the signal to the CPU", "measure the state of motion", "convert into an electric signal", "translates energy", "operates actively"],
-    "answers": ["translates energy", "operates actively"],
-    "sourceRef": "4.14/test3/Q6-8.png"
+    "choices": [
+      "pass the signal to the CPU",
+      "measure the state of motion",
+      "convert into an electric signal",
+      "translates energy",
+      "operates actively"
+    ],
+    "answers": [
+      "translates energy",
+      "operates actively"
+    ],
+    "sourceRef": "4.14/test3/Q6-8.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q7"
   },
   {
     "id": "4.14-test3-q8",
@@ -79,12 +116,23 @@
     "questionNumber": 8,
     "type": "matching",
     "prompt": "Choose correct matching.",
-    "choices": ["power electrics", "weak electrics"],
-    "items": [
-      { "prompt": "Electrical engineering", "answer": "power electrics" },
-      { "prompt": "Electronic engineering", "answer": "weak electrics" }
+    "choices": [
+      "power electrics",
+      "weak electrics"
     ],
-    "sourceRef": "4.14/test3/Q6-8.png"
+    "items": [
+      {
+        "prompt": "Electrical engineering",
+        "answer": "power electrics"
+      },
+      {
+        "prompt": "Electronic engineering",
+        "answer": "weak electrics"
+      }
+    ],
+    "sourceRef": "4.14/test3/Q6-8.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q8"
   },
   {
     "id": "4.14-test3-q9",
@@ -93,14 +141,33 @@
     "questionNumber": 9,
     "type": "matching",
     "prompt": "Choose the correct matchings.",
-    "choices": ["an electronic signal", "an electric signal", "an embedded system", "understandable physical quantity"],
-    "items": [
-      { "prompt": "the input of a computer is", "answer": "an electronic signal" },
-      { "prompt": "the output of a computer is", "answer": "an electric signal" },
-      { "prompt": "home appliances are controlled by", "answer": "an embedded system" },
-      { "prompt": "signal processing consist in extracting", "answer": "understandable physical quantity" }
+    "choices": [
+      "an electronic signal",
+      "an electric signal",
+      "an embedded system",
+      "understandable physical quantity"
     ],
-    "sourceRef": "4.14/test3/Q9-11.png"
+    "items": [
+      {
+        "prompt": "the input of a computer is",
+        "answer": "an electronic signal"
+      },
+      {
+        "prompt": "the output of a computer is",
+        "answer": "an electric signal"
+      },
+      {
+        "prompt": "home appliances are controlled by",
+        "answer": "an embedded system"
+      },
+      {
+        "prompt": "signal processing consist in extracting",
+        "answer": "understandable physical quantity"
+      }
+    ],
+    "sourceRef": "4.14/test3/Q9-11.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q9"
   },
   {
     "id": "4.14-test3-q10",
@@ -109,14 +176,33 @@
     "questionNumber": 10,
     "type": "matching",
     "prompt": "Match the correct order of procedures necessary to operate a mechatronic system safely.",
-    "choices": ["detecting the failure", "identifying the cause", "forecasting the system", "take countermeasures"],
-    "items": [
-      { "prompt": "1", "answer": "detecting the failure" },
-      { "prompt": "2", "answer": "identifying the cause" },
-      { "prompt": "3", "answer": "forecasting the system" },
-      { "prompt": "4", "answer": "take countermeasures" }
+    "choices": [
+      "detecting the failure",
+      "identifying the cause",
+      "forecasting the system",
+      "take countermeasures"
     ],
-    "sourceRef": "4.14/test3/Q9-11.png"
+    "items": [
+      {
+        "prompt": "1",
+        "answer": "detecting the failure"
+      },
+      {
+        "prompt": "2",
+        "answer": "identifying the cause"
+      },
+      {
+        "prompt": "3",
+        "answer": "forecasting the system"
+      },
+      {
+        "prompt": "4",
+        "answer": "take countermeasures"
+      }
+    ],
+    "sourceRef": "4.14/test3/Q9-11.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q10"
   },
   {
     "id": "4.14-test3-q11",
@@ -125,12 +211,27 @@
     "questionNumber": 11,
     "type": "matching",
     "prompt": "Match the purposes of the mechatronics system with their corresponding category.",
-    "choices": ["transportation", "home electronics", "robotics"],
-    "items": [
-      { "prompt": "do work efficiently", "answer": "transportation" },
-      { "prompt": "make life comfortable", "answer": "home electronics" },
-      { "prompt": "support human", "answer": "robotics" }
+    "choices": [
+      "transportation",
+      "home electronics",
+      "robotics"
     ],
-    "sourceRef": "4.14/test3/Q9-11.png"
+    "items": [
+      {
+        "prompt": "do work efficiently",
+        "answer": "transportation"
+      },
+      {
+        "prompt": "make life comfortable",
+        "answer": "home electronics"
+      },
+      {
+        "prompt": "support human",
+        "answer": "robotics"
+      }
+    ],
+    "sourceRef": "4.14/test3/Q9-11.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test3-q11"
   }
 ]

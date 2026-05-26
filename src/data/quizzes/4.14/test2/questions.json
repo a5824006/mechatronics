@@ -6,8 +6,16 @@
     "questionNumber": 1,
     "type": "fill_blank",
     "prompt": "The word mechatronics was created in {{0}} by Tetsuro {{1}}, an engineer of {{2}} Electric Corporation. Though in {{3}} it was registered as a trademark, the company waived the right and it is now a {{4}} name.",
-    "answers": ["1969", "Mori", "Yaskawa", "1972", "common"],
-    "sourceRef": "4.14/test2/Q1.png"
+    "answers": [
+      "1969",
+      "Mori",
+      "Yaskawa",
+      "1972",
+      "common"
+    ],
+    "sourceRef": "4.14/test2/Q1.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test2-q1"
   },
   {
     "id": "4.14-test2-q2",
@@ -16,14 +24,37 @@
     "questionNumber": 2,
     "type": "matching",
     "prompt": "Match the Japanese and English words corresponding to the five core technologies of mechatronics systems.",
-    "choices": ["source of energy", "sensor", "actuator", "computer", "mechanism"],
-    "items": [
-      { "prompt": "エネルギー源", "answer": "source of energy" },
-      { "prompt": "センサ", "answer": "sensor" },
-      { "prompt": "アクチュエータ", "answer": "actuator" },
-      { "prompt": "計算機", "answer": "computer" },
-      { "prompt": "機構", "answer": "mechanism" }
+    "choices": [
+      "source of energy",
+      "sensor",
+      "actuator",
+      "computer",
+      "mechanism"
     ],
-    "sourceRef": "4.14/test2/Q2.png"
+    "items": [
+      {
+        "prompt": "エネルギー源",
+        "answer": "source of energy"
+      },
+      {
+        "prompt": "センサ",
+        "answer": "sensor"
+      },
+      {
+        "prompt": "アクチュエータ",
+        "answer": "actuator"
+      },
+      {
+        "prompt": "計算機",
+        "answer": "computer"
+      },
+      {
+        "prompt": "機構",
+        "answer": "mechanism"
+      }
+    ],
+    "sourceRef": "4.14/test2/Q2.png",
+    "platform": "canvas",
+    "canonicalId": "4.14-test2-q2"
   }
 ]

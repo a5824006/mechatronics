@@ -6,18 +6,49 @@
     "questionNumber": 1,
     "type": "matching",
     "prompt": "Match each definition with its corresponding physical quantity.",
-    "choices": ["electric resistance", "inductance", "electric power", "electric potential", "capacitance", "electric charge", "electric current"],
+    "choices": [
+      "electric resistance",
+      "inductance",
+      "electric power",
+      "electric potential",
+      "capacitance",
+      "electric charge",
+      "electric current"
+    ],
     "items": [
-      { "prompt": "The electric current difficulty to flow", "answer": "electric resistance" },
-      { "prompt": "Store Energy into the magnetic field formed by electric current", "answer": "inductance" },
-      { "prompt": "Amount of work that electric current conducts per unit time", "answer": "electric power" },
-      { "prompt": "Electric pressure or electromagnetic energy", "answer": "electric potential" },
-      { "prompt": "The ability to store electric charges", "answer": "capacitance" },
-      { "prompt": "Electric Quantity that elementary particles such as electrons have", "answer": "electric charge" },
-      { "prompt": "Flow of electric charges due to the movement of electric particles such as electrons", "answer": "electric current" }
+      {
+        "prompt": "The electric current difficulty to flow",
+        "answer": "electric resistance"
+      },
+      {
+        "prompt": "Store Energy into the magnetic field formed by electric current",
+        "answer": "inductance"
+      },
+      {
+        "prompt": "Amount of work that electric current conducts per unit time",
+        "answer": "electric power"
+      },
+      {
+        "prompt": "Electric pressure or electromagnetic energy",
+        "answer": "electric potential"
+      },
+      {
+        "prompt": "The ability to store electric charges",
+        "answer": "capacitance"
+      },
+      {
+        "prompt": "Electric Quantity that elementary particles such as electrons have",
+        "answer": "electric charge"
+      },
+      {
+        "prompt": "Flow of electric charges due to the movement of electric particles such as electrons",
+        "answer": "electric current"
+      }
     ],
     "sourceRef": "4.28/test1/スクリーンショット 2026-04-28 142345.png; スクリーンショット 2026-04-28 142400.png; スクリーンショット 2026-04-28 142428.png",
-    "notes": "3枚のスクショに分かれて表示されていた問題を1問として統合。"
+    "notes": "3枚のスクショに分かれて表示されていた問題を1問として統合。",
+    "platform": "canvas",
+    "canonicalId": "4.28-test1-q1"
   },
   {
     "id": "4.28-test1-q3",
@@ -26,21 +57,62 @@
     "questionNumber": 3,
     "type": "matching",
     "prompt": "Match each type of sensor with its corresponding human sense.",
-    "choices": ["vision", "audition", "olfaction", "gustation", "taction"],
+    "choices": [
+      "vision",
+      "audition",
+      "olfaction",
+      "gustation",
+      "taction"
+    ],
     "items": [
-      { "prompt": "camera", "answer": "vision" },
-      { "prompt": "microphone", "answer": "audition" },
-      { "prompt": "odor sensor", "answer": "olfaction" },
-      { "prompt": "taste sensor", "answer": "gustation" },
-      { "prompt": "touch panel", "answer": "taction" },
-      { "prompt": "light sensor", "answer": "vision" },
-      { "prompt": "ultra-sound sensor", "answer": "audition" },
-      { "prompt": "infra-red sensor", "answer": "vision" },
-      { "prompt": "torque sensor", "answer": "taction" },
-      { "prompt": "concentration sensor", "answer": "gustation" },
-      { "prompt": "gas sensor", "answer": "olfaction" }
+      {
+        "prompt": "camera",
+        "answer": "vision"
+      },
+      {
+        "prompt": "microphone",
+        "answer": "audition"
+      },
+      {
+        "prompt": "odor sensor",
+        "answer": "olfaction"
+      },
+      {
+        "prompt": "taste sensor",
+        "answer": "gustation"
+      },
+      {
+        "prompt": "touch panel",
+        "answer": "taction"
+      },
+      {
+        "prompt": "light sensor",
+        "answer": "vision"
+      },
+      {
+        "prompt": "ultra-sound sensor",
+        "answer": "audition"
+      },
+      {
+        "prompt": "infra-red sensor",
+        "answer": "vision"
+      },
+      {
+        "prompt": "torque sensor",
+        "answer": "taction"
+      },
+      {
+        "prompt": "concentration sensor",
+        "answer": "gustation"
+      },
+      {
+        "prompt": "gas sensor",
+        "answer": "olfaction"
+      }
     ],
     "sourceRef": "4.28/test1/スクリーンショット 2026-04-28 142417.png",
-    "notes": "Question 2は提供スクショ上で内容を確認できないため、未登録。"
+    "notes": "Question 2は提供スクショ上で内容を確認できないため、未登録。",
+    "platform": "canvas",
+    "canonicalId": "4.28-test1-q3"
   }
 ]

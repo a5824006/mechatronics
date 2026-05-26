@@ -1,0 +1,234 @@
+[
+  {
+    "id": "4.14-Mtest3-q1",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "type": "matching",
+    "prompt": "Choose correct matching.",
+    "choices": [
+      "power electrics",
+      "weak electrics",
+      "supply electrics",
+      "signal electrics"
+    ],
+    "items": [
+      {
+        "prompt": "Electrical engineering",
+        "answer": "power electrics"
+      },
+      {
+        "prompt": "Electronic engineering",
+        "answer": "weak electrics"
+      }
+    ],
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134711.png",
+    "canonicalId": "4.14-test3-q8"
+  },
+  {
+    "id": "4.14-Mtest3-q2",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "type": "multi_select",
+    "prompt": "Select everything that is correct about the role of actuators.",
+    "choices": [
+      "convert into an electric signal",
+      "operates actively",
+      "measure the state of motion",
+      "translates energy",
+      "pass the signal to the CPU"
+    ],
+    "answers": [
+      "operates actively",
+      "translates energy"
+    ],
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134718.png",
+    "canonicalId": "4.14-test3-q7"
+  },
+  {
+    "id": "4.14-Mtest3-q3",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "type": "true_false",
+    "prompt": "The machines are good at lifting/moving heavy objects.",
+    "answer": true,
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134723.png",
+    "canonicalId": "4.14-test3-q1"
+  },
+  {
+    "id": "4.14-Mtest3-q4",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 4,
+    "type": "true_false",
+    "prompt": "The electronic systems are good at operating delicate motions.",
+    "answer": true,
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134729.png",
+    "canonicalId": "4.14-test3-q3"
+  },
+  {
+    "id": "4.14-Mtest3-q5",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 5,
+    "type": "matching",
+    "prompt": "Match the purposes of the mechatronics system with their corresponding category.",
+    "choices": [
+      "transportation",
+      "infrastructure equipment",
+      "home electronics",
+      "robotics",
+      "information devices"
+    ],
+    "items": [
+      {
+        "prompt": "do work efficiently",
+        "answer": "transportation"
+      },
+      {
+        "prompt": "make life comfortable",
+        "answer": "home electronics"
+      },
+      {
+        "prompt": "support human",
+        "answer": "robotics"
+      }
+    ],
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134734.png",
+    "canonicalId": "4.14-test3-q11"
+  },
+  {
+    "id": "4.14-Mtest3-q6",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 6,
+    "type": "true_false",
+    "prompt": "The mechanical systems are good at operating delicate motions.",
+    "answer": false,
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134740.png",
+    "canonicalId": "4.14-test3-q4"
+  },
+  {
+    "id": "4.14-Mtest3-q7",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 7,
+    "type": "matching",
+    "prompt": "Match the correct order of procedures necessary to operate a mechatronic system safely.",
+    "choices": [
+      "Identifying the cause",
+      "detecting the failure",
+      "forecasting the system",
+      "take countermeasures"
+    ],
+    "items": [
+      {
+        "prompt": "1",
+        "answer": "detecting the failure"
+      },
+      {
+        "prompt": "2",
+        "answer": "Identifying the cause"
+      },
+      {
+        "prompt": "3",
+        "answer": "forecasting the system"
+      },
+      {
+        "prompt": "4",
+        "answer": "take countermeasures"
+      }
+    ],
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134745.png",
+    "canonicalId": "4.14-test3-q10"
+  },
+  {
+    "id": "4.14-Mtest3-q8",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 8,
+    "type": "matching",
+    "prompt": "Choose the correct matchings.",
+    "choices": [
+      "understandable physical quantities",
+      "a human",
+      "a robot",
+      "a motor",
+      "an electronic signal",
+      "an embedded system",
+      "an electric signal",
+      "a remote controller",
+      "a keyboard"
+    ],
+    "items": [
+      {
+        "prompt": "signal processing consist in extracting",
+        "answer": "understandable physical quantities"
+      },
+      {
+        "prompt": "home appliances are controlled by",
+        "answer": "an embedded system"
+      },
+      {
+        "prompt": "the output of a computer is",
+        "answer": "an electric signal"
+      },
+      {
+        "prompt": "the input of a computer is",
+        "answer": "an electronic signal"
+      }
+    ],
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134750.png",
+    "canonicalId": "4.14-test3-q9"
+  },
+  {
+    "id": "4.14-Mtest3-q9",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 9,
+    "type": "multi_select",
+    "prompt": "Select everything that is correct about the role of sensors.",
+    "choices": [
+      "convert into an electric signal",
+      "translates energy",
+      "pass to the CPU",
+      "operates actively",
+      "measure the state of motion"
+    ],
+    "answers": [
+      "convert into an electric signal",
+      "pass to the CPU",
+      "measure the state of motion"
+    ],
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134755.png",
+    "canonicalId": "4.14-test3-q6"
+  },
+  {
+    "id": "4.14-Mtest3-q10",
+    "date": "4.14",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 10,
+    "type": "choice",
+    "prompt": "What is defined as being the smallest part of a machine that cannot be \"broken\" into smaller pieces?",
+    "choices": [
+      "electronic element",
+      "mechanism",
+      "machine element"
+    ],
+    "answer": "machine element",
+    "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134802.png",
+    "canonicalId": "4.14-test3-q5"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "4.14-Mtest2-q1",
+    "date": "4.14",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "type": "fill_blank",
+    "prompt": "The word mechatronics was created in {{0}} by Tetsuro {{1}}, an engineer of {{2}} Electric Corporation. Though in {{3}} it was registered as a trademark, the company waived the right and it is now a {{4}} name.",
+    "answers": [
+      "1969",
+      "Mori",
+      "Yaskawa",
+      "1972",
+      "common"
+    ],
+    "sourceRef": "4.14/Mtest2/スクリーンショット 2026-05-26 134116.png",
+    "canonicalId": "4.14-test2-q1"
+  }
+]

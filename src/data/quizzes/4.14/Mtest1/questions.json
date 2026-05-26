@@ -1,0 +1,85 @@
+[
+  {
+    "id": "4.14-Mtest1-q1",
+    "date": "4.14",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "type": "fill_blank",
+    "prompt": "With the objective of {{0}} increase and control automation, mechatronics connects {{1}} system elements from {{2}} to {{3}} by using {{4}} and {{5}} circuits, {{6}}, and digital {{7}} processing. It shows that mechatronic systems are closely related to {{8}} engineering and {{9}} engineering.",
+    "answers": [
+      "performance",
+      "control",
+      "sensor input",
+      "actuator output",
+      "electrical",
+      "electronic",
+      "micro-processors",
+      "signals",
+      "electronic",
+      "information"
+    ],
+    "sourceRef": "4.14/Mtest1/スクリーンショット 2026-05-26 133733.png",
+    "canonicalId": "4.14-test1-q2"
+  },
+  {
+    "id": "4.14-Mtest1-q2",
+    "date": "4.14",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "type": "fill_blank",
+    "prompt": "The word \"mechatronics\" is a {{0}} word. It is a field of science that combines {{1}} and {{2}}.",
+    "answers": [
+      "Japanese-English",
+      "mechanics",
+      "electronics"
+    ],
+    "sourceRef": "4.14/Mtest1/スクリーンショット 2026-05-26 133755.png",
+    "canonicalId": "4.14-test1-q1"
+  },
+  {
+    "id": "4.14-Mtest1-q3",
+    "date": "4.14",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "type": "matching",
+    "prompt": "Match the Japanese and English words corresponding to the five core technologies of mechatronics systems.",
+    "choices": [
+      "senses",
+      "mechanics",
+      "actuator",
+      "muscles",
+      "computer",
+      "mechanism",
+      "source of energy",
+      "sensor",
+      "information"
+    ],
+    "items": [
+      {
+        "prompt": "計算機",
+        "answer": "computer"
+      },
+      {
+        "prompt": "機構",
+        "answer": "mechanism"
+      },
+      {
+        "prompt": "エネルギー源",
+        "answer": "source of energy"
+      },
+      {
+        "prompt": "アクチュエータ",
+        "answer": "actuator"
+      },
+      {
+        "prompt": "センサ",
+        "answer": "sensor"
+      }
+    ],
+    "sourceRef": "4.14/Mtest1/スクリーンショット 2026-05-26 133800.png",
+    "canonicalId": "4.14-test2-q2"
+  }
+]

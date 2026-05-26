@@ -14,10 +14,12 @@ src/data/quizzes/<日付>/<test名>/questions.json
 
 ```text
 src/data/quizzes/4.14/test1/questions.json
-src/data/quizzes/5.19/test2/questions.json
+src/data/quizzes/5.19/Mtest2/questions.json
 ```
 
 1つの `questions.json` は、問題オブジェクトの配列です。
+
+`test<number>` はCanvas版、`Mtest<number>` はMoodle版として扱います。中間対策はMoodle版、期末対策はCanvas版を主に使う想定です。
 
 ## 2. Gitに含めるもの・含めないもの
 
@@ -44,8 +46,10 @@ Gitに含めない:
 {
   "id": "5.19-test2-q1",
   "date": "5.19",
-  "test": "test2",
+  "test": "Mtest2",
+  "platform": "moodle",
   "questionNumber": 1,
+  "canonicalId": "5.19-Mtest2-q1",
   "type": "fill_blank",
   "prompt": "Write the Ohm's Law. Answer: {{0}}",
   "answers": ["V=RxI", "V=IR"],
@@ -59,7 +63,9 @@ Gitに含めない:
 - `id`: `<date>-<test>-q<number>` を基本にする
 - `date`: 元フォルダ名
 - `test`: 元フォルダ名
+- `platform`: `moodle` または `canvas`
 - `questionNumber`: 小テスト上の問題番号
+- `canonicalId`: 別版で同じ/ほぼ同じ問題を同じ問題として扱うための共通ID
 - `type`: 問題タイプ
 - `prompt`: 問題文
 

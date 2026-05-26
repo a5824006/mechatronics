@@ -5,11 +5,15 @@ export type QuestionType =
   | "multi_select"
   | "matching";
 
+export type QuizPlatform = "moodle" | "canvas";
+
 export type QuizQuestion = {
   id: string;
   date: string;
   test: string;
+  platform?: QuizPlatform;
   questionNumber: number;
+  canonicalId?: string;
   type: QuestionType;
   prompt: string;
   choices?: string[];
@@ -26,6 +30,7 @@ export type QuizQuestion = {
 export type LoadedQuiz = {
   date: string;
   test: string;
+  platform: QuizPlatform;
   questions: QuizQuestion[];
 };
 
