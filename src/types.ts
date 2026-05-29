@@ -27,6 +27,7 @@ export type QuizQuestion = {
     alt: string;
     src: string;
   }>;
+  searchKeywords?: string[];
   sourceRef?: string;
   notes?: string;
 };

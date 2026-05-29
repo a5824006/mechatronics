@@ -10,7 +10,7 @@ type ViewMode = "setup" | "quiz" | "summary";
 type PlatformFilter = "all" | QuizPlatform;
 
 const pageLabels: Record<AppPage, string> = {
-  quiz: "小テスト",
+  quiz: "テスト対策",
   search: "答え検索",
 };
 
@@ -126,6 +126,7 @@ function questionSearchText(question: QuizQuestion) {
     ...(question.items ?? []).flatMap((item) => [item.prompt, item.answer]),
     ...answerLines(question),
     ...(question.images ?? []).map((image) => image.alt),
+    ...(question.searchKeywords ?? []),
     question.notes ?? "",
   ];
   return chunks.join(" ");
@@ -539,7 +540,7 @@ export default function App() {
         <div className="page-header">
           <div>
             <p className="eyebrow">Mechatronics Quiz</p>
-            <h1>メカトロニクス小テスト</h1>
+            <h1>メカトロニクステスト対策</h1>
           </div>
           <nav className="top-links" aria-label="ページ移動">
             {(Object.entries(pageLabels) as Array<[AppPage, string]>).map(([value, label]) => (
