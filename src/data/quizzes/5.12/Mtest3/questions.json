@@ -54,7 +54,7 @@
       "NORゲート"
     ],
     "sourceRef": "5.12/Mtest3/スクリーンショット 2026-05-29 123810.png",
-    "notes": "The triangle symbol without an inversion bubble is accepted as BUFFER in Moodle. BUF is kept only as a search keyword, not as a correct answer.",
+    "notes": "反転丸のない三角形の記号は、Moodleでは BUFFER として正答扱い。BUF は検索用キーワードとしてのみ保持し、正答には含めない。",
     "images": [
       {
         "alt": "AND",
@@ -137,6 +137,6 @@
       "1"
     ],
     "sourceRef": "5.12/Mtest3/スクリーンショット 2026-05-29 123930.png",
-    "notes": "Moodle accepts 1 + 1 = 10 here. This is binary arithmetic, while Boolean OR-style addition would normally give 1."
+    "notes": "この問題では Moodle が 1 + 1 = 10 を正答としている。これは2進数の加算であり、OR演算としてのブール加算なら通常は 1 になる。"
   }
 ]

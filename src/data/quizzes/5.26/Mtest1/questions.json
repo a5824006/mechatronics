@@ -22,6 +22,6 @@
     "prompt": "An actuator is both a {{0}} device that moves objects and a device that {{1}} operation through this motion. Particularly, the devices that use electromagnetic power are called {{2}} actuator.",
     "answers": ["driving", "controls", "Solenoid"],
     "sourceRef": "5.26/Mtest1/スクリーンショット 2026-05-26 142443.png",
-    "notes": "元スクショでは 'driving driving device' と重複していたため、問題文側の余分なdrivingのみ除去。"
+    "notes": "元スクショでは「driving driving device」と重複していたため、問題文側の余分なdrivingのみ除去。"
   }
 ]

@@ -20,7 +20,7 @@
       "246"
     ],
     "sourceRef": "5.12/Mtest2/スクリーンショット 2026-05-29 122713.png",
-    "notes": "For binary answers, leading zeros are accepted when they only pad the value to 8 bits."
+    "notes": "2進数の回答では、値を8bit表記にそろえるための先頭0は正答として扱う。"
   },
   {
     "id": "5.12-Mtest2-q2",
@@ -46,6 +46,6 @@
       "51"
     ],
     "sourceRef": "5.12/Mtest2/スクリーンショット 2026-05-29 122717.png",
-    "notes": "For binary answers, leading zeros are accepted when they only pad the value to 8 bits."
+    "notes": "2進数の回答では、値を8bit表記にそろえるための先頭0は正答として扱う。"
   }
 ]

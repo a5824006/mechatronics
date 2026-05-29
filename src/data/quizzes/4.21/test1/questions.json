@@ -44,7 +44,7 @@
       "electrical"
     ],
     "sourceRef": "4.21/test1/Q2_last_one_is_incorrect.png",
-    "notes": "元スクショは最後が一部誤答。ユーザー指定により、engineeringの正答は electronic engineering と electrical engineering として記録。",
+    "notes": "元スクショでは最後が一部誤答。ユーザー指定により、工学分野（engineering）の正答は electronic engineering と electrical engineering として記録。",
     "platform": "canvas",
     "canonicalId": "4.21-test1-q2"
   },
