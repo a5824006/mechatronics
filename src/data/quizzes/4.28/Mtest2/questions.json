@@ -1,0 +1,48 @@
+[
+  {
+    "id": "4.28-Mtest2-q1",
+    "date": "4.28",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "4.28-Mtest2-q1",
+    "type": "matching",
+    "prompt": "Match each Japanese word that correspond to a characteristic use to select or evaluate sensors, with their corresponding English word.",
+    "choices": ["environment characteristic", "sensibility", "sensitivity", "density", "frequency characteristic", "order", "resolution", "transverse characteristic", "acceptability", "revolution", "reproducibility", "prevision", "time characteristic", "transient characteristic", "accuracy", "precision"],
+    "items": [
+      { "prompt": "分解能", "answer": "resolution" },
+      { "prompt": "精度", "answer": "accuracy" },
+      { "prompt": "環境特性", "answer": "environment characteristic" },
+      { "prompt": "過渡特性", "answer": "transient characteristic" },
+      { "prompt": "再現性", "answer": "precision" },
+      { "prompt": "感度", "answer": "sensitivity" },
+      { "prompt": "周波数特性", "answer": "frequency characteristic" }
+    ],
+    "sourceRef": "4.28/Mtest2/スクリーンショット 2026-05-29 113154.png"
+  },
+  {
+    "id": "4.28-Mtest2-q2",
+    "date": "4.28",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "4.28-Mtest2-q2",
+    "type": "fill_blank",
+    "prompt": "Distance sensors using ultrasonic waves measure {{0}} from {{1}} to {{2}} of the sound signal.",
+    "answers": ["time", "transmission", "reception"],
+    "sourceRef": "4.28/Mtest2/スクリーンショット 2026-05-29 113158.png"
+  },
+  {
+    "id": "4.28-Mtest2-q3",
+    "date": "4.28",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "canonicalId": "4.28-Mtest2-q3",
+    "type": "choice",
+    "prompt": "An accelerometer measures acceleration based on the principle of which system?",
+    "choices": ["spring", "mass-dashpot", "spring-mass-dashpot", "spring-mass", "dashpot", "mass", "spring-dashpot"],
+    "answer": "spring-mass-dashpot",
+    "sourceRef": "4.28/Mtest2/スクリーンショット 2026-05-29 113204.png"
+  }
+]

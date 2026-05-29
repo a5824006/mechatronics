@@ -1,0 +1,14 @@
+[
+  {
+    "id": "5.26-Mtest3-q1",
+    "date": "5.26",
+    "test": "Mtest3",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "5.26-Mtest3-q1",
+    "type": "fill_blank",
+    "prompt": "There are also {{0}} actuators and {{1}} actuators. The first operates by producing continuous {{2}} fluctuation of air. The second uses the {{3}} effect, which consists in heat transfer move from one metal to the other metal when the electric current flows the {{4}} of two kinds of metals. It is commonly used to cool the {{5}} of computers.",
+    "answers": ["acoustic wave", "thermo-electric", "pressure", "Peltier", "junction", "CPU"],
+    "sourceRef": "5.26/Mtest3/スクリーンショット 2026-05-29 115059.png"
+  }
+]

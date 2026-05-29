@@ -1,12 +1,18 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
 import { buildBalancedSet, isTextCorrect, loadAttempts, saveAttempt, shuffle } from "./lib/quiz";
 import type { LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
 
 type UserAnswer = string | boolean | string[] | Record<string, string>;
 type AnswerMap = Record<string, UserAnswer>;
+type AppPage = "quiz" | "search";
 type ViewMode = "setup" | "quiz" | "summary";
 type PlatformFilter = "all" | QuizPlatform;
+
+const pageLabels: Record<AppPage, string> = {
+  quiz: "小テスト",
+  search: "答え検索",
+};
 
 const modeLabels: Record<SessionMode, string> = {
   single: "この回の小テストを受ける",
@@ -36,6 +42,10 @@ function questionTypeLabel(type: QuestionType) {
 
 function platformLabel(platform: QuizPlatform | undefined) {
   return platform === "moodle" ? "Moodle版" : "Canvas版";
+}
+
+function pageFromHash(): AppPage {
+  return window.location.hash === "#search" ? "search" : "quiz";
 }
 
 function defaultAnswer(question: QuizQuestion): UserAnswer {
@@ -78,6 +88,81 @@ function renderPromptWithBlanks(
   });
 }
 
+function formatExpectedAnswer(answer: string | string[] | undefined) {
+  if (Array.isArray(answer)) return answer.join(" / ");
+  return String(answer ?? "");
+}
+
+function filledPromptText(question: QuizQuestion) {
+  if (question.type !== "fill_blank") return question.prompt;
+  return question.prompt.replace(/\{\{(\d+)\}\}/g, (_, index: string) => {
+    const answer = question.answers?.[Number(index)];
+    return `[${formatExpectedAnswer(answer)}]`;
+  });
+}
+
+function answerLines(question: QuizQuestion) {
+  if (question.type === "true_false") return [`True / False: ${question.answer ? "True" : "False"}`];
+  if (question.type === "choice") return [`Answer: ${String(question.answer ?? "")}`];
+  if (question.type === "multi_select") {
+    return (question.answers ?? []).map((answer, index) => `Answer ${index + 1}: ${formatExpectedAnswer(answer)}`);
+  }
+  if (question.type === "matching") {
+    return (question.items ?? []).map((item) => `${item.prompt} -> ${item.answer}`);
+  }
+  return (question.answers ?? []).map((answer, index) => `Answer ${index + 1}: ${formatExpectedAnswer(answer)}`);
+}
+
+function questionSearchText(question: QuizQuestion) {
+  const chunks = [
+    question.id,
+    question.canonicalId ?? "",
+    question.date,
+    question.test,
+    `Question ${question.questionNumber}`,
+    question.prompt,
+    filledPromptText(question),
+    ...(question.choices ?? []),
+    ...(question.items ?? []).flatMap((item) => [item.prompt, item.answer]),
+    ...answerLines(question),
+    ...(question.images ?? []).map((image) => image.alt),
+    question.notes ?? "",
+  ];
+  return chunks.join(" ");
+}
+
+function normalizeSearchText(value: string) {
+  return value
+    .normalize("NFKC")
+    .replace(/(?:answer|回答)\s*\d+\s*(?:question|問題)\s*\d+/gi, " ")
+    .replace(/\{\{\d+\}\}/g, " ")
+    .replace(/[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~、。・「」『』（）［］【】]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function searchQuestions(query: string) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return [];
+
+  const queryTokens = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
+  return allQuestions
+    .map((question) => {
+      const corpus = normalizeSearchText(questionSearchText(question));
+      const matchedTokens = queryTokens.filter((token) => corpus.includes(token));
+      const exactBonus = corpus.includes(normalizedQuery) ? queryTokens.length + 8 : 0;
+      return {
+        question,
+        score: matchedTokens.length + exactBonus,
+        matchedTokens,
+      };
+    })
+    .filter((result) => result.score > 0)
+    .sort((a, b) => b.score - a.score || a.question.id.localeCompare(b.question.id))
+    .slice(0, 12);
+}
+
 function gradeQuestion(question: QuizQuestion, answer: UserAnswer | undefined) {
   const normalized = normalizeQuestionAnswer(question, answer);
   if (question.type === "true_false") return normalized === question.answer;
@@ -103,11 +188,11 @@ function gradeQuestion(question: QuizQuestion, answer: UserAnswer | undefined) {
 function answerSummary(question: QuizQuestion) {
   if (question.type === "true_false") return question.answer ? "True" : "False";
   if (question.type === "choice") return String(question.answer);
-  if (question.type === "multi_select") return (question.answers ?? []).join(", ");
+  if (question.type === "multi_select") return (question.answers ?? []).map(formatExpectedAnswer).join(", ");
   if (question.type === "matching") {
     return (question.items ?? []).map((item) => `${item.prompt} -> ${item.answer}`).join(" / ");
   }
-  return (question.answers ?? []).map((answer) => (Array.isArray(answer) ? answer[0] : answer)).join(", ");
+  return (question.answers ?? []).map(formatExpectedAnswer).join(", ");
 }
 
 function userAnswerSummary(question: QuizQuestion, answer: UserAnswer | undefined) {
@@ -141,6 +226,20 @@ function hasAnswer(question: QuizQuestion, answer: UserAnswer | undefined) {
   return typeof answer === "string" && answer.length > 0;
 }
 
+function QuestionImages({ images }: { images: QuizQuestion["images"] }) {
+  if (!images || images.length === 0) return null;
+  return (
+    <div className="question-images" aria-label="問題画像">
+      {images.map((image) => (
+        <figure key={image.alt}>
+          <img src={image.src} alt={image.alt} />
+          <figcaption>{image.alt}</figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 function QuestionCard({
   question,
   answer,
@@ -166,6 +265,8 @@ function QuestionCard({
       </div>
 
       <div className="question-body">
+        <QuestionImages images={question.images} />
+
         {question.type === "fill_blank" && (
           <>
             <p className="fill-prompt">
@@ -306,7 +407,68 @@ function QuestionCard({
   );
 }
 
+function SearchPage() {
+  const [query, setQuery] = useState("");
+  const normalizedQuery = normalizeSearchText(query);
+  const results = useMemo(() => searchQuestions(query), [query]);
+
+  return (
+    <section className="search-page">
+      <section className="search-panel">
+        <label className="search-box">
+          検索文字列
+          <textarea
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            rows={8}
+            placeholder="Binary Decimal Hexadecimal 11100111 Answer 1 Question 2 ..."
+          />
+        </label>
+        <div className="search-actions">
+          <button type="button" onClick={() => setQuery("")} disabled={!query}>
+            クリア
+          </button>
+          <span>{normalizedQuery ? `${results.length}件` : `${allQuestions.length}問から検索`}</span>
+        </div>
+      </section>
+
+      {!normalizedQuery && (
+        <section className="empty-state">問題文や表を貼り付けると、近い問題と正答が表示されます。</section>
+      )}
+
+      {normalizedQuery && results.length === 0 && (
+        <section className="empty-state">一致する問題が見つかりませんでした。</section>
+      )}
+
+      {results.length > 0 && (
+        <div className="search-results">
+          {results.map(({ question, matchedTokens }) => (
+            <article key={question.id} className="search-result">
+              <div className="question-meta">
+                <span>{question.date} {question.test}</span>
+                <span>{platformLabel(question.platform)}</span>
+                <span>Q{question.questionNumber}</span>
+                <span>{questionTypeLabel(question.type)}</span>
+              </div>
+              <QuestionImages images={question.images} />
+              <p className="search-question-text">{filledPromptText(question)}</p>
+              <ol className="answer-list">
+                {answerLines(question).map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ol>
+              <p className="match-hint">一致: {matchedTokens.slice(0, 8).join(", ")}</p>
+              {question.notes && <p className="notes">{question.notes}</p>}
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function App() {
+  const [page, setPage] = useState<AppPage>(() => pageFromHash());
   const [platformFilter, setPlatformFilter] = useState<PlatformFilter>("moodle");
   const [mode, setMode] = useState<SessionMode>("single");
   const [selectedQuizKey, setSelectedQuizKey] = useState(() => quizKey(quizzes[0]));
@@ -316,6 +478,13 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [viewMode, setViewMode] = useState<ViewMode>("setup");
   const [attempts, setAttempts] = useState(() => loadAttempts());
+
+  useEffect(() => {
+    const handleHashChange = () => setPage(pageFromHash());
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange();
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   const activeQuizzes = useMemo(
     () => quizzes.filter((quiz) => platformFilter === "all" || quiz.platform === platformFilter),
@@ -367,11 +536,21 @@ export default function App() {
   return (
     <main className="app-shell">
       <section className="control-band">
-        <div>
-          <p className="eyebrow">Mechatronics Quiz</p>
-          <h1>メカトロニクス小テスト</h1>
+        <div className="page-header">
+          <div>
+            <p className="eyebrow">Mechatronics Quiz</p>
+            <h1>メカトロニクス小テスト</h1>
+          </div>
+          <nav className="top-links" aria-label="ページ移動">
+            {(Object.entries(pageLabels) as Array<[AppPage, string]>).map(([value, label]) => (
+              <a key={value} className={page === value ? "active" : ""} href={value === "search" ? "#search" : "#quiz"}>
+                {label}
+              </a>
+            ))}
+          </nav>
         </div>
 
+        {page === "quiz" && (
         <div className="controls">
           <label>
             版
@@ -431,8 +610,13 @@ export default function App() {
             {viewMode === "setup" ? "開始" : "新しく開始"}
           </button>
         </div>
+        )}
       </section>
 
+      {page === "search" ? (
+        <SearchPage />
+      ) : (
+        <>
       <section className="status-grid">
         <div><span>収録</span><strong>{activeQuestions.length}</strong></div>
         <div><span>今回</span><strong>{session.length || "-"}</strong></div>
@@ -482,6 +666,8 @@ export default function App() {
               />
             ))}
           </div>
+        </>
+      )}
         </>
       )}
     </main>

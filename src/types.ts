@@ -23,6 +23,10 @@ export type QuizQuestion = {
     prompt: string;
     answer: string;
   }>;
+  images?: Array<{
+    alt: string;
+    src: string;
+  }>;
   sourceRef?: string;
   notes?: string;
 };

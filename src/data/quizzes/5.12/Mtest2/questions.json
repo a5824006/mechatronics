@@ -1,0 +1,51 @@
+[
+  {
+    "id": "5.12-Mtest2-q1",
+    "date": "5.12",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "5.12-Mtest2-q1",
+    "type": "fill_blank",
+    "prompt": "Complete the conversion table. Row 1: Binary 11000111, Decimal {{0}}, Hexadecimal {{1}}. Row 2: Binary {{2}}, Decimal 23, Hexadecimal {{3}}. Row 3: Binary {{4}}, Decimal {{5}}, Hexadecimal F6.",
+    "answers": [
+      "199",
+      "C7",
+      [
+        "10111",
+        "00010111"
+      ],
+      "17",
+      "11110110",
+      "246"
+    ],
+    "sourceRef": "5.12/Mtest2/スクリーンショット 2026-05-29 122713.png",
+    "notes": "For binary answers, leading zeros are accepted when they only pad the value to 8 bits."
+  },
+  {
+    "id": "5.12-Mtest2-q2",
+    "date": "5.12",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "5.12-Mtest2-q2",
+    "type": "fill_blank",
+    "prompt": "Complete the conversion table. Row 1: Binary 11100111, Decimal {{0}}, Hexadecimal {{1}}. Row 2: Binary {{2}}, Decimal 33, Hexadecimal {{3}}. Row 3: Binary {{4}}, Decimal {{5}}, Hexadecimal 33.",
+    "answers": [
+      "231",
+      "E7",
+      [
+        "100001",
+        "00100001"
+      ],
+      "21",
+      [
+        "110011",
+        "00110011"
+      ],
+      "51"
+    ],
+    "sourceRef": "5.12/Mtest2/スクリーンショット 2026-05-29 122717.png",
+    "notes": "For binary answers, leading zeros are accepted when they only pad the value to 8 bits."
+  }
+]

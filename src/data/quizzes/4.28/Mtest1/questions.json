@@ -1,0 +1,23 @@
+[
+  {
+    "id": "4.28-Mtest1-q1",
+    "date": "4.28",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "4.28-Mtest1-q1",
+    "type": "matching",
+    "prompt": "Match each physical quantity name with its official unit in the \"Systeme International\" of Units.",
+    "choices": ["minute (min)", "Kelvin (K)", "Ampere (A)", "gram (g)", "candela (cd)", "degree Celsius (°C)", "Newton (N)", "kilometer (km)", "kilogram (kg)", "second (s)", "hour (h)", "lux (lux)", "Volt (V)", "mol (mol)", "metre (m)"],
+    "items": [
+      { "prompt": "mass", "answer": "kilogram (kg)" },
+      { "prompt": "amount of substance", "answer": "mol (mol)" },
+      { "prompt": "thermodynamic temperature", "answer": "Kelvin (K)" },
+      { "prompt": "length", "answer": "metre (m)" },
+      { "prompt": "electric current", "answer": "Ampere (A)" },
+      { "prompt": "time", "answer": "second (s)" },
+      { "prompt": "luminous intensity", "answer": "candela (cd)" }
+    ],
+    "sourceRef": "4.28/Mtest1/スクリーンショット 2026-05-29 112132.png"
+  }
+]

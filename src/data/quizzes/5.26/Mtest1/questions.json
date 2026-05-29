@@ -1,0 +1,27 @@
+[
+  {
+    "id": "5.26-Mtest1-q1",
+    "date": "5.26",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "5.26-Mtest1-q1",
+    "type": "fill_blank",
+    "prompt": "An actuator is a mechanism that puts something into {{0}} action. It can also be defined as something that operates or drives {{1}}. The role of an actuator is to {{2}} the inputted {{3}} into physical {{4}}.",
+    "answers": ["automatic", "actively", "translates", "energy", "motion"],
+    "sourceRef": "5.26/Mtest1/スクリーンショット 2026-05-26 142134.png"
+  },
+  {
+    "id": "5.26-Mtest1-q2",
+    "date": "5.26",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "5.26-Mtest1-q2",
+    "type": "fill_blank",
+    "prompt": "An actuator is both a {{0}} device that moves objects and a device that {{1}} operation through this motion. Particularly, the devices that use electromagnetic power are called {{2}} actuator.",
+    "answers": ["driving", "controls", "Solenoid"],
+    "sourceRef": "5.26/Mtest1/スクリーンショット 2026-05-26 142443.png",
+    "notes": "元スクショでは 'driving driving device' と重複していたため、問題文側の余分なdrivingのみ除去。"
+  }
+]
