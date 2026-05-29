@@ -143,12 +143,12 @@ function normalizeSearchText(value: string) {
     .toLowerCase();
 }
 
-function searchQuestions(query: string) {
+function searchQuestions(query: string, candidates: QuizQuestion[]) {
   const normalizedQuery = normalizeSearchText(query);
   if (!normalizedQuery) return [];
 
   const queryTokens = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
-  return allQuestions
+  return candidates
     .map((question) => {
       const corpus = normalizeSearchText(questionSearchText(question));
       const matchedTokens = queryTokens.filter((token) => corpus.includes(token));
@@ -410,8 +410,13 @@ function QuestionCard({
 
 function SearchPage() {
   const [query, setQuery] = useState("");
+  const [searchPlatformFilter, setSearchPlatformFilter] = useState<PlatformFilter>("all");
   const normalizedQuery = normalizeSearchText(query);
-  const results = useMemo(() => searchQuestions(query), [query]);
+  const searchableQuestions = useMemo(
+    () => allQuestions.filter((question) => searchPlatformFilter === "all" || question.platform === searchPlatformFilter),
+    [searchPlatformFilter],
+  );
+  const results = useMemo(() => searchQuestions(query, searchableQuestions), [query, searchableQuestions]);
 
   return (
     <section className="search-page">
@@ -429,7 +434,24 @@ function SearchPage() {
           <button type="button" onClick={() => setQuery("")} disabled={!query}>
             クリア
           </button>
-          <span>{normalizedQuery ? `${results.length}件` : `${allQuestions.length}問から検索`}</span>
+          <div className="search-filter">
+            <label>
+              版
+              <select
+                value={searchPlatformFilter}
+                onChange={(event) => setSearchPlatformFilter(event.target.value as PlatformFilter)}
+              >
+                {Object.entries(platformLabels).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
+              </select>
+            </label>
+            <span>
+              {normalizedQuery
+                ? `${results.length}件 / 対象${searchableQuestions.length}問`
+                : `対象${searchableQuestions.length}問`}
+            </span>
+          </div>
         </div>
       </section>
 

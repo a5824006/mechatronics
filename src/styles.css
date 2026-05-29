@@ -405,6 +405,30 @@ h1 {
   margin-top: 12px;
 }
 
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.search-filter label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #4b5a61;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.search-filter select {
+  min-height: 38px;
+  padding: 0 10px;
+  background: #ffffff;
+  color: #17212b;
+}
+
 .search-actions span,
 .match-hint {
   color: #63727a;
