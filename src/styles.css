@@ -459,6 +459,19 @@ h1 {
   margin: 12px 0 0;
 }
 
+.load-more {
+  display: flex;
+  justify-content: center;
+}
+
+.load-more button {
+  min-width: 180px;
+  border-color: #176b87;
+  background: #ffffff;
+  color: #176b87;
+  font-weight: 800;
+}
+
 @media (max-width: 720px) {
   .app-shell {
     width: min(100% - 20px, 1120px);

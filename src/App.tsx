@@ -8,6 +8,9 @@ type AnswerMap = Record<string, UserAnswer>;
 type AppPage = "quiz" | "search";
 type ViewMode = "setup" | "quiz" | "summary";
 type PlatformFilter = "all" | QuizPlatform;
+type SearchSortMode = "relevance" | "newest" | "oldest";
+
+const SEARCH_BATCH_SIZE = 15;
 
 const pageLabels: Record<AppPage, string> = {
   quiz: "テスト対策",
@@ -24,6 +27,12 @@ const platformLabels: Record<PlatformFilter, string> = {
   all: "すべて",
   moodle: "Moodle版 (Mtest)",
   canvas: "Canvas版 (test)",
+};
+
+const searchSortLabels: Record<SearchSortMode, string> = {
+  relevance: "関連度順",
+  newest: "新しい順",
+  oldest: "古い順",
 };
 
 function quizKey(quiz: LoadedQuiz) {
@@ -113,25 +122,6 @@ function answerLines(question: QuizQuestion) {
   return (question.answers ?? []).map((answer, index) => `Answer ${index + 1}: ${formatExpectedAnswer(answer)}`);
 }
 
-function questionSearchText(question: QuizQuestion) {
-  const chunks = [
-    question.id,
-    question.canonicalId ?? "",
-    question.date,
-    question.test,
-    `Question ${question.questionNumber}`,
-    question.prompt,
-    filledPromptText(question),
-    ...(question.choices ?? []),
-    ...(question.items ?? []).flatMap((item) => [item.prompt, item.answer]),
-    ...answerLines(question),
-    ...(question.images ?? []).map((image) => image.alt),
-    ...(question.searchKeywords ?? []),
-    question.notes ?? "",
-  ];
-  return chunks.join(" ");
-}
-
 function normalizeSearchText(value: string) {
   return value
     .normalize("NFKC")
@@ -143,25 +133,102 @@ function normalizeSearchText(value: string) {
     .toLowerCase();
 }
 
-function searchQuestions(query: string, candidates: QuizQuestion[]) {
+function answerSearchTexts(question: QuizQuestion) {
+  if (question.type === "true_false") return [question.answer ? "True" : "False"];
+  if (question.type === "choice") return [String(question.answer ?? "")];
+  if (question.type === "matching") return (question.items ?? []).map((item) => item.answer);
+  return (question.answers ?? []).flatMap((answer) => (Array.isArray(answer) ? answer : [answer])).map(String);
+}
+
+function questionSearchFields(question: QuizQuestion) {
+  return [
+    { weight: 12, texts: [...answerSearchTexts(question), ...(question.searchKeywords ?? []), ...(question.images ?? []).map((image) => image.alt)] },
+    { weight: 6, texts: [question.prompt, filledPromptText(question)] },
+    { weight: 4, texts: [...(question.choices ?? []), ...(question.items ?? []).map((item) => item.prompt)] },
+    { weight: 3, texts: [question.id, question.canonicalId ?? "", question.date, question.test, `Question ${question.questionNumber}`] },
+    { weight: 1, texts: [question.notes ?? ""] },
+  ];
+}
+
+function isAsciiToken(token: string) {
+  return /^[a-z0-9]+$/.test(token);
+}
+
+function fieldMatchesToken(fieldText: string, token: string) {
+  if (!token) return false;
+  if (isAsciiToken(token)) {
+    return fieldText.split(" ").includes(token);
+  }
+  return fieldText.includes(token);
+}
+
+function fieldMatchesQuery(fieldText: string, normalizedQuery: string, queryTokens: string[]) {
+  if (queryTokens.length === 1) return fieldMatchesToken(fieldText, queryTokens[0]);
+  return fieldText.includes(normalizedQuery);
+}
+
+function scoreQuestion(question: QuizQuestion, normalizedQuery: string, queryTokens: string[]) {
+  const fields = questionSearchFields(question).map((field) => ({
+    weight: field.weight,
+    texts: field.texts.map(normalizeSearchText).filter(Boolean),
+  }));
+
+  const matchedTokens = queryTokens.filter((token) => fields.some((field) => field.texts.some((text) => fieldMatchesToken(text, token))));
+  const tokenScore = queryTokens.reduce((score, token) => {
+    const bestWeight = fields.reduce((best, field) => {
+      return field.texts.some((text) => fieldMatchesToken(text, token)) ? Math.max(best, field.weight) : best;
+    }, 0);
+    return score + bestWeight;
+  }, 0);
+  const phraseScore = fields.reduce((score, field) => {
+    return field.texts.some((text) => fieldMatchesQuery(text, normalizedQuery, queryTokens)) ? Math.max(score, field.weight * 2) : score;
+  }, 0);
+
+  return {
+    matchedTokens,
+    score: tokenScore + phraseScore,
+  };
+}
+
+function dateSortValue(question: QuizQuestion) {
+  const match = question.date.match(/^(\d+)\.(\d+)$/);
+  if (!match) return 0;
+  return Number(match[1]) * 100 + Number(match[2]);
+}
+
+function compareQuestionOrder(a: QuizQuestion, b: QuizQuestion, direction: "newest" | "oldest") {
+  const dateDelta = dateSortValue(a) - dateSortValue(b);
+  if (dateDelta !== 0) return direction === "newest" ? -dateDelta : dateDelta;
+
+  const testDelta = a.test.localeCompare(b.test, "ja", { numeric: true, sensitivity: "base" });
+  if (testDelta !== 0) return testDelta;
+
+  const questionDelta = a.questionNumber - b.questionNumber;
+  if (questionDelta !== 0) return questionDelta;
+
+  return a.id.localeCompare(b.id, "ja", { numeric: true, sensitivity: "base" });
+}
+
+function searchQuestions(query: string, candidates: QuizQuestion[], sortMode: SearchSortMode) {
   const normalizedQuery = normalizeSearchText(query);
   if (!normalizedQuery) return [];
 
   const queryTokens = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
   return candidates
     .map((question) => {
-      const corpus = normalizeSearchText(questionSearchText(question));
-      const matchedTokens = queryTokens.filter((token) => corpus.includes(token));
-      const exactBonus = corpus.includes(normalizedQuery) ? queryTokens.length + 8 : 0;
+      const { score, matchedTokens } = scoreQuestion(question, normalizedQuery, queryTokens);
       return {
         question,
-        score: matchedTokens.length + exactBonus,
+        score,
         matchedTokens,
       };
     })
     .filter((result) => result.score > 0)
-    .sort((a, b) => b.score - a.score || a.question.id.localeCompare(b.question.id))
-    .slice(0, 12);
+    .sort((a, b) => {
+      if (sortMode === "newest") return compareQuestionOrder(a.question, b.question, "newest") || b.score - a.score;
+      if (sortMode === "oldest") return compareQuestionOrder(a.question, b.question, "oldest") || b.score - a.score;
+      return b.score - a.score || compareQuestionOrder(a.question, b.question, "newest");
+    });
 }
 
 function gradeQuestion(question: QuizQuestion, answer: UserAnswer | undefined) {
@@ -411,12 +478,20 @@ function QuestionCard({
 function SearchPage() {
   const [query, setQuery] = useState("");
   const [searchPlatformFilter, setSearchPlatformFilter] = useState<PlatformFilter>("all");
+  const [searchSortMode, setSearchSortMode] = useState<SearchSortMode>("relevance");
+  const [visibleCount, setVisibleCount] = useState(SEARCH_BATCH_SIZE);
   const normalizedQuery = normalizeSearchText(query);
   const searchableQuestions = useMemo(
     () => allQuestions.filter((question) => searchPlatformFilter === "all" || question.platform === searchPlatformFilter),
     [searchPlatformFilter],
   );
-  const results = useMemo(() => searchQuestions(query, searchableQuestions), [query, searchableQuestions]);
+  const results = useMemo(() => searchQuestions(query, searchableQuestions, searchSortMode), [query, searchableQuestions, searchSortMode]);
+  const visibleResults = results.slice(0, visibleCount);
+  const visibleResultCount = Math.min(visibleCount, results.length);
+
+  useEffect(() => {
+    setVisibleCount(SEARCH_BATCH_SIZE);
+  }, [query, searchPlatformFilter, searchSortMode]);
 
   return (
     <section className="search-page">
@@ -446,9 +521,20 @@ function SearchPage() {
                 ))}
               </select>
             </label>
+            <label>
+              並び順
+              <select
+                value={searchSortMode}
+                onChange={(event) => setSearchSortMode(event.target.value as SearchSortMode)}
+              >
+                {Object.entries(searchSortLabels).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
+              </select>
+            </label>
             <span>
               {normalizedQuery
-                ? `${results.length}件 / 対象${searchableQuestions.length}問`
+                ? `${visibleResultCount} / ${results.length}件表示（対象${searchableQuestions.length}問）`
                 : `対象${searchableQuestions.length}問`}
             </span>
           </div>
@@ -464,27 +550,39 @@ function SearchPage() {
       )}
 
       {results.length > 0 && (
-        <div className="search-results">
-          {results.map(({ question, matchedTokens }) => (
-            <article key={question.id} className="search-result">
-              <div className="question-meta">
-                <span>{question.date} {question.test}</span>
-                <span>{platformLabel(question.platform)}</span>
-                <span>Q{question.questionNumber}</span>
-                <span>{questionTypeLabel(question.type)}</span>
-              </div>
-              <QuestionImages images={question.images} />
-              <p className="search-question-text">{filledPromptText(question)}</p>
-              <ol className="answer-list">
-                {answerLines(question).map((line) => (
-                  <li key={line}>{line}</li>
-                ))}
-              </ol>
-              <p className="match-hint">一致: {matchedTokens.slice(0, 8).join(", ")}</p>
-              {question.notes && <p className="notes">{question.notes}</p>}
-            </article>
-          ))}
-        </div>
+        <>
+          <div className="search-results">
+            {visibleResults.map(({ question, matchedTokens }) => (
+              <article key={question.id} className="search-result">
+                <div className="question-meta">
+                  <span>{question.date} {question.test}</span>
+                  <span>{platformLabel(question.platform)}</span>
+                  <span>Q{question.questionNumber}</span>
+                  <span>{questionTypeLabel(question.type)}</span>
+                </div>
+                <QuestionImages images={question.images} />
+                <p className="search-question-text">{filledPromptText(question)}</p>
+                <ol className="answer-list">
+                  {answerLines(question).map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ol>
+                <p className="match-hint">一致: {matchedTokens.slice(0, 8).join(", ")}</p>
+                {question.notes && <p className="notes">{question.notes}</p>}
+              </article>
+            ))}
+          </div>
+          {visibleResultCount < results.length && (
+            <div className="load-more">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((current) => Math.min(current + SEARCH_BATCH_SIZE, results.length))}
+              >
+                次の15件を表示
+              </button>
+            </div>
+          )}
+        </>
       )}
     </section>
   );
