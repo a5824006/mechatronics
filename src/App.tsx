@@ -147,7 +147,7 @@ function normalizeSearchText(value: string) {
     .normalize("NFKC")
     .replace(/(?:answer|回答)\s*\d+\s*(?:question|問題)\s*\d+/gi, " ")
     .replace(/\{\{\d+\}\}/g, " ")
-    .replace(/[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~、。・「」『』（）［］【】]/g, " ")
+    .replace(/[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~©®™、。・「」『』（）［］【】－―–—]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
@@ -229,6 +229,7 @@ function scoreLectureMaterial(material: LectureMaterial, normalizedQuery: string
   const tokens = effectiveTokens;
   if (tokens.length === 0) return { matchedTokens: [], score: 0 };
   const matchedTokens = tokens.filter((token) => fields.some((field) => field.texts.some((text) => fieldMatchesToken(text, token))));
+  if (matchedTokens.length === 0) return { matchedTokens: [], score: 0 };
   const tokenScore = tokens.reduce((score, token) => {
     const bestWeight = fields.reduce((best, field) => {
       return field.texts.some((text) => fieldMatchesToken(text, token)) ? Math.max(best, field.weight) : best;
