@@ -34,6 +34,13 @@ function normalizeWhitespace(value) {
   return value.replace(/\s+/g, " ").trim();
 }
 
+function removeFooterText(value) {
+  return normalizeWhitespace(value
+    .replace(/©2016\s+Aoyama\s+Gakuin\s+University\s+IIT\s+Dpt\s+-\s+Mechatronics\s+-\s+Guillaume\s+LOPEZ\s*\d*/gi, " ")
+    .replace(/since\s+2013\s+\d*\s*Aoyama\s+Gakuin\s+University\s+-\s+Guillaume\s+Lopez\s*\d*/gi, " ")
+    .replace(/since\s+2013\s+Aoyama\s+Gakuin\s+University\s+-\s+Guillaume\s+Lopez\s*\d*/gi, " "));
+}
+
 function toDateFromPath(filePath) {
   const parent = path.basename(path.dirname(filePath));
   return /^\d+\.\d+$/.test(parent) ? parent : "";
@@ -88,7 +95,7 @@ async function extractPdf(filePath) {
   for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
     const page = await document.getPage(pageNumber);
     const content = await page.getTextContent();
-    const text = normalizeWhitespace(content.items.map((item) => item.str).join(" "));
+    const text = removeFooterText(content.items.map((item) => item.str).join(" "));
     if (!text) continue;
     const title = titleForSource(sourceName);
     materials.push({
@@ -117,7 +124,7 @@ function decodeXmlText(value) {
 
 function extractSlideText(xml) {
   const texts = [...xml.matchAll(/<a:t>([\s\S]*?)<\/a:t>/g)].map((match) => decodeXmlText(match[1] ?? ""));
-  return normalizeWhitespace(texts.join(" "));
+  return removeFooterText(texts.join(" "));
 }
 
 async function extractPptx(filePath) {

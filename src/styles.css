@@ -461,6 +461,15 @@ h1 {
   line-height: 1.8;
 }
 
+.lecture-result {
+  cursor: pointer;
+}
+
+.lecture-result:focus-visible {
+  outline: 3px solid #7bb9c8;
+  outline-offset: 3px;
+}
+
 .lecture-title {
   margin: 0 0 10px;
   font-size: 1.05rem;
@@ -473,6 +482,25 @@ h1 {
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.6;
+}
+
+.lecture-detail-text {
+  max-height: 340px;
+  overflow: auto;
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid #d5dee1;
+  border-radius: 6px;
+  background: #f9fbfb;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.lecture-match {
+  border-radius: 4px;
+  background: #ffe58a;
+  color: #17212b;
+  font-weight: 900;
 }
 
 .answer-list {
@@ -491,6 +519,54 @@ h1 {
 
 .match-hint {
   margin: 12px 0 0;
+}
+
+.detail-hint {
+  margin: 10px 0 0;
+  color: #176b87;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(23, 33, 43, 0.42);
+}
+
+.material-modal {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: min(760px, calc(100vh - 36px));
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid #cdd9dc;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(23, 33, 43, 0.22);
+}
+
+.material-modal-header {
+  padding-right: 48px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0;
+  border-color: #176b87;
+  color: #176b87;
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .load-more {

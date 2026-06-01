@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { lectureMaterials } from "./data/loadLectures";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
 import { buildBalancedSet, isTextCorrect, loadAttempts, saveAttempt, shuffle } from "./lib/quiz";
@@ -327,6 +327,71 @@ function materialExcerpt(material: LectureMaterial, matchedTokens: string[]) {
   return `${start > 0 ? "..." : ""}${text.slice(start, end)}${end < text.length ? "..." : ""}`;
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function materialMatchRange(text: string, matchedTokens: string[]) {
+  for (const token of matchedTokens) {
+    if (!token) continue;
+    if (isAsciiToken(token)) {
+      const match = new RegExp(`\\b${escapeRegExp(token)}\\b`, "i").exec(text);
+      if (match) return { index: match.index, length: match[0].length };
+    } else {
+      const normalizedText = text.normalize("NFKC");
+      const normalizedToken = token.normalize("NFKC");
+      const index = normalizedText.indexOf(normalizedToken);
+      if (index >= 0) return { index, length: normalizedToken.length };
+    }
+  }
+  return null;
+}
+
+function LectureMaterialText({
+  material,
+  matchedTokens,
+  expanded,
+}: {
+  material: LectureMaterial;
+  matchedTokens: string[];
+  expanded: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const matchRef = useRef<HTMLSpanElement | null>(null);
+  const matchRange = materialMatchRange(material.text, matchedTokens);
+
+  useEffect(() => {
+    if (!expanded || !containerRef.current || !matchRef.current) return;
+    const container = containerRef.current;
+    const target = matchRef.current;
+    container.scrollTop = Math.max(0, target.offsetTop - container.clientHeight / 2);
+  }, [expanded, material.id, matchRange?.index]);
+
+  if (!expanded) {
+    return <p className="search-question-text">{materialExcerpt(material, matchedTokens)}</p>;
+  }
+
+  if (!matchRange) {
+    return (
+      <div className="lecture-detail-text" ref={containerRef} onClick={(event) => event.stopPropagation()}>
+        {material.text}
+      </div>
+    );
+  }
+
+  const before = material.text.slice(0, matchRange.index);
+  const matched = material.text.slice(matchRange.index, matchRange.index + matchRange.length);
+  const after = material.text.slice(matchRange.index + matchRange.length);
+
+  return (
+    <div className="lecture-detail-text" ref={containerRef} onClick={(event) => event.stopPropagation()}>
+      {before}
+      <span className="lecture-match" ref={matchRef}>{matched}</span>
+      {after}
+    </div>
+  );
+}
+
 function gradeQuestion(question: QuizQuestion, answer: UserAnswer | undefined) {
   const normalized = normalizeQuestionAnswer(question, answer);
   if (question.type === "true_false") return normalized === question.answer;
@@ -577,6 +642,10 @@ function SearchPage() {
   const [searchPlatformFilter, setSearchPlatformFilter] = useState<PlatformFilter>("all");
   const [searchSortMode, setSearchSortMode] = useState<SearchSortMode>("relevance");
   const [visibleCount, setVisibleCount] = useState(SEARCH_BATCH_SIZE);
+  const [activeMaterialDetail, setActiveMaterialDetail] = useState<{
+    material: LectureMaterial;
+    matchedTokens: string[];
+  } | null>(null);
   const normalizedQuery = normalizeSearchText(query);
   const searchableQuestions = useMemo(
     () => allQuestions.filter((question) => searchPlatformFilter === "all" || question.platform === searchPlatformFilter),
@@ -592,7 +661,17 @@ function SearchPage() {
 
   useEffect(() => {
     setVisibleCount(SEARCH_BATCH_SIZE);
+    setActiveMaterialDetail(null);
   }, [query, searchTargetMode, searchPlatformFilter, searchSortMode]);
+
+  useEffect(() => {
+    if (!activeMaterialDetail) return;
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setActiveMaterialDetail(null);
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeMaterialDetail]);
 
   return (
     <section className="search-page">
@@ -712,7 +791,20 @@ function SearchPage() {
         <>
           <div className="search-results">
             {visibleLectureResults.map(({ material, matchedTokens }) => (
-              <article key={material.id} className="search-result">
+              <article
+                key={material.id}
+                className="search-result lecture-result"
+                role="button"
+                tabIndex={0}
+                aria-haspopup="dialog"
+                onClick={() => setActiveMaterialDetail({ material, matchedTokens })}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActiveMaterialDetail({ material, matchedTokens });
+                  }
+                }}
+              >
                 <div className="question-meta">
                   <span>{material.date}</span>
                   <span>{material.sourceName}</span>
@@ -721,11 +813,16 @@ function SearchPage() {
                 </div>
                 <QuestionImages images={material.images} />
                 <h2 className="lecture-title">{material.title}</h2>
-                <p className="search-question-text">{materialExcerpt(material, matchedTokens)}</p>
+                <LectureMaterialText
+                  material={material}
+                  matchedTokens={matchedTokens}
+                  expanded={false}
+                />
                 {material.keywords.length > 0 && (
                   <p className="lecture-keywords">キーワード: {material.keywords.slice(0, 10).join(", ")}</p>
                 )}
                 <p className="match-hint">一致: {matchedTokens.slice(0, 8).join(", ")}</p>
+                <p className="detail-hint">クリックで詳細表示</p>
               </article>
             ))}
           </div>
@@ -740,6 +837,49 @@ function SearchPage() {
             </div>
           )}
         </>
+      )}
+
+      {activeMaterialDetail && (
+        <div
+          className="modal-backdrop"
+          role="presentation"
+        >
+          <section
+            className="material-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="material-modal-title"
+          >
+            <button
+              type="button"
+              className="modal-close"
+              aria-label="詳細を閉じる"
+              onClick={() => setActiveMaterialDetail(null)}
+            >
+              ×
+            </button>
+            <div className="material-modal-header">
+              <div>
+                <div className="question-meta">
+                  <span>{activeMaterialDetail.material.date}</span>
+                  <span>{activeMaterialDetail.material.sourceName}</span>
+                  <span>{materialLocation(activeMaterialDetail.material)}</span>
+                  <span>{activeMaterialDetail.material.sourceType.toUpperCase()}</span>
+                </div>
+                <h2 id="material-modal-title" className="lecture-title">{activeMaterialDetail.material.title}</h2>
+              </div>
+            </div>
+            <QuestionImages images={activeMaterialDetail.material.images} />
+            <LectureMaterialText
+              material={activeMaterialDetail.material}
+              matchedTokens={activeMaterialDetail.matchedTokens}
+              expanded
+            />
+            {activeMaterialDetail.material.keywords.length > 0 && (
+              <p className="lecture-keywords">キーワード: {activeMaterialDetail.material.keywords.slice(0, 12).join(", ")}</p>
+            )}
+          </section>
+        </div>
       )}
     </section>
   );
