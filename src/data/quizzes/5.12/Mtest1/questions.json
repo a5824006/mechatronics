@@ -133,8 +133,7 @@
       "digital",
       "bit"
     ],
-    "sourceRef": "5.12/Mtest1/スクリーンショット 2026-05-29 121203.png",
-    "notes": "5.12講義資料および外部資料で確認済み。Moodle上では部分正解扱いだが、不正扱いになった項目は解答キーまたは採点設定ミスの可能性が高い。講義資料では、標本化間隔（sampling interval T）は2つの標本点間の時間幅、標本化周波数（sampling rate/frequency）はその逆数で単位は毎秒サンプル数（Hz）、A/D変換分解能（A/D conversion resolution）はbitで表すと説明されているため、ユーザー回答を正答として扱う。"
+    "sourceRef": "5.12/Mtest1/スクリーンショット 2026-05-29 121203.png"
   },
   {
     "id": "5.12-Mtest1-q5",
