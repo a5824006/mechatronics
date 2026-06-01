@@ -109,7 +109,7 @@ h1 {
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 12px;
   align-items: end;
 }
@@ -117,6 +117,7 @@ h1 {
 .controls label {
   display: grid;
   gap: 6px;
+  min-width: 0;
   color: #4b5a61;
   font-size: 0.9rem;
   font-weight: 700;
@@ -124,6 +125,8 @@ h1 {
 
 .controls select,
 .controls input {
+  width: 100%;
+  min-width: 0;
   min-height: 42px;
   padding: 0 10px;
   background: #ffffff;
@@ -383,24 +386,97 @@ h1 {
   font-weight: 800;
 }
 
-.search-mode-switch {
-  display: inline-grid;
-  grid-template-columns: repeat(2, minmax(120px, 1fr));
-  gap: 6px;
-  width: min(100%, 340px);
+.search-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 14px;
 }
 
-.search-mode-switch button {
+.search-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.settings-button {
   min-height: 38px;
+  padding: 0 14px;
   background: #ffffff;
   font-weight: 800;
 }
 
-.search-mode-switch button.selected {
+.settings-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  min-height: 52px;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  border-color: #6f7b83;
+  background: #6f7b83;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(23, 33, 43, 0.22);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.settings-fab:hover,
+.settings-fab:focus-visible {
+  border-color: #59656d;
+  background: #59656d;
+  color: #ffffff;
+}
+
+.settings-button[aria-expanded="true"] {
   border-color: #176b87;
   background: #d9edf2;
   color: #0e4d61;
+}
+
+.settings-fab[aria-expanded="true"] {
+  border-color: #4b5a61;
+  background: #4b5a61;
+  color: #ffffff;
+}
+
+.search-settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  position: fixed;
+  right: 24px;
+  bottom: 88px;
+  z-index: 29;
+  width: min(360px, calc(100vw - 32px));
+  padding: 14px;
+  border: 1px solid #cdd9dc;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(23, 33, 43, 0.18);
+}
+
+.search-settings label,
+.checkbox-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #4b5a61;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: #176b87;
 }
 
 .search-box textarea {

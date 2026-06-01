@@ -16,7 +16,7 @@ const SEARCH_BATCH_SIZE = 15;
 
 const pageLabels: Record<AppPage, string> = {
   quiz: "テスト対策",
-  search: "答え検索",
+  search: "講義資料検索",
 };
 
 const modeLabels: Record<SessionMode, string> = {
@@ -35,11 +35,6 @@ const searchSortLabels: Record<SearchSortMode, string> = {
   relevance: "関連度順",
   newest: "新しい順",
   oldest: "古い順",
-};
-
-const searchTargetLabels: Record<SearchTargetMode, string> = {
-  questions: "問題検索",
-  lectures: "講義資料検索",
 };
 
 const lectureIgnoredTokens = new Set([
@@ -713,7 +708,8 @@ function QuestionCard({
 
 function SearchPage() {
   const [query, setQuery] = useState("");
-  const [searchTargetMode, setSearchTargetMode] = useState<SearchTargetMode>("questions");
+  const [questionSearchEnabled, setQuestionSearchEnabled] = useState(false);
+  const [isSearchSettingsOpen, setIsSearchSettingsOpen] = useState(false);
   const [searchPlatformFilter, setSearchPlatformFilter] = useState<PlatformFilter>("all");
   const [searchSortMode, setSearchSortMode] = useState<SearchSortMode>("relevance");
   const [visibleCount, setVisibleCount] = useState(SEARCH_BATCH_SIZE);
@@ -721,6 +717,7 @@ function SearchPage() {
     material: LectureMaterial;
     matchedTokens: string[];
   } | null>(null);
+  const searchTargetMode: SearchTargetMode = questionSearchEnabled ? "questions" : "lectures";
   const normalizedQuery = normalizeSearchText(query);
   const searchableQuestions = useMemo(
     () => allQuestions.filter((question) => searchPlatformFilter === "all" || question.platform === searchPlatformFilter),
@@ -737,7 +734,7 @@ function SearchPage() {
   useEffect(() => {
     setVisibleCount(SEARCH_BATCH_SIZE);
     setActiveMaterialDetail(null);
-  }, [query, searchTargetMode, searchPlatformFilter, searchSortMode]);
+  }, [query, questionSearchEnabled, searchPlatformFilter, searchSortMode]);
 
   useEffect(() => {
     if (!activeMaterialDetail) return;
@@ -751,17 +748,8 @@ function SearchPage() {
   return (
     <section className="search-page">
       <section className="search-panel">
-        <div className="search-mode-switch" aria-label="検索対象">
-          {(Object.entries(searchTargetLabels) as Array<[SearchTargetMode, string]>).map(([value, label]) => (
-            <button
-              key={value}
-              type="button"
-              className={searchTargetMode === value ? "selected" : ""}
-              onClick={() => setSearchTargetMode(value)}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="search-header">
+          <h2>講義資料検索</h2>
         </div>
         <label className="search-box">
           検索文字列
@@ -779,19 +767,6 @@ function SearchPage() {
             クリア
           </button>
           <div className="search-filter">
-            {searchTargetMode === "questions" && (
-              <label>
-                版
-                <select
-                  value={searchPlatformFilter}
-                  onChange={(event) => setSearchPlatformFilter(event.target.value as PlatformFilter)}
-                >
-                  {Object.entries(platformLabels).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
-              </label>
-            )}
             <label>
               並び順
               <select
@@ -808,8 +783,42 @@ function SearchPage() {
                 ? `${visibleResultCount} / ${activeResultCount}件表示（対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}）`
                 : `対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}`}
             </span>
+            <button
+              type="button"
+              className="settings-button settings-fab"
+              aria-label="設定"
+              aria-expanded={isSearchSettingsOpen}
+              onClick={() => setIsSearchSettingsOpen((current) => !current)}
+            >
+              <span aria-hidden="true">⚙</span>
+            </button>
           </div>
         </div>
+        {isSearchSettingsOpen && (
+          <div className="search-settings">
+            <label className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={questionSearchEnabled}
+                onChange={(event) => setQuestionSearchEnabled(event.target.checked)}
+              />
+              <span>小テストの正答検索を有効にする</span>
+            </label>
+            {questionSearchEnabled && (
+              <label>
+                版
+                <select
+                  value={searchPlatformFilter}
+                  onChange={(event) => setSearchPlatformFilter(event.target.value as PlatformFilter)}
+                >
+                  {Object.entries(platformLabels).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+              </label>
+            )}
+          </div>
+        )}
       </section>
 
       {!normalizedQuery && (
