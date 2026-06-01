@@ -383,6 +383,26 @@ h1 {
   font-weight: 800;
 }
 
+.search-mode-switch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 6px;
+  width: min(100%, 340px);
+  margin-bottom: 14px;
+}
+
+.search-mode-switch button {
+  min-height: 38px;
+  background: #ffffff;
+  font-weight: 800;
+}
+
+.search-mode-switch button.selected {
+  border-color: #176b87;
+  background: #d9edf2;
+  color: #0e4d61;
+}
+
 .search-box textarea {
   width: 100%;
   min-height: 180px;
@@ -439,6 +459,20 @@ h1 {
 .search-question-text {
   margin: 0 0 14px;
   line-height: 1.8;
+}
+
+.lecture-title {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.lecture-keywords {
+  margin: 0;
+  color: #4b5a61;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.6;
 }
 
 .answer-list {

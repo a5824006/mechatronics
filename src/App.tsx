@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import { lectureMaterials } from "./data/loadLectures";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
 import { buildBalancedSet, isTextCorrect, loadAttempts, saveAttempt, shuffle } from "./lib/quiz";
-import type { LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
+import type { LectureMaterial, LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
 
 type UserAnswer = string | boolean | string[] | Record<string, string>;
 type AnswerMap = Record<string, UserAnswer>;
@@ -9,6 +10,7 @@ type AppPage = "quiz" | "search";
 type ViewMode = "setup" | "quiz" | "summary";
 type PlatformFilter = "all" | QuizPlatform;
 type SearchSortMode = "relevance" | "newest" | "oldest";
+type SearchTargetMode = "questions" | "lectures";
 
 const SEARCH_BATCH_SIZE = 15;
 
@@ -33,6 +35,11 @@ const searchSortLabels: Record<SearchSortMode, string> = {
   relevance: "関連度順",
   newest: "新しい順",
   oldest: "古い順",
+};
+
+const searchTargetLabels: Record<SearchTargetMode, string> = {
+  questions: "問題検索",
+  lectures: "講義資料検索",
 };
 
 function quizKey(quiz: LoadedQuiz) {
@@ -150,6 +157,14 @@ function questionSearchFields(question: QuizQuestion) {
   ];
 }
 
+function lectureSearchFields(material: LectureMaterial) {
+  return [
+    { weight: 10, texts: [material.title, ...(material.keywords ?? [])] },
+    { weight: 6, texts: [material.text] },
+    { weight: 2, texts: [material.id, material.date, material.sourceName, material.sourceType, `${material.pageNumber}`] },
+  ];
+}
+
 function isAsciiToken(token: string) {
   return /^[a-z0-9]+$/.test(token);
 }
@@ -190,8 +205,37 @@ function scoreQuestion(question: QuizQuestion, normalizedQuery: string, queryTok
   };
 }
 
+function scoreLectureMaterial(material: LectureMaterial, normalizedQuery: string, queryTokens: string[]) {
+  const fields = lectureSearchFields(material).map((field) => ({
+    weight: field.weight,
+    texts: field.texts.map(normalizeSearchText).filter(Boolean),
+  }));
+
+  const effectiveTokens = queryTokens.length > 1 ? queryTokens.filter((token) => !["a", "an", "and", "are", "for", "in", "is", "of", "the", "to", "with"].includes(token)) : queryTokens;
+  const tokens = effectiveTokens.length > 0 ? effectiveTokens : queryTokens;
+  const matchedTokens = tokens.filter((token) => fields.some((field) => field.texts.some((text) => fieldMatchesToken(text, token))));
+  const tokenScore = tokens.reduce((score, token) => {
+    const bestWeight = fields.reduce((best, field) => {
+      return field.texts.some((text) => fieldMatchesToken(text, token)) ? Math.max(best, field.weight) : best;
+    }, 0);
+    return score + bestWeight;
+  }, 0);
+  const phraseScore = fields.reduce((score, field) => {
+    return field.texts.some((text) => fieldMatchesQuery(text, normalizedQuery, queryTokens)) ? Math.max(score, field.weight * 2) : score;
+  }, 0);
+
+  return {
+    matchedTokens,
+    score: tokenScore + phraseScore,
+  };
+}
+
 function dateSortValue(question: QuizQuestion) {
-  const match = question.date.match(/^(\d+)\.(\d+)$/);
+  return dateValue(question.date);
+}
+
+function dateValue(date: string) {
+  const match = date.match(/^(\d+)\.(\d+)$/);
   if (!match) return 0;
   return Number(match[1]) * 100 + Number(match[2]);
 }
@@ -205,6 +249,19 @@ function compareQuestionOrder(a: QuizQuestion, b: QuizQuestion, direction: "newe
 
   const questionDelta = a.questionNumber - b.questionNumber;
   if (questionDelta !== 0) return questionDelta;
+
+  return a.id.localeCompare(b.id, "ja", { numeric: true, sensitivity: "base" });
+}
+
+function compareLectureMaterialOrder(a: LectureMaterial, b: LectureMaterial, direction: "newest" | "oldest") {
+  const dateDelta = dateValue(a.date) - dateValue(b.date);
+  if (dateDelta !== 0) return direction === "newest" ? -dateDelta : dateDelta;
+
+  const sourceDelta = a.sourceName.localeCompare(b.sourceName, "ja", { numeric: true, sensitivity: "base" });
+  if (sourceDelta !== 0) return sourceDelta;
+
+  const pageDelta = a.pageNumber - b.pageNumber;
+  if (pageDelta !== 0) return pageDelta;
 
   return a.id.localeCompare(b.id, "ja", { numeric: true, sensitivity: "base" });
 }
@@ -229,6 +286,45 @@ function searchQuestions(query: string, candidates: QuizQuestion[], sortMode: Se
       if (sortMode === "oldest") return compareQuestionOrder(a.question, b.question, "oldest") || b.score - a.score;
       return b.score - a.score || compareQuestionOrder(a.question, b.question, "newest");
     });
+}
+
+function searchLectureMaterials(query: string, candidates: LectureMaterial[], sortMode: SearchSortMode) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return [];
+
+  const queryTokens = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
+  return candidates
+    .map((material) => {
+      const { score, matchedTokens } = scoreLectureMaterial(material, normalizedQuery, queryTokens);
+      return {
+        material,
+        score,
+        matchedTokens,
+      };
+    })
+    .filter((result) => result.score > 0)
+    .sort((a, b) => {
+      if (sortMode === "newest") return compareLectureMaterialOrder(a.material, b.material, "newest") || b.score - a.score;
+      if (sortMode === "oldest") return compareLectureMaterialOrder(a.material, b.material, "oldest") || b.score - a.score;
+      return b.score - a.score || compareLectureMaterialOrder(a.material, b.material, "newest");
+    });
+}
+
+function materialLocation(material: LectureMaterial) {
+  return material.sourceType === "pdf" ? `p.${material.pageNumber}` : `slide ${material.pageNumber}`;
+}
+
+function materialExcerpt(material: LectureMaterial, matchedTokens: string[]) {
+  const text = material.text;
+  if (text.length <= 360) return text;
+  const normalized = normalizeSearchText(text);
+  const token = matchedTokens.find((candidate) => normalized.includes(candidate));
+  if (!token) return `${text.slice(0, 360)}...`;
+
+  const index = Math.max(0, normalized.indexOf(token));
+  const start = Math.max(0, index - 120);
+  const end = Math.min(text.length, start + 360);
+  return `${start > 0 ? "..." : ""}${text.slice(start, end)}${end < text.length ? "..." : ""}`;
 }
 
 function gradeQuestion(question: QuizQuestion, answer: UserAnswer | undefined) {
@@ -477,6 +573,7 @@ function QuestionCard({
 
 function SearchPage() {
   const [query, setQuery] = useState("");
+  const [searchTargetMode, setSearchTargetMode] = useState<SearchTargetMode>("questions");
   const [searchPlatformFilter, setSearchPlatformFilter] = useState<PlatformFilter>("all");
   const [searchSortMode, setSearchSortMode] = useState<SearchSortMode>("relevance");
   const [visibleCount, setVisibleCount] = useState(SEARCH_BATCH_SIZE);
@@ -485,24 +582,42 @@ function SearchPage() {
     () => allQuestions.filter((question) => searchPlatformFilter === "all" || question.platform === searchPlatformFilter),
     [searchPlatformFilter],
   );
-  const results = useMemo(() => searchQuestions(query, searchableQuestions, searchSortMode), [query, searchableQuestions, searchSortMode]);
-  const visibleResults = results.slice(0, visibleCount);
-  const visibleResultCount = Math.min(visibleCount, results.length);
+  const questionResults = useMemo(() => searchQuestions(query, searchableQuestions, searchSortMode), [query, searchableQuestions, searchSortMode]);
+  const lectureResults = useMemo(() => searchLectureMaterials(query, lectureMaterials, searchSortMode), [query, searchSortMode]);
+  const activeResultCount = searchTargetMode === "questions" ? questionResults.length : lectureResults.length;
+  const activeTargetCount = searchTargetMode === "questions" ? searchableQuestions.length : lectureMaterials.length;
+  const visibleResultCount = Math.min(visibleCount, activeResultCount);
+  const visibleQuestionResults = questionResults.slice(0, visibleCount);
+  const visibleLectureResults = lectureResults.slice(0, visibleCount);
 
   useEffect(() => {
     setVisibleCount(SEARCH_BATCH_SIZE);
-  }, [query, searchPlatformFilter, searchSortMode]);
+  }, [query, searchTargetMode, searchPlatformFilter, searchSortMode]);
 
   return (
     <section className="search-page">
       <section className="search-panel">
+        <div className="search-mode-switch" aria-label="検索対象">
+          {(Object.entries(searchTargetLabels) as Array<[SearchTargetMode, string]>).map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              className={searchTargetMode === value ? "selected" : ""}
+              onClick={() => setSearchTargetMode(value)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
         <label className="search-box">
           検索文字列
           <textarea
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             rows={8}
-            placeholder="Binary Decimal Hexadecimal 11100111 Answer 1 Question 2 ..."
+            placeholder={searchTargetMode === "questions"
+              ? "Binary Decimal Hexadecimal 11100111 Answer 1 Question 2 ..."
+              : "sensor transistor binary AND gate などのキーワード、または問題文を貼り付け"}
           />
         </label>
         <div className="search-actions">
@@ -510,17 +625,19 @@ function SearchPage() {
             クリア
           </button>
           <div className="search-filter">
-            <label>
-              版
-              <select
-                value={searchPlatformFilter}
-                onChange={(event) => setSearchPlatformFilter(event.target.value as PlatformFilter)}
-              >
-                {Object.entries(platformLabels).map(([value, label]) => (
-                  <option key={value} value={value}>{label}</option>
-                ))}
-              </select>
-            </label>
+            {searchTargetMode === "questions" && (
+              <label>
+                版
+                <select
+                  value={searchPlatformFilter}
+                  onChange={(event) => setSearchPlatformFilter(event.target.value as PlatformFilter)}
+                >
+                  {Object.entries(platformLabels).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+              </label>
+            )}
             <label>
               並び順
               <select
@@ -534,25 +651,31 @@ function SearchPage() {
             </label>
             <span>
               {normalizedQuery
-                ? `${visibleResultCount} / ${results.length}件表示（対象${searchableQuestions.length}問）`
-                : `対象${searchableQuestions.length}問`}
+                ? `${visibleResultCount} / ${activeResultCount}件表示（対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}）`
+                : `対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}`}
             </span>
           </div>
         </div>
       </section>
 
       {!normalizedQuery && (
-        <section className="empty-state">問題文や表を貼り付けると、近い問題と正答が表示されます。</section>
+        <section className="empty-state">
+          {searchTargetMode === "questions"
+            ? "問題文や表を貼り付けると、近い問題と正答が表示されます。"
+            : "キーワードや問題文を貼り付けると、関連する講義資料ページが表示されます。"}
+        </section>
       )}
 
-      {normalizedQuery && results.length === 0 && (
-        <section className="empty-state">一致する問題が見つかりませんでした。</section>
+      {normalizedQuery && activeResultCount === 0 && (
+        <section className="empty-state">
+          {searchTargetMode === "questions" ? "一致する問題が見つかりませんでした。" : "一致する講義資料が見つかりませんでした。"}
+        </section>
       )}
 
-      {results.length > 0 && (
+      {searchTargetMode === "questions" && questionResults.length > 0 && (
         <>
           <div className="search-results">
-            {visibleResults.map(({ question, matchedTokens }) => (
+            {visibleQuestionResults.map(({ question, matchedTokens }) => (
               <article key={question.id} className="search-result">
                 <div className="question-meta">
                   <span>{question.date} {question.test}</span>
@@ -572,11 +695,45 @@ function SearchPage() {
               </article>
             ))}
           </div>
-          {visibleResultCount < results.length && (
+          {visibleResultCount < questionResults.length && (
             <div className="load-more">
               <button
                 type="button"
-                onClick={() => setVisibleCount((current) => Math.min(current + SEARCH_BATCH_SIZE, results.length))}
+                onClick={() => setVisibleCount((current) => Math.min(current + SEARCH_BATCH_SIZE, questionResults.length))}
+              >
+                次の15件を表示
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {searchTargetMode === "lectures" && lectureResults.length > 0 && (
+        <>
+          <div className="search-results">
+            {visibleLectureResults.map(({ material, matchedTokens }) => (
+              <article key={material.id} className="search-result">
+                <div className="question-meta">
+                  <span>{material.date}</span>
+                  <span>{material.sourceName}</span>
+                  <span>{materialLocation(material)}</span>
+                  <span>{material.sourceType.toUpperCase()}</span>
+                </div>
+                <QuestionImages images={material.images} />
+                <h2 className="lecture-title">{material.title}</h2>
+                <p className="search-question-text">{materialExcerpt(material, matchedTokens)}</p>
+                {material.keywords.length > 0 && (
+                  <p className="lecture-keywords">キーワード: {material.keywords.slice(0, 10).join(", ")}</p>
+                )}
+                <p className="match-hint">一致: {matchedTokens.slice(0, 8).join(", ")}</p>
+              </article>
+            ))}
+          </div>
+          {visibleResultCount < lectureResults.length && (
+            <div className="load-more">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((current) => Math.min(current + SEARCH_BATCH_SIZE, lectureResults.length))}
               >
                 次の15件を表示
               </button>

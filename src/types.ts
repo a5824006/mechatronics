@@ -39,6 +39,21 @@ export type LoadedQuiz = {
   questions: QuizQuestion[];
 };
 
+export type LectureMaterial = {
+  id: string;
+  date: string;
+  sourceName: string;
+  sourceType: "pdf" | "pptx";
+  pageNumber: number;
+  title: string;
+  text: string;
+  keywords: string[];
+  images?: Array<{
+    alt: string;
+    src: string;
+  }>;
+};
+
 export type SessionMode = "single" | "balanced" | "random";
 
 export type AttemptRecord = {
