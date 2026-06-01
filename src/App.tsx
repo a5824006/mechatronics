@@ -363,6 +363,16 @@ function materialMatchRange(text: string, matchedTokens: string[]) {
   return null;
 }
 
+function sameLectureSourceMaterials(material: LectureMaterial) {
+  return lectureMaterials
+    .filter((candidate) => (
+      candidate.date === material.date
+      && candidate.sourceName === material.sourceName
+      && candidate.sourceType === material.sourceType
+    ))
+    .sort((a, b) => a.pageNumber - b.pageNumber);
+}
+
 function LectureMaterialText({
   material,
   matchedTokens,
@@ -404,6 +414,55 @@ function LectureMaterialText({
       {before}
       <span className="lecture-match" ref={matchRef}>{matched}</span>
       {after}
+    </div>
+  );
+}
+
+function LectureSourceText({
+  activeMaterial,
+  matchedTokens,
+}: {
+  activeMaterial: LectureMaterial;
+  matchedTokens: string[];
+}) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const targetRef = useRef<HTMLSpanElement | null>(null);
+  const sourceMaterials = useMemo(() => sameLectureSourceMaterials(activeMaterial), [activeMaterial]);
+  const targetMaterial = sourceMaterials.find((material) => (
+    material.id === activeMaterial.id && materialMatchRange(material.text, matchedTokens)
+  )) ?? sourceMaterials.find((material) => materialMatchRange(material.text, matchedTokens)) ?? activeMaterial;
+
+  useEffect(() => {
+    if (!containerRef.current || !targetRef.current) return;
+    const container = containerRef.current;
+    const target = targetRef.current;
+    container.scrollTop = Math.max(0, target.offsetTop - container.clientHeight / 2);
+  }, [activeMaterial.id, targetMaterial.id, matchedTokens.join("|")]);
+
+  return (
+    <div className="lecture-detail-text lecture-source-text" ref={containerRef}>
+      {sourceMaterials.map((material) => {
+        const matchRange = materialMatchRange(material.text, matchedTokens);
+        const shouldMarkTarget = material.id === targetMaterial.id && matchRange;
+        const before = matchRange ? material.text.slice(0, matchRange.index) : material.text;
+        const matched = matchRange ? material.text.slice(matchRange.index, matchRange.index + matchRange.length) : "";
+        const after = matchRange ? material.text.slice(matchRange.index + matchRange.length) : "";
+
+        return (
+          <section key={material.id} className="lecture-section">
+            <h3 className="lecture-section-heading">{materialLocation(material)}</h3>
+            {matchRange ? (
+              <p>
+                {before}
+                <span className="lecture-match" ref={shouldMarkTarget ? targetRef : undefined}>{matched}</span>
+                {after}
+              </p>
+            ) : (
+              <p>{material.text}</p>
+            )}
+          </section>
+        );
+      })}
     </div>
   );
 }
@@ -886,10 +945,9 @@ function SearchPage() {
               </div>
             </div>
             <QuestionImages images={activeMaterialDetail.material.images} />
-            <LectureMaterialText
-              material={activeMaterialDetail.material}
+            <LectureSourceText
+              activeMaterial={activeMaterialDetail.material}
               matchedTokens={activeMaterialDetail.matchedTokens}
-              expanded
             />
             {activeMaterialDetail.material.keywords.length > 0 && (
               <p className="lecture-keywords">キーワード: {activeMaterialDetail.material.keywords.slice(0, 12).join(", ")}</p>

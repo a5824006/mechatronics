@@ -496,6 +496,37 @@ h1 {
   white-space: pre-wrap;
 }
 
+.lecture-source-text {
+  max-height: min(58vh, 520px);
+}
+
+.lecture-section {
+  display: grid;
+  gap: 8px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid #d5dee1;
+}
+
+.lecture-section + .lecture-section {
+  padding-top: 18px;
+}
+
+.lecture-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lecture-section p {
+  margin: 0;
+}
+
+.lecture-section-heading {
+  margin: 0;
+  color: #176b87;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
 .lecture-match {
   border-radius: 4px;
   background: #ffe58a;
