@@ -27,7 +27,8 @@ const stopWords = new Set([
   "about", "after", "again", "also", "and", "are", "basic", "been", "before", "being", "between", "can",
   "class", "due", "each", "for", "from", "have", "into", "its", "lesson", "more", "not", "one", "part",
   "required", "since", "than", "that", "the", "their", "then", "there", "this", "today", "university",
-  "using", "was", "with", "will", "you", "aoyama", "gakuin", "guillaume", "lopez", "mechatronics",
+  "using", "was", "with", "will", "you", "2013", "2016", "aoyama", "gakuin", "guillaume", "lopez",
+  "mechatronics", "iit", "dpt",
 ]);
 
 function normalizeWhitespace(value) {
@@ -37,8 +38,9 @@ function normalizeWhitespace(value) {
 function removeFooterText(value) {
   return normalizeWhitespace(value
     .replace(/©2016\s+Aoyama\s+Gakuin\s+University\s+IIT\s+Dpt\s+-\s+Mechatronics\s+-\s+Guillaume\s+LOPEZ\s*\d*/gi, " ")
-    .replace(/since\s+2013\s+\d*\s*Aoyama\s+Gakuin\s+University\s+-\s+Guillaume\s+Lopez\s*\d*/gi, " ")
-    .replace(/since\s+2013\s+Aoyama\s+Gakuin\s+University\s+-\s+Guillaume\s+Lopez\s*\d*/gi, " "));
+    .replace(/Aoyama\s+Gakuin\s+University\s+IIT\s+Dpt\s+-\s+Mechatronics\s+-\s+Guillaume\s+LOPEZ\s*\d*/gi, " ")
+    .replace(/since\s+(?:2013\s+)?\d*\s*Aoyama\s+Gakuin\s+University\s+-\s+Guillaume\s+Lopez\s*\d*/gi, " ")
+    .replace(/©2016/gi, " "));
 }
 
 function toDateFromPath(filePath) {

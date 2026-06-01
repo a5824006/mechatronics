@@ -42,6 +42,19 @@ const searchTargetLabels: Record<SearchTargetMode, string> = {
   lectures: "講義資料検索",
 };
 
+const lectureIgnoredTokens = new Set([
+  "2013",
+  "2016",
+  "aoyama",
+  "gakuin",
+  "university",
+  "iit",
+  "dpt",
+  "mechatronics",
+  "guillaume",
+  "lopez",
+]);
+
 function quizKey(quiz: LoadedQuiz) {
   return `${quiz.date}/${quiz.test}`;
 }
@@ -211,8 +224,10 @@ function scoreLectureMaterial(material: LectureMaterial, normalizedQuery: string
     texts: field.texts.map(normalizeSearchText).filter(Boolean),
   }));
 
-  const effectiveTokens = queryTokens.length > 1 ? queryTokens.filter((token) => !["a", "an", "and", "are", "for", "in", "is", "of", "the", "to", "with"].includes(token)) : queryTokens;
-  const tokens = effectiveTokens.length > 0 ? effectiveTokens : queryTokens;
+  const ignoredTokens = new Set(["a", "an", "and", "are", "for", "in", "is", "of", "the", "to", "with", ...lectureIgnoredTokens]);
+  const effectiveTokens = queryTokens.length > 1 ? queryTokens.filter((token) => !ignoredTokens.has(token)) : queryTokens.filter((token) => !lectureIgnoredTokens.has(token));
+  const tokens = effectiveTokens;
+  if (tokens.length === 0) return { matchedTokens: [], score: 0 };
   const matchedTokens = tokens.filter((token) => fields.some((field) => field.texts.some((text) => fieldMatchesToken(text, token))));
   const tokenScore = tokens.reduce((score, token) => {
     const bestWeight = fields.reduce((best, field) => {

@@ -25,7 +25,6 @@
       "information",
       "225",
       "bld",
-      "dpt",
       "environment",
       "instructor",
       "integrated",
@@ -774,11 +773,11 @@
       "contents",
       "course",
       "digital",
-      "dpt",
       "dvd",
       "engineering",
       "faculty",
-      "field"
+      "field",
+      "goods"
     ]
   },
   {
@@ -937,7 +936,6 @@
       "1",
       "225",
       "bld",
-      "dpt",
       "environment",
       "instructor",
       "integrated",
@@ -2031,7 +2029,6 @@
       "2",
       "225",
       "bld",
-      "dpt",
       "environment",
       "instructor",
       "integrated",
@@ -2707,7 +2704,6 @@
       "bld",
       "circuits",
       "digital",
-      "dpt",
       "environment",
       "instructor",
       "integrated",
@@ -3039,22 +3035,22 @@
     "sourceType": "pptx",
     "pageNumber": 16,
     "title": "Basic knowledge of digital circuits required for mechatronics",
-    "text": "Analog/Digital (A/D) Conversion ©2016 Electrical signals Decomposition Accuracy, reproducibility Analog Vertical long strips Always high Digital Sampling rate (unit: Hz) The higher increasing the amount of data⇒ trade-off Aoyama Gakuin University IIT Dpt - Mechatronics - Guillaume LOPEZ 16 Analog electric signal ⇒ D igital signal Quantization error (value) Sampling error ( time )",
+    "text": "Analog/Digital (A/D) Conversion Electrical signals Decomposition Accuracy, reproducibility Analog Vertical long strips Always high Digital Sampling rate (unit: Hz) The higher increasing the amount of data⇒ trade-off Analog electric signal ⇒ D igital signal Quantization error (value) Sampling error ( time )",
     "keywords": [
       "analog",
       "digital",
       "error",
       "sampling",
       "signal",
-      "16",
-      "2016",
       "accuracy",
       "always",
       "amount",
       "circuits",
       "conversion",
       "data",
-      "decomposition"
+      "decomposition",
+      "electric",
+      "electrical"
     ]
   },
   {
@@ -5168,7 +5164,7 @@
     "sourceType": "pdf",
     "pageNumber": 12,
     "title": "Basic Knowledge about Electrical Engineering",
-    "text": "Aoyama Gakuin University IIT Dpt - Mechatronics - Guillaume LOPEZ Terminology of Electrical Engineering English Definition Electricity Electric charge (electric Quantity) Electric Q uantity that elementary particles have . Its value is either positive or negative. Electric current (current Intensity) Flow of Electric charges due to the movement of electric particles such as electrons （ Electric Transmission). Electric potential (Voltage) Electric pressure, or Electromagnetic E nergy Electrical Power Amount of work that electric current conducts per unit time Nucleus Electron (-) Particle having a negative electric charge Proton (+) Particle having a positive electric charge Neutron Particle without electric charge Conduction ©2016 12",
+    "text": "Terminology of Electrical Engineering English Definition Electricity Electric charge (electric Quantity) Electric Q uantity that elementary particles have . Its value is either positive or negative. Electric current (current Intensity) Flow of Electric charges due to the movement of electric particles such as electrons （ Electric Transmission). Electric potential (Voltage) Electric pressure, or Electromagnetic E nergy Electrical Power Amount of work that electric current conducts per unit time Nucleus Electron (-) Particle having a negative electric charge Proton (+) Particle having a positive electric charge Neutron Particle without electric charge Conduction 12",
     "keywords": [
       "electric",
       "charge",
@@ -5181,9 +5177,9 @@
       "particles",
       "positive",
       "12",
-      "2016",
       "amount",
-      "charges"
+      "charges",
+      "conduction"
     ]
   },
   {
@@ -6862,14 +6858,12 @@
     "sourceType": "pdf",
     "pageNumber": 2,
     "title": "Basic knowledge about actuators",
-    "text": "INSTRUCTOR Guillaume LOPEZ guillaume@it.aoyama.ac.jp Wearable Environment and Information Systems Laboratory (Dpt. of Integrated Information Technology, bld. O #225) since 2 Aoyama Gakuin University - Guillaume Lopez",
+    "text": "INSTRUCTOR Guillaume LOPEZ guillaume@it.aoyama.ac.jp Wearable Environment and Information Systems Laboratory (Dpt. of Integrated Information Technology, bld. O #225)",
     "keywords": [
       "information",
-      "2",
       "225",
       "actuators",
       "bld",
-      "dpt",
       "environment",
       "instructor",
       "integrated",
@@ -6887,12 +6881,12 @@
     "sourceType": "pdf",
     "pageNumber": 3,
     "title": "Basic knowledge about actuators",
-    "text": "LESSON AGENDA 1. ACTUATOR AND MECHATRONICS 2. A VARIETY OF MOTOR 3. OTHER ACTUATOR since 3 Aoyama Gakuin University - Guillaume Lopez",
+    "text": "LESSON AGENDA 1. ACTUATOR AND MECHATRONICS 2. A VARIETY OF MOTOR 3. OTHER ACTUATOR",
     "keywords": [
-      "3",
       "actuator",
       "1",
       "2",
+      "3",
       "actuators",
       "agenda",
       "knowledge",
