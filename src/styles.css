@@ -422,8 +422,16 @@ h1 {
   background: #6f7b83;
   color: #ffffff;
   box-shadow: 0 10px 24px rgba(23, 33, 43, 0.22);
-  font-size: 1.7rem;
+  font-size: 2.1rem;
   line-height: 1;
+}
+
+.gear-icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  color: #ffffff;
+  fill: currentColor;
 }
 
 .settings-fab:hover,

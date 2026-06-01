@@ -717,6 +717,8 @@ function SearchPage() {
     material: LectureMaterial;
     matchedTokens: string[];
   } | null>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
+  const settingsButtonRef = useRef<HTMLButtonElement>(null);
   const searchTargetMode: SearchTargetMode = questionSearchEnabled ? "questions" : "lectures";
   const normalizedQuery = normalizeSearchText(query);
   const searchableQuestions = useMemo(
@@ -745,6 +747,24 @@ function SearchPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeMaterialDetail]);
 
+  useEffect(() => {
+    if (!isSearchSettingsOpen) return;
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setIsSearchSettingsOpen(false);
+    }
+    function handlePointerDown(event: PointerEvent) {
+      const target = event.target as Node;
+      if (settingsRef.current?.contains(target) || settingsButtonRef.current?.contains(target)) return;
+      setIsSearchSettingsOpen(false);
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [isSearchSettingsOpen]);
+
   return (
     <section className="search-page">
       <section className="search-panel">
@@ -757,9 +777,7 @@ function SearchPage() {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             rows={8}
-            placeholder={searchTargetMode === "questions"
-              ? "Binary Decimal Hexadecimal 11100111 Answer 1 Question 2 ..."
-              : "sensor transistor binary AND gate などのキーワード、または問題文を貼り付け"}
+            placeholder="任意の文字列またはキーワードを入力"
           />
         </label>
         <div className="search-actions">
@@ -784,18 +802,21 @@ function SearchPage() {
                 : `対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}`}
             </span>
             <button
+              ref={settingsButtonRef}
               type="button"
               className="settings-button settings-fab"
               aria-label="設定"
               aria-expanded={isSearchSettingsOpen}
               onClick={() => setIsSearchSettingsOpen((current) => !current)}
             >
-              <span aria-hidden="true">⚙</span>
+              <svg className="gear-icon" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M19.4 13.5c.1-.5.1-1 .1-1.5s0-1-.1-1.5l2-1.5-2-3.5-2.4 1a8 8 0 0 0-2.6-1.5L14 2h-4l-.4 3a8 8 0 0 0-2.6 1.5l-2.4-1-2 3.5 2 1.5a8.6 8.6 0 0 0 0 3l-2 1.5 2 3.5 2.4-1a8 8 0 0 0 2.6 1.5l.4 3h4l.4-3a8 8 0 0 0 2.6-1.5l2.4 1 2-3.5-2-1.5ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z" />
+              </svg>
             </button>
           </div>
         </div>
         {isSearchSettingsOpen && (
-          <div className="search-settings">
+          <div className="search-settings" ref={settingsRef}>
             <label className="checkbox-row">
               <input
                 type="checkbox"
