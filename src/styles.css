@@ -198,6 +198,10 @@ h1 {
   margin-bottom: 18px;
 }
 
+.question-images:has(figure:only-child) {
+  grid-template-columns: 1fr;
+}
+
 .question-images figure {
   display: grid;
   gap: 6px;
@@ -214,6 +218,12 @@ h1 {
   max-width: 110px;
   aspect-ratio: 4 / 3;
   object-fit: contain;
+}
+
+.question-images figure:only-child img {
+  max-width: min(100%, 920px);
+  max-height: 520px;
+  aspect-ratio: auto;
 }
 
 .question-images figcaption {

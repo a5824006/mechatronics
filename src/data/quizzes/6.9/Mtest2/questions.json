@@ -1,0 +1,54 @@
+[
+  {
+    "id": "6.9-Mtest2-q1",
+    "date": "6.9",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "6.9-Mtest2-q1",
+    "type": "fill_blank",
+    "prompt": "There are mainly two types of interface communication protocols. The {{0}} communication delivers data by 1 bit after the other in one signal line. In contrast, the {{1}} communication delivers the data of plural bits at the same time using plural signal lines. The table hereafter is a sum-up of the main serial communication interfaces used in computers. {{2}}: It is a serial interface used as the standard interface for desktop computers and so on for the oldest times. It is not possible to communicate over long distances, but by connecting a modem it is possible to access the world's communication network. {{3}}: Use a coaxial cable to enable high-speed simultaneous communication between multiple transmitting and receiving terminals. This interface is adopted in LAN (Local Area Network). {{4}}: Interface for realizing high-speed, high-capacity communication between peripheral devices of personal computers. It also has automatic recognition functions such as connection and disconnection. {{5}}: Interface for controlling electric musical instruments. {{6}} is the abbreviation of {{7}} {{8}} {{9}}.",
+    "answers": [
+      "serial",
+      "parallel",
+      "RS232C",
+      "ETHERNET",
+      "USB",
+      "MIDI",
+      "USB",
+      "Universal",
+      "Serial",
+      "Bus"
+    ],
+    "sourceRef": "6.9/Mtest2/スクリーンショット 2026-06-09 162651.png"
+  },
+  {
+    "id": "6.9-Mtest2-q2",
+    "date": "6.9",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "6.9-Mtest2-q2",
+    "type": "matching",
+    "prompt": "Match each characteristic with the type of computer it describes best.",
+    "choices": [
+      "Arduino",
+      "RaspberryPi"
+    ],
+    "items": [
+      { "prompt": "needs a 5 volts power supply", "answer": "RaspberryPi" },
+      { "prompt": "it does not run on top of an OS", "answer": "Arduino" },
+      { "prompt": "stores only one program at once in EEPROM", "answer": "Arduino" },
+      { "prompt": "needs to use external monitor, keyboard, and mouse", "answer": "RaspberryPi" },
+      { "prompt": "not good for I/O intensive applications", "answer": "RaspberryPi" },
+      { "prompt": "shields can be used to extend functionalities", "answer": "Arduino" },
+      { "prompt": "it is running on top of an OS", "answer": "RaspberryPi" },
+      { "prompt": "gets power from a battery cell", "answer": "Arduino" },
+      { "prompt": "provides a lot of analog and digital I/O", "answer": "Arduino" },
+      { "prompt": "good for prototype combining software and electronic hardware", "answer": "Arduino" },
+      { "prompt": "credit-card sized computer", "answer": "RaspberryPi" },
+      { "prompt": "open hardware MCU", "answer": "Arduino" }
+    ],
+    "sourceRef": "6.9/Mtest2/スクリーンショット 2026-06-09 162700.png"
+  }
+]

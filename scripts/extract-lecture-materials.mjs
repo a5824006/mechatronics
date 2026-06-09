@@ -21,6 +21,7 @@ const lectureTitles = new Map([
   ["Suuplementary-diode_transistor_dff.pptx", "Suplementary: diode / transistor difference"],
   ["Mechatronics-5-19.pdf", "Basic Knowledge about Electrical Engineering"],
   ["Mechatronics-5-26.pdf", "Basic knowledge about actuators"],
+  ["Mechatronics-6-9.pdf", "Computer technology required to understand mechatronics"],
 ]);
 
 const stopWords = new Set([
