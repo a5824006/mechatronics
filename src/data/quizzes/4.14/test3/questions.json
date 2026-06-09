@@ -9,7 +9,7 @@
     "answer": true,
     "sourceRef": "4.14/test3/Q1-5.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q1"
+    "canonicalId": "4.14-Mtest3-q3"
   },
   {
     "id": "4.14-test3-q2",
@@ -33,7 +33,7 @@
     "answer": true,
     "sourceRef": "4.14/test3/Q1-5.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q3"
+    "canonicalId": "4.14-Mtest3-q4"
   },
   {
     "id": "4.14-test3-q4",
@@ -45,7 +45,7 @@
     "answer": false,
     "sourceRef": "4.14/test3/Q1-5.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q4"
+    "canonicalId": "4.14-Mtest3-q6"
   },
   {
     "id": "4.14-test3-q5",
@@ -62,7 +62,7 @@
     "answer": "machine element",
     "sourceRef": "4.14/test3/Q1-5.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q5"
+    "canonicalId": "4.14-Mtest3-q10"
   },
   {
     "id": "4.14-test3-q6",
@@ -85,7 +85,7 @@
     ],
     "sourceRef": "4.14/test3/Q6-8.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q6"
+    "canonicalId": "4.14-Mtest3-q9"
   },
   {
     "id": "4.14-test3-q7",
@@ -107,7 +107,7 @@
     ],
     "sourceRef": "4.14/test3/Q6-8.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q7"
+    "canonicalId": "4.14-Mtest3-q2"
   },
   {
     "id": "4.14-test3-q8",
@@ -132,7 +132,7 @@
     ],
     "sourceRef": "4.14/test3/Q6-8.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q8"
+    "canonicalId": "4.14-Mtest3-q1"
   },
   {
     "id": "4.14-test3-q9",
@@ -167,7 +167,7 @@
     ],
     "sourceRef": "4.14/test3/Q9-11.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q9"
+    "canonicalId": "4.14-Mtest3-q8"
   },
   {
     "id": "4.14-test3-q10",
@@ -202,7 +202,7 @@
     ],
     "sourceRef": "4.14/test3/Q9-11.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q10"
+    "canonicalId": "4.14-Mtest3-q7"
   },
   {
     "id": "4.14-test3-q11",
@@ -232,6 +232,6 @@
     ],
     "sourceRef": "4.14/test3/Q9-11.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test3-q11"
+    "canonicalId": "4.14-Mtest3-q5"
   }
 ]

@@ -5,22 +5,61 @@
     "test": "Mtest1",
     "platform": "moodle",
     "questionNumber": 1,
-    "canonicalId": "4.28-test1-q3",
+    "canonicalId": "4.21-Mtest1-q1",
     "type": "matching",
     "prompt": "Match each type of sensor with its corresponding human sense.",
-    "choices": ["taction", "olfaction", "audition", "gustation", "vision"],
+    "choices": [
+      "taction",
+      "olfaction",
+      "audition",
+      "gustation",
+      "vision"
+    ],
     "items": [
-      { "prompt": "microphone", "answer": "audition" },
-      { "prompt": "camera", "answer": "vision" },
-      { "prompt": "torque sensor", "answer": "taction" },
-      { "prompt": "touch panel", "answer": "taction" },
-      { "prompt": "ultra-sound sensor", "answer": "audition" },
-      { "prompt": "light sensor", "answer": "vision" },
-      { "prompt": "gas sensor", "answer": "olfaction" },
-      { "prompt": "infra-red sensor", "answer": "vision" },
-      { "prompt": "concentration sensor", "answer": "gustation" },
-      { "prompt": "taste sensor", "answer": "gustation" },
-      { "prompt": "odor sensor", "answer": "olfaction" }
+      {
+        "prompt": "microphone",
+        "answer": "audition"
+      },
+      {
+        "prompt": "camera",
+        "answer": "vision"
+      },
+      {
+        "prompt": "torque sensor",
+        "answer": "taction"
+      },
+      {
+        "prompt": "touch panel",
+        "answer": "taction"
+      },
+      {
+        "prompt": "ultra-sound sensor",
+        "answer": "audition"
+      },
+      {
+        "prompt": "light sensor",
+        "answer": "vision"
+      },
+      {
+        "prompt": "gas sensor",
+        "answer": "olfaction"
+      },
+      {
+        "prompt": "infra-red sensor",
+        "answer": "vision"
+      },
+      {
+        "prompt": "concentration sensor",
+        "answer": "gustation"
+      },
+      {
+        "prompt": "taste sensor",
+        "answer": "gustation"
+      },
+      {
+        "prompt": "odor sensor",
+        "answer": "olfaction"
+      }
     ],
     "sourceRef": "4.21/Mtest1/スクリーンショット 2026-05-29 111148.png"
   },
@@ -30,11 +69,33 @@
     "test": "Mtest1",
     "platform": "moodle",
     "questionNumber": 2,
-    "canonicalId": "4.21-test1-q5",
+    "canonicalId": "4.21-Mtest1-q2",
     "type": "multi_select",
     "prompt": "Select all the physical quantities that sensors are essentially used to measure in the mechatronics system.",
-    "choices": ["distance", "vibration", "angle", "force", "age", "waist", "position", "acceleration", "BMI", "waste", "light intensity", "displacement"],
-    "answers": ["distance", "vibration", "angle", "force", "position", "acceleration", "light intensity", "displacement"],
+    "choices": [
+      "distance",
+      "vibration",
+      "angle",
+      "force",
+      "age",
+      "waist",
+      "position",
+      "acceleration",
+      "BMI",
+      "waste",
+      "light intensity",
+      "displacement"
+    ],
+    "answers": [
+      "distance",
+      "vibration",
+      "angle",
+      "force",
+      "position",
+      "acceleration",
+      "light intensity",
+      "displacement"
+    ],
     "sourceRef": "4.21/Mtest1/スクリーンショット 2026-05-29 111156.png"
   },
   {
@@ -43,13 +104,26 @@
     "test": "Mtest1",
     "platform": "moodle",
     "questionNumber": 3,
-    "canonicalId": "4.21-test1-q1",
+    "canonicalId": "4.21-Mtest1-q3",
     "type": "matching",
     "prompt": "Sensors can be classified into two categories regarding their purpose. Match the category name and its purpose.",
-    "choices": ["status sensors", "control sensors", "motion sensors", "internal sensors", "external sensors", "location sensors"],
+    "choices": [
+      "status sensors",
+      "control sensors",
+      "motion sensors",
+      "internal sensors",
+      "external sensors",
+      "location sensors"
+    ],
     "items": [
-      { "prompt": "self status and/or control self movement", "answer": "internal sensors" },
-      { "prompt": "identify surroundings, and move to the target location", "answer": "external sensors" }
+      {
+        "prompt": "self status and/or control self movement",
+        "answer": "internal sensors"
+      },
+      {
+        "prompt": "identify surroundings, and move to the target location",
+        "answer": "external sensors"
+      }
     ],
     "sourceRef": "4.21/Mtest1/スクリーンショット 2026-05-29 111203.png"
   },
@@ -59,11 +133,21 @@
     "test": "Mtest1",
     "platform": "moodle",
     "questionNumber": 4,
-    "canonicalId": "4.21-test1-q3",
+    "canonicalId": "4.21-Mtest1-q4",
     "type": "multi_select",
     "prompt": "Select everything that is correct about the role of sensors.",
-    "choices": ["convert into an electric signal", "translates energy", "pass to the CPU", "operates actively", "measure the state of motion"],
-    "answers": ["convert into an electric signal", "pass to the CPU", "measure the state of motion"],
+    "choices": [
+      "convert into an electric signal",
+      "translates energy",
+      "pass to the CPU",
+      "operates actively",
+      "measure the state of motion"
+    ],
+    "answers": [
+      "convert into an electric signal",
+      "pass to the CPU",
+      "measure the state of motion"
+    ],
     "sourceRef": "4.21/Mtest1/スクリーンショット 2026-05-29 111210.png"
   },
   {
@@ -72,10 +156,13 @@
     "test": "Mtest1",
     "platform": "moodle",
     "questionNumber": 5,
-    "canonicalId": "4.21-test1-q4",
+    "canonicalId": "4.21-Mtest1-q5",
     "type": "fill_blank",
     "prompt": "A sensor takes the measurement object's {{0}} and translates it into a {{1}} that we can use.",
-    "answers": ["reaction", "physical quantity"],
+    "answers": [
+      "reaction",
+      "physical quantity"
+    ],
     "sourceRef": "4.21/Mtest1/スクリーンショット 2026-05-29 111215.png"
   }
 ]

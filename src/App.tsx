@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { lectureMaterials } from "./data/loadLectures";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
-import { buildBalancedSet, isTextCorrect, loadAttempts, saveAttempt, shuffle } from "./lib/quiz";
+import { buildBalancedSet, isTextCorrect, loadAttempts, loadReviewIds, saveAttempt, saveReviewResult, shuffle } from "./lib/quiz";
 import type { LectureMaterial, LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
 
 type UserAnswer = string | boolean | string[] | Record<string, string>;
@@ -11,8 +11,19 @@ type ViewMode = "setup" | "quiz" | "summary";
 type PlatformFilter = "all" | QuizPlatform;
 type SearchSortMode = "relevance" | "newest" | "oldest";
 type SearchTargetMode = "questions" | "lectures";
+type StoredQuizState = {
+  platformFilter: PlatformFilter;
+  mode: SessionMode;
+  selectedQuizKey: string;
+  questionCount: number;
+  questionIds: string[];
+  answers: AnswerMap;
+  currentIndex: number;
+  viewMode: Exclude<ViewMode, "setup">;
+};
 
 const SEARCH_BATCH_SIZE = 15;
+const QUIZ_STATE_STORAGE_KEY = "mechatronics-quiz-current-session";
 
 const pageLabels: Record<AppPage, string> = {
   quiz: "テスト対策",
@@ -23,6 +34,7 @@ const modeLabels: Record<SessionMode, string> = {
   single: "この回の小テストを受ける",
   balanced: "バラバラ・均等モード",
   random: "バラバラ・完全ランダムモード",
+  review: "要復習だけ",
 };
 
 const platformLabels: Record<PlatformFilter, string> = {
@@ -70,6 +82,33 @@ function platformLabel(platform: QuizPlatform | undefined) {
 
 function pageFromHash(): AppPage {
   return window.location.hash === "#search" ? "search" : "quiz";
+}
+
+function questionByIdMap() {
+  return new Map(allQuestions.map((question) => [question.id, question]));
+}
+
+function loadStoredQuizState(): (Omit<StoredQuizState, "questionIds"> & { session: QuizQuestion[] }) | null {
+  const raw = localStorage.getItem(QUIZ_STATE_STORAGE_KEY);
+  if (!raw) return null;
+  try {
+    const stored = JSON.parse(raw) as StoredQuizState;
+    const byId = questionByIdMap();
+    const session = (stored.questionIds ?? []).map((id) => byId.get(id)).filter((question): question is QuizQuestion => Boolean(question));
+    if (session.length === 0) return null;
+    return {
+      platformFilter: stored.platformFilter ?? "moodle",
+      mode: stored.mode ?? "single",
+      selectedQuizKey: stored.selectedQuizKey ?? quizKey(quizzes[0]),
+      questionCount: stored.questionCount ?? 10,
+      answers: stored.answers ?? {},
+      currentIndex: Math.min(Math.max(stored.currentIndex ?? 0, 0), session.length - 1),
+      viewMode: stored.viewMode === "summary" ? "summary" : "quiz",
+      session,
+    };
+  } catch {
+    return null;
+  }
 }
 
 function defaultAnswer(question: QuizQuestion): UserAnswer {
@@ -135,6 +174,50 @@ function answerLines(question: QuizQuestion) {
     return (question.items ?? []).map((item) => `${item.prompt} -> ${item.answer}`);
   }
   return (question.answers ?? []).map((answer, index) => `Answer ${index + 1}: ${formatExpectedAnswer(answer)}`);
+}
+
+function textPositionInQuery(text: string, normalizedQuery: string) {
+  const normalizedText = normalizeSearchText(text);
+  if (!normalizedText) return Number.POSITIVE_INFINITY;
+  const directIndex = normalizedQuery.indexOf(normalizedText);
+  if (directIndex >= 0) return directIndex;
+
+  const tokens = normalizedText.split(" ").filter((token) => token.length > 1);
+  if (tokens.length === 0) return Number.POSITIVE_INFINITY;
+  const positions = tokens.map((token) => normalizedQuery.indexOf(token)).filter((index) => index >= 0);
+  if (positions.length === 0) return Number.POSITIVE_INFINITY;
+  return Math.min(...positions);
+}
+
+function answerLinesForSearch(question: QuizQuestion, query: string) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return answerLines(question);
+
+  if (question.type === "matching") {
+    const orderedItems = [...(question.items ?? [])]
+      .map((item, index) => ({
+        item,
+        index,
+        position: textPositionInQuery(item.prompt, normalizedQuery),
+      }))
+      .sort((a, b) => a.position - b.position || a.index - b.index)
+      .map(({ item }) => item);
+    return orderedItems.map((item) => `${item.prompt} -> ${item.answer}`);
+  }
+
+  if (question.type === "multi_select") {
+    const orderedAnswers = [...(question.answers ?? [])]
+      .map((answer, index) => ({
+        answer,
+        index,
+        position: textPositionInQuery(formatExpectedAnswer(answer), normalizedQuery),
+      }))
+      .sort((a, b) => a.position - b.position || a.index - b.index)
+      .map(({ answer }) => answer);
+    return orderedAnswers.map((answer, index) => `Answer ${index + 1}: ${formatExpectedAnswer(answer)}`);
+  }
+
+  return answerLines(question);
 }
 
 function normalizeSearchText(value: string) {
@@ -798,8 +881,8 @@ function SearchPage() {
             </label>
             <span>
               {normalizedQuery
-                ? `${visibleResultCount} / ${activeResultCount}件表示（対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}）`
-                : `対象${activeTargetCount}${searchTargetMode === "questions" ? "問" : "ページ/スライド"}`}
+                ? `${visibleResultCount} / ${activeResultCount}件表示（対象:${activeTargetCount}）`
+                : `対象:${activeTargetCount}`}
             </span>
             <button
               ref={settingsButtonRef}
@@ -844,9 +927,7 @@ function SearchPage() {
 
       {!normalizedQuery && (
         <section className="empty-state">
-          {searchTargetMode === "questions"
-            ? "問題文や表を貼り付けると、近い問題と正答が表示されます。"
-            : "キーワードや問題文を貼り付けると、関連する講義資料ページが表示されます。"}
+          キーワードや問題文を貼り付けると、関連する講義資料ページが表示されます。
         </section>
       )}
 
@@ -870,7 +951,7 @@ function SearchPage() {
                 <QuestionImages images={question.images} />
                 <p className="search-question-text">{filledPromptText(question)}</p>
                 <ol className="answer-list">
-                  {answerLines(question).map((line) => (
+                  {answerLinesForSearch(question, query).map((line) => (
                     <li key={line}>{line}</li>
                   ))}
                 </ol>
@@ -990,16 +1071,18 @@ function SearchPage() {
 }
 
 export default function App() {
+  const restoredQuizState = useMemo(() => loadStoredQuizState(), []);
   const [page, setPage] = useState<AppPage>(() => pageFromHash());
-  const [platformFilter, setPlatformFilter] = useState<PlatformFilter>("moodle");
-  const [mode, setMode] = useState<SessionMode>("single");
-  const [selectedQuizKey, setSelectedQuizKey] = useState(() => quizKey(quizzes[0]));
-  const [questionCount, setQuestionCount] = useState(10);
-  const [session, setSession] = useState<QuizQuestion[]>([]);
-  const [answers, setAnswers] = useState<AnswerMap>({});
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<ViewMode>("setup");
+  const [platformFilter, setPlatformFilter] = useState<PlatformFilter>(restoredQuizState?.platformFilter ?? "moodle");
+  const [mode, setMode] = useState<SessionMode>(restoredQuizState?.mode ?? "single");
+  const [selectedQuizKey, setSelectedQuizKey] = useState(() => restoredQuizState?.selectedQuizKey ?? quizKey(quizzes[0]));
+  const [questionCount, setQuestionCount] = useState(restoredQuizState?.questionCount ?? 10);
+  const [session, setSession] = useState<QuizQuestion[]>(restoredQuizState?.session ?? []);
+  const [answers, setAnswers] = useState<AnswerMap>(restoredQuizState?.answers ?? {});
+  const [currentIndex, setCurrentIndex] = useState(restoredQuizState?.currentIndex ?? 0);
+  const [viewMode, setViewMode] = useState<ViewMode>(restoredQuizState?.viewMode ?? "setup");
   const [attempts, setAttempts] = useState(() => loadAttempts());
+  const [reviewIds, setReviewIds] = useState(() => loadReviewIds());
 
   useEffect(() => {
     const handleHashChange = () => setPage(pageFromHash());
@@ -1018,23 +1101,46 @@ export default function App() {
   const maxCount = activeQuestions.length || allQuestions.length;
   const answeredCount = session.filter((question) => hasAnswer(question, answers[question.id])).length;
   const correctCount = session.filter((question) => gradeQuestion(question, answers[question.id])).length;
+  const activeReviewQuestions = useMemo(() => {
+    const ids = new Set(reviewIds);
+    return activeQuestions.filter((question) => ids.has(question.id));
+  }, [activeQuestions, reviewIds]);
+  const canStart = mode !== "review" || activeReviewQuestions.length > 0;
 
-  const historicalWeakCount = useMemo(() => {
-    return allQuestions.filter((question) => {
-      const record = attempts[question.id];
-      return record && record.correct < record.attempts;
-    }).length;
-  }, [attempts]);
+  const reviewCount = useMemo(() => {
+    const validIds = new Set(allQuestions.map((question) => question.id));
+    return reviewIds.filter((id) => validIds.has(id)).length;
+  }, [reviewIds]);
+
+  useEffect(() => {
+    if (viewMode === "setup" || session.length === 0) {
+      localStorage.removeItem(QUIZ_STATE_STORAGE_KEY);
+      return;
+    }
+    const stored: StoredQuizState = {
+      platformFilter,
+      mode,
+      selectedQuizKey,
+      questionCount,
+      questionIds: session.map((question) => question.id),
+      answers,
+      currentIndex,
+      viewMode,
+    };
+    localStorage.setItem(QUIZ_STATE_STORAGE_KEY, JSON.stringify(stored));
+  }, [answers, currentIndex, mode, platformFilter, questionCount, selectedQuizKey, session, viewMode]);
 
   function buildSession() {
     const count = Math.min(Math.max(questionCount, 1), maxCount);
     if (mode === "single") return [...(selectedQuiz?.questions ?? [])].sort((a, b) => a.questionNumber - b.questionNumber);
+    if (mode === "review") return [...activeReviewQuestions].sort((a, b) => compareQuestionOrder(a, b, "newest"));
     if (mode === "balanced") return buildBalancedSet(activeQuizzes, count);
     return shuffle(activeQuestions).slice(0, count);
   }
 
   function startSession() {
     const nextSession = buildSession();
+    if (nextSession.length === 0) return;
     setSession(nextSession);
     setAnswers(Object.fromEntries(nextSession.map((question) => [question.id, defaultAnswer(question)])));
     setCurrentIndex(0);
@@ -1043,10 +1149,14 @@ export default function App() {
 
   function finishSession() {
     let nextAttempts = attempts;
+    let nextReviewIds = reviewIds;
     session.forEach((question) => {
-      nextAttempts = saveAttempt(question.id, gradeQuestion(question, answers[question.id]));
+      const isCorrect = gradeQuestion(question, answers[question.id]);
+      nextAttempts = saveAttempt(question.id, isCorrect);
+      nextReviewIds = saveReviewResult(question.id, isCorrect);
     });
     setAttempts(nextAttempts);
+    setReviewIds(nextReviewIds);
     setViewMode("summary");
     setCurrentIndex(0);
   }
@@ -1114,7 +1224,7 @@ export default function App() {
             </label>
           )}
 
-          {mode !== "single" && (
+          {(mode === "balanced" || mode === "random") && (
             <label>
               出題数
               <input
@@ -1128,7 +1238,7 @@ export default function App() {
             </label>
           )}
 
-          <button type="button" className="primary" onClick={startSession}>
+          <button type="button" className="primary" onClick={startSession} disabled={!canStart}>
             {viewMode === "setup" ? "開始" : "新しく開始"}
           </button>
         </div>
@@ -1143,11 +1253,15 @@ export default function App() {
         <div><span>収録</span><strong>{activeQuestions.length}</strong></div>
         <div><span>今回</span><strong>{session.length || "-"}</strong></div>
         <div><span>回答済み</span><strong>{answeredCount}</strong></div>
-        <div><span>要復習</span><strong>{historicalWeakCount}</strong></div>
+        <div><span>要復習</span><strong>{reviewCount}</strong></div>
       </section>
 
       {viewMode === "setup" && (
-        <section className="empty-state">出題モードを選んで「開始」を押すと問題が表示されます。</section>
+        <section className="empty-state">
+          {mode === "review" && activeReviewQuestions.length === 0
+            ? "要復習に登録されている問題はありません。"
+            : "出題モードを選んで「開始」を押すと問題が表示されます。"}
+        </section>
       )}
 
       {viewMode === "quiz" && currentQuestion && (

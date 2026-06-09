@@ -20,7 +20,7 @@
       "information"
     ],
     "sourceRef": "4.14/Mtest1/スクリーンショット 2026-05-26 133733.png",
-    "canonicalId": "4.14-test1-q2"
+    "canonicalId": "4.14-Mtest1-q1"
   },
   {
     "id": "4.14-Mtest1-q2",
@@ -36,7 +36,7 @@
       "electronics"
     ],
     "sourceRef": "4.14/Mtest1/スクリーンショット 2026-05-26 133755.png",
-    "canonicalId": "4.14-test1-q1"
+    "canonicalId": "4.14-Mtest1-q2"
   },
   {
     "id": "4.14-Mtest1-q3",
@@ -80,6 +80,6 @@
       }
     ],
     "sourceRef": "4.14/Mtest1/スクリーンショット 2026-05-26 133800.png",
-    "canonicalId": "4.14-test2-q2"
+    "canonicalId": "4.14-Mtest1-q3"
   }
 ]

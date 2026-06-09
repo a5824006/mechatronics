@@ -5,7 +5,7 @@
     "test": "Mtest1",
     "platform": "moodle",
     "questionNumber": 1,
-    "canonicalId": "6.9-Mtest1-q1",
+    "canonicalId": "4.14-Mtest3-q8",
     "type": "matching",
     "prompt": "Choose the correct matchings about computer input/output and signal processing.",
     "choices": [

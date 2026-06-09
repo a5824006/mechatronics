@@ -54,7 +54,7 @@ export type LectureMaterial = {
   }>;
 };
 
-export type SessionMode = "single" | "balanced" | "random";
+export type SessionMode = "single" | "balanced" | "random" | "review";
 
 export type AttemptRecord = {
   attempts: number;

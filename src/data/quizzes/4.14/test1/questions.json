@@ -24,7 +24,7 @@
     ],
     "sourceRef": "4.14/test1/Q1.png",
     "platform": "canvas",
-    "canonicalId": "4.14-test1-q1"
+    "canonicalId": "4.14-Mtest1-q2"
   },
   {
     "id": "4.14-test1-q2",
@@ -48,6 +48,6 @@
     "sourceRef": "4.14/test1/Q2.png",
     "notes": "4.21/test1/Q2の補正方針とは別に、この回の採点済みスクショどおりに記録。",
     "platform": "canvas",
-    "canonicalId": "4.14-test1-q2"
+    "canonicalId": "4.14-Mtest1-q1"
   }
 ]

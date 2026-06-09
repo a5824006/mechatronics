@@ -24,7 +24,7 @@
       }
     ],
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134711.png",
-    "canonicalId": "4.14-test3-q8"
+    "canonicalId": "4.14-Mtest3-q1"
   },
   {
     "id": "4.14-Mtest3-q2",
@@ -46,7 +46,7 @@
       "translates energy"
     ],
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134718.png",
-    "canonicalId": "4.14-test3-q7"
+    "canonicalId": "4.14-Mtest3-q2"
   },
   {
     "id": "4.14-Mtest3-q3",
@@ -58,7 +58,7 @@
     "prompt": "The machines are good at lifting/moving heavy objects.",
     "answer": true,
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134723.png",
-    "canonicalId": "4.14-test3-q1"
+    "canonicalId": "4.14-Mtest3-q3"
   },
   {
     "id": "4.14-Mtest3-q4",
@@ -70,7 +70,7 @@
     "prompt": "The electronic systems are good at operating delicate motions.",
     "answer": true,
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134729.png",
-    "canonicalId": "4.14-test3-q3"
+    "canonicalId": "4.14-Mtest3-q4"
   },
   {
     "id": "4.14-Mtest3-q5",
@@ -102,7 +102,7 @@
       }
     ],
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134734.png",
-    "canonicalId": "4.14-test3-q11"
+    "canonicalId": "4.14-Mtest3-q5"
   },
   {
     "id": "4.14-Mtest3-q6",
@@ -114,7 +114,7 @@
     "prompt": "The mechanical systems are good at operating delicate motions.",
     "answer": false,
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134740.png",
-    "canonicalId": "4.14-test3-q4"
+    "canonicalId": "4.14-Mtest3-q6"
   },
   {
     "id": "4.14-Mtest3-q7",
@@ -149,7 +149,7 @@
       }
     ],
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134745.png",
-    "canonicalId": "4.14-test3-q10"
+    "canonicalId": "4.14-Mtest3-q7"
   },
   {
     "id": "4.14-Mtest3-q8",
@@ -189,7 +189,7 @@
       }
     ],
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134750.png",
-    "canonicalId": "4.14-test3-q9"
+    "canonicalId": "4.14-Mtest3-q8"
   },
   {
     "id": "4.14-Mtest3-q9",
@@ -212,7 +212,7 @@
       "measure the state of motion"
     ],
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134755.png",
-    "canonicalId": "4.14-test3-q6"
+    "canonicalId": "4.14-Mtest3-q9"
   },
   {
     "id": "4.14-Mtest3-q10",
@@ -229,6 +229,6 @@
     ],
     "answer": "machine element",
     "sourceRef": "4.14/Mtest3/スクリーンショット 2026-05-26 134802.png",
-    "canonicalId": "4.14-test3-q5"
+    "canonicalId": "4.14-Mtest3-q10"
   }
 ]

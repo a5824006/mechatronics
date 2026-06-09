@@ -22,7 +22,7 @@
     ],
     "sourceRef": "4.21/test1/Q1.png",
     "platform": "canvas",
-    "canonicalId": "4.21-test1-q1"
+    "canonicalId": "4.21-Mtest1-q3"
   },
   {
     "id": "4.21-test1-q2",
@@ -69,7 +69,7 @@
     ],
     "sourceRef": "4.21/test1/Q3.png",
     "platform": "canvas",
-    "canonicalId": "4.21-test1-q3"
+    "canonicalId": "4.21-Mtest1-q4"
   },
   {
     "id": "4.21-test1-q4",
@@ -84,7 +84,7 @@
     ],
     "sourceRef": "4.21/test1/Q4.png",
     "platform": "canvas",
-    "canonicalId": "4.21-test1-q4"
+    "canonicalId": "4.21-Mtest1-q5"
   },
   {
     "id": "4.21-test1-q5",
@@ -118,6 +118,6 @@
     "sourceRef": "4.21/test1/Q5.png",
     "notes": "スクショ内に重複選択肢があるため、JSONでは重複を統合。",
     "platform": "canvas",
-    "canonicalId": "4.21-test1-q5"
+    "canonicalId": "4.21-Mtest1-q2"
   }
 ]

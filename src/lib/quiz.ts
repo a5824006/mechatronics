@@ -1,6 +1,7 @@
 import type { AttemptRecord, LoadedQuiz, QuizQuestion } from "../types";
 
 export const STORAGE_KEY = "mechatronics-quiz-attempts";
+export const REVIEW_STORAGE_KEY = "mechatronics-quiz-review-ids";
 
 export function normalizeAnswer(value: string) {
   return value.trim().replace(/\s+/g, " ").toLowerCase();
@@ -61,4 +62,31 @@ export function saveAttempt(questionId: string, isCorrect: boolean) {
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(attempts));
   return attempts;
+}
+
+export function loadReviewIds() {
+  const raw = localStorage.getItem(REVIEW_STORAGE_KEY);
+  if (!raw) return [];
+  try {
+    const value = JSON.parse(raw);
+    return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveReviewIds(ids: string[]) {
+  const uniqueIds = Array.from(new Set(ids));
+  localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(uniqueIds));
+  return uniqueIds;
+}
+
+export function saveReviewResult(questionId: string, isCorrect: boolean) {
+  const ids = new Set(loadReviewIds());
+  if (isCorrect) {
+    ids.delete(questionId);
+  } else {
+    ids.add(questionId);
+  }
+  return saveReviewIds([...ids]);
 }
