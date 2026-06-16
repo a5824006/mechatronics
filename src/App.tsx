@@ -853,14 +853,12 @@ function SearchPage() {
   const questionResults = useMemo(() => searchQuestions(query, searchableQuestions, searchSortMode), [query, searchableQuestions, searchSortMode]);
   const dynamicAnswerResults = useMemo(() => matchDynamicAnswerTemplates(query), [query]);
   const lectureResults = useMemo(() => searchLectureMaterials(query, lectureMaterials, searchSortMode), [query, searchSortMode]);
-  const activeSearchResultCount = searchTargetMode === "questions" ? questionResults.length : lectureResults.length;
-  const activeResultCount = dynamicAnswerResults.length + activeSearchResultCount;
+  const activeResultCount = searchTargetMode === "questions" ? dynamicAnswerResults.length + questionResults.length : lectureResults.length;
   const activeTargetCount = searchTargetMode === "questions" ? searchableQuestions.length : lectureMaterials.length;
   const visibleResultCount = Math.min(visibleCount, activeResultCount);
-  const visibleDynamicResults = dynamicAnswerResults.slice(0, visibleCount);
-  const visibleSearchCount = Math.max(0, visibleCount - visibleDynamicResults.length);
-  const visibleQuestionResults = questionResults.slice(0, visibleSearchCount);
-  const visibleLectureResults = lectureResults.slice(0, visibleSearchCount);
+  const visibleDynamicResults = searchTargetMode === "questions" ? dynamicAnswerResults.slice(0, visibleCount) : [];
+  const visibleQuestionResults = questionResults.slice(0, Math.max(0, visibleCount - visibleDynamicResults.length));
+  const visibleLectureResults = lectureResults.slice(0, visibleCount);
 
   useEffect(() => {
     setVisibleCount(SEARCH_BATCH_SIZE);
