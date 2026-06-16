@@ -570,6 +570,58 @@ h1 {
   line-height: 1.5;
 }
 
+.dynamic-answer-result {
+  border-color: #7bb9c8;
+  background: #f7fcfd;
+}
+
+.dynamic-answer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.dynamic-answer-grid div {
+  padding: 10px;
+  border: 1px solid #d5dee1;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.dynamic-answer-grid dt {
+  margin-bottom: 4px;
+  color: #63727a;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.dynamic-answer-grid dd {
+  margin: 0;
+  color: #17212b;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.dynamic-answer-list li {
+  background: #dff3f6;
+}
+
+.formula-box {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #d5dee1;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.formula-box code {
+  color: #17212b;
+  white-space: pre-wrap;
+}
+
 .lecture-keywords {
   margin: 0;
   color: #4b5a61;

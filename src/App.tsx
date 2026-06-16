@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { matchDynamicAnswerTemplates } from "./data/dynamicAnswerTemplates";
 import { lectureMaterials } from "./data/loadLectures";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
 import { buildBalancedSet, isTextCorrect, loadAttempts, loadReviewIds, saveAttempt, saveReviewResult, shuffle } from "./lib/quiz";
+import type { DynamicAnswerTemplateResult } from "./data/dynamicAnswerTemplates";
 import type { LectureMaterial, LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
 
 type UserAnswer = string | boolean | string[] | Record<string, string>;
@@ -789,6 +791,46 @@ function QuestionCard({
   );
 }
 
+function DynamicAnswerResultCard({ result }: { result: DynamicAnswerTemplateResult }) {
+  return (
+    <article className="search-result dynamic-answer-result">
+      <div className="question-meta">
+        <span>可変問題として検出</span>
+        <span>{result.kind === "calculation" ? "計算" : "辞書"}</span>
+        <span>{result.title}</span>
+      </div>
+      <h2 className="lecture-title">{result.title}</h2>
+      {result.extracted.length > 0 && (
+        <dl className="dynamic-answer-grid">
+          {result.extracted.map((item) => (
+            <div key={`${item.label}-${item.value}`}>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      <ol className="answer-list dynamic-answer-list">
+        {result.answers.map((answer) => (
+          <li key={`${answer.label}-${answer.value}`}>
+            <strong>{answer.label}: </strong>
+            {answer.value}
+          </li>
+        ))}
+      </ol>
+      {result.formulaLines && result.formulaLines.length > 0 && (
+        <div className="formula-box">
+          {result.formulaLines.map((line) => (
+            <code key={line}>{line}</code>
+          ))}
+        </div>
+      )}
+      <p className="match-hint">一致: {result.matchedTokens.slice(0, 8).join(", ")}</p>
+      {result.notes && <p className="notes">{result.notes}</p>}
+    </article>
+  );
+}
+
 function SearchPage() {
   const [query, setQuery] = useState("");
   const [questionSearchEnabled, setQuestionSearchEnabled] = useState(false);
@@ -809,12 +851,16 @@ function SearchPage() {
     [searchPlatformFilter],
   );
   const questionResults = useMemo(() => searchQuestions(query, searchableQuestions, searchSortMode), [query, searchableQuestions, searchSortMode]);
+  const dynamicAnswerResults = useMemo(() => matchDynamicAnswerTemplates(query), [query]);
   const lectureResults = useMemo(() => searchLectureMaterials(query, lectureMaterials, searchSortMode), [query, searchSortMode]);
-  const activeResultCount = searchTargetMode === "questions" ? questionResults.length : lectureResults.length;
+  const activeSearchResultCount = searchTargetMode === "questions" ? questionResults.length : lectureResults.length;
+  const activeResultCount = dynamicAnswerResults.length + activeSearchResultCount;
   const activeTargetCount = searchTargetMode === "questions" ? searchableQuestions.length : lectureMaterials.length;
   const visibleResultCount = Math.min(visibleCount, activeResultCount);
-  const visibleQuestionResults = questionResults.slice(0, visibleCount);
-  const visibleLectureResults = lectureResults.slice(0, visibleCount);
+  const visibleDynamicResults = dynamicAnswerResults.slice(0, visibleCount);
+  const visibleSearchCount = Math.max(0, visibleCount - visibleDynamicResults.length);
+  const visibleQuestionResults = questionResults.slice(0, visibleSearchCount);
+  const visibleLectureResults = lectureResults.slice(0, visibleSearchCount);
 
   useEffect(() => {
     setVisibleCount(SEARCH_BATCH_SIZE);
@@ -937,6 +983,14 @@ function SearchPage() {
         </section>
       )}
 
+      {normalizedQuery && visibleDynamicResults.length > 0 && (
+        <div className="search-results">
+          {visibleDynamicResults.map((result) => (
+            <DynamicAnswerResultCard key={result.id} result={result} />
+          ))}
+        </div>
+      )}
+
       {searchTargetMode === "questions" && questionResults.length > 0 && (
         <>
           <div className="search-results">
@@ -960,11 +1014,11 @@ function SearchPage() {
               </article>
             ))}
           </div>
-          {visibleResultCount < questionResults.length && (
+          {visibleResultCount < activeResultCount && (
             <div className="load-more">
               <button
                 type="button"
-                onClick={() => setVisibleCount((current) => Math.min(current + SEARCH_BATCH_SIZE, questionResults.length))}
+                onClick={() => setVisibleCount((current) => Math.min(current + SEARCH_BATCH_SIZE, activeResultCount))}
               >
                 次の15件を表示
               </button>
