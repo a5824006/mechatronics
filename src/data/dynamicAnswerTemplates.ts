@@ -176,7 +176,6 @@ function matchAdcTemplate(rawQuery: string, normalizedQuery: string): DynamicAns
     ],
     answers,
     formulaLines,
-    notes: "中間スクショの 5-bit / 0 to 3 V / 0.7 V では、Delta = 3 / (32 - 1) として計算します。",
   };
 }
 
