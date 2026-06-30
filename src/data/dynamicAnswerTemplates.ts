@@ -117,6 +117,34 @@ function matchSamplingRateTemplate(rawQuery: string, normalizedQuery: string): D
   };
 }
 
+function matchSamplingPeriodTemplate(rawQuery: string, normalizedQuery: string): DynamicAnswerTemplateResult | null {
+  if (!includesAny(normalizedQuery, ["sampling period", "sampled at"])) return null;
+
+  const frequencyHz = extractNumber(
+    rawQuery,
+    /sampled\s+at\s+([0-9]+(?:\.[0-9]+)?)\s*(?:hertz|hz)\b/i,
+  ) ?? extractNumber(rawQuery, /sampling\s+(?:rate|frequency)\s*(?:is|=|:)?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:hertz|hz)\b/i);
+  if (frequencyHz === null || frequencyHz === 0) return null;
+
+  const periodMs = 1000 / frequencyHz;
+  return {
+    id: "sampling-period-from-frequency",
+    title: "Sampling period",
+    kind: "calculation",
+    confidence: 130,
+    matchedTokens: ["sampling", "period", "hertz"],
+    extracted: [{ label: "sampling frequency F", value: `${frequencyHz} Hz` }],
+    answers: [{ label: "sampling period T", value: String(Math.round(periodMs)) }],
+    formulaLines: [
+      "T = 1 / F",
+      "The answer is requested in milliseconds, so T = 1000 / F",
+      `T = 1000 / ${frequencyHz} = ${periodMs}`,
+      "Rounded to the nearest integer.",
+    ],
+    notes: "sampled at / sampling rate / sampling frequency と Hz / hertz の表記ゆれを同じ意味として扱います。",
+  };
+}
+
 function extractAdcValues(rawQuery: string) {
   const bits = extractNumber(rawQuery, /([0-9]+)\s*[- ]?\s*bit\s+adc/i);
   const rangeMatch = /ranging\s+from\s+(-?[0-9]+(?:\.[0-9]+)?)\s+to\s+(-?[0-9]+(?:\.[0-9]+)?)\s*(?:volts?|v)\b/i.exec(rawQuery);
@@ -224,6 +252,7 @@ export function matchDynamicAnswerTemplates(query: string) {
   return [
     matchSiUnitTemplate(normalizedQuery),
     matchSamplingRateTemplate(query, normalizedQuery),
+    matchSamplingPeriodTemplate(query, normalizedQuery),
     matchAdcTemplate(query, normalizedQuery),
     matchImpedancePowerTemplate(query, normalizedQuery),
   ]

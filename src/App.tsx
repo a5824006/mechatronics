@@ -75,6 +75,7 @@ function questionTypeLabel(type: QuestionType) {
     choice: "選択",
     multi_select: "複数選択",
     matching: "マッチング",
+    calculation: "計算",
   }[type];
 }
 
@@ -169,6 +170,7 @@ function filledPromptText(question: QuizQuestion) {
 function answerLines(question: QuizQuestion) {
   if (question.type === "true_false") return [`True / False: ${question.answer ? "True" : "False"}`];
   if (question.type === "choice") return [`Answer: ${String(question.answer ?? "")}`];
+  if (question.type === "calculation") return ["数値は貼り付けた問題文から自動計算"];
   if (question.type === "multi_select") {
     return (question.answers ?? []).map((answer, index) => `Answer ${index + 1}: ${formatExpectedAnswer(answer)}`);
   }
@@ -237,6 +239,7 @@ function answerSearchTexts(question: QuizQuestion) {
   if (question.type === "true_false") return [question.answer ? "True" : "False"];
   if (question.type === "choice") return [String(question.answer ?? "")];
   if (question.type === "matching") return (question.items ?? []).map((item) => item.answer);
+  if (question.type === "calculation") return question.searchKeywords ?? [];
   return (question.answers ?? []).flatMap((answer) => (Array.isArray(answer) ? answer : [answer])).map(String);
 }
 

@@ -3,7 +3,8 @@ export type QuestionType =
   | "true_false"
   | "choice"
   | "multi_select"
-  | "matching";
+  | "matching"
+  | "calculation";
 
 export type QuizPlatform = "moodle" | "canvas";
 
