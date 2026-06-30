@@ -22,6 +22,7 @@ const lectureTitles = new Map([
   ["Mechatronics-5-19.pdf", "Basic Knowledge about Electrical Engineering"],
   ["Mechatronics-5-26.pdf", "Basic knowledge about actuators"],
   ["Mechatronics-6-9.pdf", "Computer technology required to understand mechatronics"],
+  ["Mechatronics-6-30.pdf", "Data processing technology required for mechatronics"],
 ]);
 
 const stopWords = new Set([
