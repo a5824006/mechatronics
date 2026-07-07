@@ -7,7 +7,7 @@
     "questionNumber": 1,
     "canonicalId": "6.30-Mtest2-q1",
     "type": "fill_blank",
-    "prompt": "Zero-crossing rate (ZCR) of a signal {{0}} of size T is defined formally as ZCR_T = 1/(T-1) x sum 1_R<0{s_t x s_t-1 < 0}. Where \"s\" is a {{1}} of {{2}} T and the indicator function is {{3}} if its argument A is true and {{4}} otherwise. Usually, {{5}} the \"positive-going\" or \"negative-going\" crossings are counted, rather than {{6}} the crossings.",
+    "prompt": "Zero-crossing rate (ZCR) of a signal {{0}} of size T is defined formally as a formula. Where \"s\" is a {{1}} of {{2}} T and the indicator function {A} is {{3}} if its argument A is true and {{4}} otherwise. Usually, {{5}} the \"positive-going\" or \"negative-going\" crossings are counted, rather than {{6}} the crossings.",
     "choices": [
       "only",
       "signal",
@@ -35,7 +35,9 @@
       "signal frame",
       "indicator function",
       "positive-going",
-      "negative-going"
+      "negative-going",
+      "argument A is true",
+      "otherwise"
     ]
   },
   {
@@ -81,7 +83,7 @@
     "questionNumber": 4,
     "canonicalId": "6.30-Mtest2-q4",
     "type": "fill_blank",
-    "prompt": "The short-term energy is the vector resulting from the calculation of the energy of a short term frame of the signal, repeated at regular \"shift\" intervals on the whole signal. In the formula, \"n\" is the {{0}} number relative to the whole signal. \"m\" is the {{1}} size in number of {{2}}. It can be as small as {{3}} sample or as large as frame size {{4}}. \"i\" is the {{5}} number respecting 1 <= i <= (L - N) / m + 1. \"L\" is the number of {{6}} in the whole signal.",
+    "prompt": "The short-term energy is the vector resulting from the calculation of the energy of a short term frame of the signal, repeated at regular \"shift\" intervals on the whole signal. Its formula can be defined as follows. Where, \"n\" is the {{0}} number relative to the whole signal. \"m\" is the {{1}} size in number of {{2}}. It can be as small as {{3}} sample or as large as frame size {{4}}. \"i\" is the {{5}} number respecting. \"L\" is the number of {{6}} in the whole signal.",
     "choices": [
       "sample",
       "frame",

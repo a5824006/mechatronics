@@ -365,18 +365,31 @@ function compareLectureMaterialOrder(a: LectureMaterial, b: LectureMaterial, dir
   return a.id.localeCompare(b.id, "ja", { numeric: true, sensitivity: "base" });
 }
 
-function searchQuestions(query: string, candidates: QuizQuestion[], sortMode: SearchSortMode) {
-  const normalizedQuery = normalizeSearchText(query);
-  if (!normalizedQuery) return [];
+function questionSearchQueryParts(query: string) {
+  const rawParts = query
+    .split(/\r?\n\s*-{3,}\s*\r?\n/g)
+    .map((part) => normalizeSearchText(part))
+    .filter(Boolean);
+  const parts = rawParts.length > 1 ? rawParts : [normalizeSearchText(query)].filter(Boolean);
+  return parts.map((normalizedQuery) => ({
+    normalizedQuery,
+    queryTokens: Array.from(new Set(normalizedQuery.split(" ").filter(Boolean))),
+  }));
+}
 
-  const queryTokens = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
+function searchQuestions(query: string, candidates: QuizQuestion[], sortMode: SearchSortMode) {
+  const queryParts = questionSearchQueryParts(query);
+  if (queryParts.length === 0) return [];
+
   return candidates
     .map((question) => {
-      const { score, matchedTokens } = scoreQuestion(question, normalizedQuery, queryTokens);
+      const best = queryParts
+        .map((part) => scoreQuestion(question, part.normalizedQuery, part.queryTokens))
+        .sort((a, b) => b.score - a.score || b.matchedTokens.length - a.matchedTokens.length)[0] ?? { score: 0, matchedTokens: [] };
       return {
         question,
-        score,
-        matchedTokens,
+        score: best.score,
+        matchedTokens: best.matchedTokens,
       };
     })
     .filter((result) => result.score > 0)
