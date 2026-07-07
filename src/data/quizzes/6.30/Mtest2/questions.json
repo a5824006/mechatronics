@@ -1,0 +1,197 @@
+[
+  {
+    "id": "6.30-Mtest2-q1",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "6.30-Mtest2-q1",
+    "type": "fill_blank",
+    "prompt": "Zero-crossing rate (ZCR) of a signal {{0}} of size T is defined formally as ZCR_T = 1/(T-1) x sum 1_R<0{s_t x s_t-1 < 0}. Where \"s\" is a {{1}} of {{2}} T and the indicator function is {{3}} if its argument A is true and {{4}} otherwise. Usually, {{5}} the \"positive-going\" or \"negative-going\" crossings are counted, rather than {{6}} the crossings.",
+    "choices": [
+      "only",
+      "signal",
+      "-1",
+      "1",
+      "0",
+      "all",
+      "length",
+      "frame"
+    ],
+    "answers": [
+      "frame",
+      "signal",
+      "length",
+      "1",
+      "0",
+      "only",
+      "all"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142647.png",
+    "notes": "Moodle上では一部が不正解扱いだが、講義資料のZero-Crossing Rateの説明ではこの内容で一致している。",
+    "searchKeywords": [
+      "zero-crossing rate",
+      "ZCR",
+      "signal frame",
+      "indicator function",
+      "positive-going",
+      "negative-going"
+    ]
+  },
+  {
+    "id": "6.30-Mtest2-q2",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "6.30-Mtest2-q2",
+    "type": "fill_blank",
+    "prompt": "To perform real-time processing we can only use \"the {{0}} values\" and \"the {{1}} values.\" However, the output signal variations will be {{2}} regarding the input ones. In the case of post-processing, \"the {{3}} values\" are also available, and the output variations will be {{4}} with the input ones.",
+    "answers": [
+      "past",
+      "current",
+      "delayed",
+      "future",
+      "synchronized"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142652.png"
+  },
+  {
+    "id": "6.30-Mtest2-q3",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "canonicalId": "6.30-Mtest2-q3",
+    "type": "fill_blank",
+    "prompt": "The {{0}} filter consists of arranging and outputting several input data in descending order and outputting the {{1}} value. It has the characteristic to remove {{2}} values, while reasonably maintaining {{3}} changes.",
+    "answers": [
+      "median",
+      "median",
+      "sudden",
+      "trend"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142658.png"
+  },
+  {
+    "id": "6.30-Mtest2-q4",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 4,
+    "canonicalId": "6.30-Mtest2-q4",
+    "type": "fill_blank",
+    "prompt": "The short-term energy is the vector resulting from the calculation of the energy of a short term frame of the signal, repeated at regular \"shift\" intervals on the whole signal. In the formula, \"n\" is the {{0}} number relative to the whole signal. \"m\" is the {{1}} size in number of {{2}}. It can be as small as {{3}} sample or as large as frame size {{4}}. \"i\" is the {{5}} number respecting 1 <= i <= (L - N) / m + 1. \"L\" is the number of {{6}} in the whole signal.",
+    "choices": [
+      "sample",
+      "frame",
+      "shift",
+      "samples",
+      "1",
+      "N"
+    ],
+    "answers": [
+      "sample",
+      "shift",
+      "samples",
+      "1",
+      "N",
+      "frame",
+      "samples"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142704.png",
+    "notes": "Moodle上では一部が不正解扱いだが、講義資料のShort-Time Energyの説明ではこの内容で一致している。",
+    "searchKeywords": [
+      "short-term energy",
+      "short-time energy",
+      "shift size",
+      "frame size",
+      "number of samples"
+    ]
+  },
+  {
+    "id": "6.30-Mtest2-q5",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 5,
+    "canonicalId": "6.30-Mtest2-q5",
+    "type": "fill_blank",
+    "prompt": "In the 1st order low pass filter, not only the {{0}} but also the previous {{1}} is used. It can be defined by equation {{2}}. The more ratio \"r\" is close to {{3}}, the more data variations are reduced.",
+    "answers": [
+      "input",
+      "output",
+      "1",
+      "0"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142712.png",
+    "searchKeywords": [
+      "1st order low pass filter",
+      "low pass filter",
+      "previous output"
+    ]
+  },
+  {
+    "id": "6.30-Mtest2-q6",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 6,
+    "canonicalId": "6.30-Mtest2-q6",
+    "type": "fill_blank",
+    "prompt": "One of the basic processing of signal changing with time is {{0}}. Its purpose is to reduce {{1}} or extract {{2}} from the signal.",
+    "answers": [
+      "filtering",
+      "noise",
+      "features"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142717.png"
+  },
+  {
+    "id": "6.30-Mtest2-q7",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 7,
+    "canonicalId": "6.30-Mtest2-q7",
+    "type": "fill_blank",
+    "prompt": "The {{0}} filter consists of calculating and outputting the average of several input data. It has the characteristic to reduce {{1}} frequencies. It is convenient to remove {{2}} variations but is unsuitable for real-time use such as in control.",
+    "answers": [
+      "moving average",
+      "high",
+      "small"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142721.png"
+  },
+  {
+    "id": "6.30-Mtest2-q8",
+    "date": "6.30",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 8,
+    "canonicalId": "6.30-Mtest2-q8",
+    "type": "fill_blank",
+    "prompt": "Calculate the moving average and median filter output corresponding to input data, with a frame size of 3 samples, and a shifting size of 1 sample. Input: 9, 4, 5, 3, 7, 8, 6, 1. Moving average outputs: {{0}}, {{1}}, {{2}}, {{3}}, {{4}}, {{5}}. Median filter outputs: {{6}}, {{7}}, {{8}}, {{9}}, {{10}}, {{11}}.",
+    "answers": [
+      "6",
+      "4",
+      "5",
+      "6",
+      "7",
+      "5",
+      "5",
+      "4",
+      "5",
+      "7",
+      "7",
+      "6"
+    ],
+    "sourceRef": "6.30/Mtest2/スクリーンショット 2026-07-07 142725.png",
+    "searchKeywords": [
+      "moving average",
+      "median filter",
+      "frame size 3",
+      "shifting size 1"
+    ]
+  }
+]
