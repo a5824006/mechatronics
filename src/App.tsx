@@ -3,6 +3,7 @@ import { matchDynamicAnswerTemplates } from "./data/dynamicAnswerTemplates";
 import { lectureMaterials } from "./data/loadLectures";
 import { allQuestions, quizzes } from "./data/loadQuizzes";
 import { buildBalancedSet, isTextCorrect, loadAttempts, loadReviewIds, saveAttempt, saveReviewResult, shuffle } from "./lib/quiz";
+import { matchingItemsInPastedAnswerOrder } from "./lib/pastedAnswerOrder";
 import type { DynamicAnswerTemplateResult } from "./data/dynamicAnswerTemplates";
 import type { LectureMaterial, LoadedQuiz, QuestionType, QuizPlatform, QuizQuestion, SessionMode } from "./types";
 
@@ -198,6 +199,9 @@ function answerLinesForSearch(question: QuizQuestion, query: string) {
   if (!normalizedQuery) return answerLines(question);
 
   if (question.type === "matching") {
+    const pastedOrder = matchingItemsInPastedAnswerOrder(question.items ?? [], query);
+    if (pastedOrder) return pastedOrder.map((item) => `${item.prompt} -> ${item.answer}`);
+
     const orderedItems = [...(question.items ?? [])]
       .map((item, index) => ({
         item,
