@@ -28,6 +28,11 @@ export type QuizQuestion = {
     alt: string;
     src: string;
   }>;
+  imageTable?: Array<{
+    label: string;
+    alt: string;
+    src: string;
+  }>;
   searchKeywords?: string[];
   sourceRef?: string;
   notes?: string;

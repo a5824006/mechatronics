@@ -245,7 +245,15 @@ function answerSearchTexts(question: QuizQuestion) {
 
 function questionSearchFields(question: QuizQuestion) {
   return [
-    { weight: 12, texts: [...answerSearchTexts(question), ...(question.searchKeywords ?? []), ...(question.images ?? []).map((image) => image.alt)] },
+    {
+      weight: 12,
+      texts: [
+        ...answerSearchTexts(question),
+        ...(question.searchKeywords ?? []),
+        ...(question.images ?? []).map((image) => image.alt),
+        ...(question.imageTable ?? []).flatMap((cell) => [cell.label, cell.alt]),
+      ],
+    },
     { weight: 6, texts: [question.prompt, filledPromptText(question)] },
     { weight: 4, texts: [...(question.choices ?? []), ...(question.items ?? []).map((item) => item.prompt)] },
     { weight: 3, texts: [question.id, question.canonicalId ?? "", question.date, question.test, `Question ${question.questionNumber}`] },
@@ -640,6 +648,30 @@ function QuestionImages({ images }: { images: QuizQuestion["images"] }) {
   );
 }
 
+function QuestionImageTable({ cells }: { cells: QuizQuestion["imageTable"] }) {
+  if (!cells || cells.length === 0) return null;
+  return (
+    <div className="question-image-table-scroll" aria-label="問題画像の表">
+      <table className="question-image-table">
+        <thead>
+          <tr>
+            {cells.map((cell) => <th key={cell.label} scope="col">{cell.label}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {cells.map((cell) => (
+              <td key={cell.label}>
+                <img src={cell.src} alt={cell.alt} />
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function QuestionCard({
   question,
   answer,
@@ -666,6 +698,7 @@ function QuestionCard({
 
       <div className="question-body">
         <QuestionImages images={question.images} />
+        <QuestionImageTable cells={question.imageTable} />
 
         {question.type === "fill_blank" && (
           <>
@@ -1017,6 +1050,7 @@ function SearchPage() {
                   <span>{questionTypeLabel(question.type)}</span>
                 </div>
                 <QuestionImages images={question.images} />
+                <QuestionImageTable cells={question.imageTable} />
                 <p className="search-question-text">{filledPromptText(question)}</p>
                 <ol className="answer-list">
                   {answerLinesForSearch(question, query).map((line) => (
