@@ -1,0 +1,103 @@
+[
+  {
+    "id": "7.7-Mtest2-q1",
+    "date": "7.7",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "7.7-Mtest2-q1",
+    "type": "fill_blank",
+    "prompt": "Generally, the development process of an embedded system is carried out according to a \"{{0}}\" model. It is a development technique performed while repeating \"{{1}} design ⇒ {{2}} design ⇒ {{3}} development ⇒ {{4}}\".",
+    "answers": [
+      "Spiral",
+      "Basic",
+      "detail",
+      "Program",
+      "test"
+    ],
+    "sourceRef": "7.7/Mtest2/スクリーンショット 2026-07-14 140742.png",
+    "searchKeywords": [
+      "embedded system",
+      "Spiral model",
+      "Basic design",
+      "detail design",
+      "Program development",
+      "test"
+    ]
+  },
+  {
+    "id": "7.7-Mtest2-q2",
+    "date": "7.7",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "7.7-Mtest2-q2",
+    "type": "matching",
+    "prompt": "Match each characteristic with the type of computer it describes best.",
+    "choices": [
+      "Arduino",
+      "RaspberryPi"
+    ],
+    "items": [
+      {
+        "prompt": "provides a lot of analog and digital I/O",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "needs to use external monitor, keyboard, and mouse",
+        "answer": "RaspberryPi"
+      },
+      {
+        "prompt": "stores only one program at once in EEPROM",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "it is running on top of an OS",
+        "answer": "RaspberryPi"
+      },
+      {
+        "prompt": "needs a 5 volts power supply",
+        "answer": "RaspberryPi"
+      },
+      {
+        "prompt": "gets power from a battery cell",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "good for prototype combining software and electronic hardware",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "it does not run on top of an OS",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "credit-card sized computer",
+        "answer": "RaspberryPi"
+      },
+      {
+        "prompt": "open hardware MCU",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "shields can be used to extend functionalities",
+        "answer": "Arduino"
+      },
+      {
+        "prompt": "not good for I/O intensive applications",
+        "answer": "RaspberryPi"
+      }
+    ],
+    "sourceRef": "7.7/Mtest2/スクリーンショット 2026-07-14 140751.png",
+    "searchKeywords": [
+      "Arduino",
+      "RaspberryPi",
+      "Raspberry Pi",
+      "I/O",
+      "EEPROM",
+      "OS",
+      "MCU",
+      "shields"
+    ]
+  }
+]
