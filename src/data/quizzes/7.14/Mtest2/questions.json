@@ -1,0 +1,107 @@
+[
+  {
+    "id": "7.14-Mtest2-q1",
+    "date": "7.14",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "7.14-Mtest2-q1",
+    "type": "matching",
+    "prompt": "Match the feedback control methods name with there correct definitions.",
+    "choices": [
+      "Object value changes over time",
+      "modern control process",
+      "traditional control process",
+      "For objects whose position or attitude changes irregularly",
+      "Controlled condition stops at a particular value, and the objective value does not change.",
+      "proportional feedback type",
+      "Change of target value has been scheduled in advance"
+    ],
+    "items": [
+      {
+        "prompt": "follow-up control",
+        "answer": "For objects whose position or attitude changes irregularly"
+      },
+      {
+        "prompt": "programmed control",
+        "answer": "Change of target value has been scheduled in advance"
+      },
+      {
+        "prompt": "tracking control",
+        "answer": "Object value changes over time"
+      }
+    ],
+    "sourceRef": "7.14/Mtest2/スクリーンショット 2026-07-21 201841.png; スクリーンショット 2026-07-21 202055.png",
+    "notes": "正答は満点結果、選択肢一覧は同じ問題のドロップダウン画像から記録。問題文のthereは画面表示をそのまま使用。",
+    "searchKeywords": [
+      "feedback control methods",
+      "follow-up control",
+      "programmed control",
+      "tracking control",
+      "target value"
+    ]
+  },
+  {
+    "id": "7.14-Mtest2-q2",
+    "date": "7.14",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "7.14-Mtest2-q2",
+    "type": "fill_blank",
+    "prompt": "PID control means {{0}} (P) {{1}} (I) {{2}} (D) control.",
+    "answers": [
+      "Proportional",
+      "Integral",
+      "Derivative"
+    ],
+    "sourceRef": "7.14/Mtest2/スクリーンショット 2026-07-21 202101.png",
+    "notes": "正答は満点結果から記録。",
+    "searchKeywords": [
+      "PID control",
+      "Proportional",
+      "Integral",
+      "Derivative"
+    ]
+  },
+  {
+    "id": "7.14-Mtest2-q3",
+    "date": "7.14",
+    "test": "Mtest2",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "canonicalId": "7.14-Mtest2-q3",
+    "type": "multi_select",
+    "prompt": "Among the following, which are NOT control methods (select all).",
+    "choices": [
+      "Alternative control",
+      "Adaptive control",
+      "Optimal control",
+      "Maximum control",
+      "PID control",
+      "VIP control",
+      "Reduced control",
+      "Advance control"
+    ],
+    "answers": [
+      "Alternative control",
+      "Maximum control",
+      "VIP control",
+      "Reduced control",
+      "Advance control"
+    ],
+    "sourceRef": "7.14/Mtest2/スクリーンショット 2026-07-21 202108.png",
+    "notes": "正答は満点結果でチェック済みの5項目から記録。",
+    "searchKeywords": [
+      "control methods",
+      "Adaptive control",
+      "Optimal control",
+      "PID control",
+      "Alternative control",
+      "Maximum control",
+      "VIP control",
+      "Reduced control",
+      "Advance control"
+    ]
+  }
+]

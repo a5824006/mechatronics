@@ -1,0 +1,99 @@
+[
+  {
+    "id": "7.14-Mtest1-q1",
+    "date": "7.14",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 1,
+    "canonicalId": "7.14-Mtest1-q1",
+    "type": "matching",
+    "prompt": "Match the system model type with its definition.",
+    "choices": [
+      "Model to emulate real functions using computers",
+      "Controlled condition stops at a particular value, and the objective value does not change",
+      "Object value changes over time",
+      "Control for objects whose position or attitude changes irregularly",
+      "Another real system to emulate the function of the target system",
+      "An equation to express the functions or properties of the system based on various natural and physical laws",
+      "Change of target value has been scheduled in advance"
+    ],
+    "items": [
+      {
+        "prompt": "Mathematical model",
+        "answer": "An equation to express the functions or properties of the system based on various natural and physical laws"
+      },
+      {
+        "prompt": "Physical model",
+        "answer": "Another real system to emulate the function of the target system"
+      },
+      {
+        "prompt": "Computer model",
+        "answer": "Model to emulate real functions using computers"
+      }
+    ],
+    "sourceRef": "7.14/Mtest1/スクリーンショット 2026-07-21 201500.png; スクリーンショット 2026-07-21 201616.png",
+    "notes": "正答は満点結果、選択肢一覧は同じ問題のドロップダウン画像から記録。",
+    "searchKeywords": [
+      "system model",
+      "mathematical model",
+      "physical model",
+      "computer model",
+      "natural and physical laws"
+    ]
+  },
+  {
+    "id": "7.14-Mtest1-q2",
+    "date": "7.14",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 2,
+    "canonicalId": "7.14-Mtest1-q2",
+    "type": "fill_blank",
+    "prompt": "A system is a set or group that conducts a certain {{0}} as a whole, while being composed by multiple {{1}} that are organized and {{2}} with each other to achieve a goal. Any system as the following 3 characteristics: 1. {{3}} of elements at one level 2. {{4}} of different-level layers 3. {{5}} realized as a whole by them",
+    "answers": [
+      "function",
+      "components",
+      "interact",
+      "Combination",
+      "Pile",
+      "Function"
+    ],
+    "sourceRef": "7.14/Mtest1/スクリーンショット 2026-07-21 201512.png",
+    "notes": "正答は満点結果から記録。大文字・小文字は画面表示に合わせた。",
+    "searchKeywords": [
+      "system",
+      "function",
+      "components",
+      "interact",
+      "Combination",
+      "Pile"
+    ]
+  },
+  {
+    "id": "7.14-Mtest1-q3",
+    "date": "7.14",
+    "test": "Mtest1",
+    "platform": "moodle",
+    "questionNumber": 3,
+    "canonicalId": "7.14-Mtest1-q3",
+    "type": "fill_blank",
+    "prompt": "To understand the system, we consider each component as a {{0}} and investigate the relation between its input and output. {{1}} is often used to express the transfer of signal and the interactions between components composing a system. The major structures of a system are the {{2}} structure, {{3}} structure that return some part of the output to the input, and, in case some external cause happens to deteriorate the control {{4}} structure that operates necessary corrections in advance to reduce the noise effects.",
+    "answers": [
+      "block box",
+      "block diagram",
+      "serial",
+      "feedback",
+      "feed forward"
+    ],
+    "sourceRef": "7.14/Mtest1/スクリーンショット 2026-07-21 201519.png",
+    "notes": "正答は満点結果から記録。block boxおよびfeed forwardは画面表示をそのまま使用。",
+    "searchKeywords": [
+      "block box",
+      "block diagram",
+      "serial structure",
+      "feedback structure",
+      "feed forward structure",
+      "noise effects"
+    ]
+  }
+]

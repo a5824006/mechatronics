@@ -25,14 +25,14 @@
     "type": "fill_blank",
     "prompt": "Write the Ampere's law. Use official symbols for physical quantities, use =, x, /, +, - for operators, use Pi or π, and use no blank spaces. Answer: {{0}}",
     "answers": [
-      "I=2xπxrxH",
-      "I=2xPixrxH",
-      "I=2πrH",
-      "H=I/(2xπxr)",
-      "H=I/(2xPixr)"
+      "I=2xπxrxL",
+      "I=2xPixrxL",
+      "I=2πrL",
+      "L=I/(2xπxr)",
+      "L=I/(2xPixr)"
     ],
     "sourceRef": "5.19/Mtest2/Q2.png",
-    "notes": "スクショの文字が小さいため、講義で一般的な円形磁界のアンペール則表記を別解として含める。",
+    "notes": "満点スクショに合わせ、物理量記号はLとして登録。",
     "platform": "moodle",
     "canonicalId": "5.19-Mtest2-q2"
   },
